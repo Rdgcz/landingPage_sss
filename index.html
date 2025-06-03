@@ -17,37 +17,39 @@
     <!-- Favicon -->
     <link rel="icon" href="images/favicon_android-chrome-512x512.png">
     <title>Sítio Sábio Sabiá</title>
-       <style>
+    <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            height: 100vh;
+            min-height: 100vh;
             color: white;
-            /* Fallback sólido caso a imagem falhe */
+            /* Fallback sólido */
             background-color: #3a5a40;
-            /* Imagem de fundo com verificação de carregamento */
-            background: linear-gradient(rgba(58, 90, 64, 0.8), rgba(58, 90, 64, 0.9)), 
-                        url('images/nature-background2.jpg') no-repeat center center/cover,
-                        #3a5a40; /* Cor de fallback */
+            /* Imagem de fundo com fallback */
+            background: 
+                linear-gradient(rgba(58, 90, 64, 0.8), rgba(58, 90, 64, 0.9)), 
+                url('./images/nature-background2.jpg') no-repeat center center/cover;
             background-attachment: fixed;
         }
-           .content-overlay {
+
+        .content-overlay {
             position: relative;
-            z-index: 1;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 50px;
-            height: 100vh;
+            padding: 2rem;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            box-sizing: border-box;
         }
 
         img.logo {
             max-width: 300px;
-            margin: 20px auto;
+            width: 100%;
+            margin: 0 auto 20px;
             display: block;
         }
 
@@ -61,6 +63,7 @@
         .social-icon img {
             transition: transform 0.2s;
             width: 28px;
+            height: 28px;
         }
 
         .social-icon:hover img {
@@ -69,27 +72,42 @@
 
         h1, h2, p {
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            margin: 0.5rem 0;
         }
 
+        /* Mobile */
         @media (max-width: 768px) {
             body {
-                background-size: auto 100%;
+                background-size: cover;
+                background-position: top center;
             }
-
+            
             .content-overlay {
-                padding: 20px;
+                padding: 1rem;
             }
+            
             img.logo {
                 max-width: 200px;
             }
         }
+
+        /* Verificação de imagem */
+        .bg-check {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+        }
     </style>
 </head>
 <body>
-    <!-- ... (mantenha todo o conteúdo) ... -->
-     <!-- Conteúdo sobreposto -->
+    <!-- Verificação invisível da imagem -->
+    <img src="./images/nature-background2.jpg" alt="" class="bg-check" onerror="document.body.style.background = '#3a5a40'">
+
+    <!-- Conteúdo -->
     <div class="content-overlay">
-        <img src="images/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá" class="logo">
+        <img src="./images/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá" class="logo">
         <h1>Sítio Sábio Sabiá</h1>
         <p>Site em construção</p>
         
@@ -104,17 +122,5 @@
         
         <h2>sitiosabiosabia@gmail.com</h2>
     </div>
-    <!-- Script para verificar se a imagem carregou -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const img = new Image();
-            img.src = 'images/nature-background2.jpg';
-            
-            img.onerror = function() {
-                console.error('Erro: Imagem de fundo não carregou. Verifique o caminho: images/nature-background2.jpg');
-                document.body.style.background = '#3a5a40'; // Fallback sólido
-            };
-        });
-    </script>
 </body>
 </html>
