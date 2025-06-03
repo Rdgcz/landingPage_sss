@@ -17,21 +17,22 @@
     <!-- Favicon -->
     <link rel="icon" href="images/favicon_android-chrome-512x512.png">
     <title>Sítio Sábio Sabiá</title>
-    <style>
+       <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
             height: 100vh;
-            overflow-x: hidden;
-            position: relative;
             color: white;
+            /* Fallback sólido caso a imagem falhe */
+            background-color: #3a5a40;
+            /* Imagem de fundo com verificação de carregamento */
             background: linear-gradient(rgba(58, 90, 64, 0.8), rgba(58, 90, 64, 0.9)), 
-                        url('images/nature-background2.png') no-repeat center center/cover;
+                        url('images/nature-background2.jpg') no-repeat center center/cover,
+                        #3a5a40; /* Cor de fallback */
             background-attachment: fixed;
         }
-
-        .content-overlay {
+           .content-overlay {
             position: relative;
             z-index: 1;
             background-color: rgba(0, 0, 0, 0.5);
@@ -70,11 +71,11 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        /* Otimização para mobile */
         @media (max-width: 768px) {
             body {
                 background-size: auto 100%;
             }
+
             .content-overlay {
                 padding: 20px;
             }
@@ -85,7 +86,8 @@
     </style>
 </head>
 <body>
-    <!-- Conteúdo sobreposto -->
+    <!-- ... (mantenha todo o conteúdo) ... -->
+     <!-- Conteúdo sobreposto -->
     <div class="content-overlay">
         <img src="images/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá" class="logo">
         <h1>Sítio Sábio Sabiá</h1>
@@ -102,5 +104,17 @@
         
         <h2>sitiosabiosabia@gmail.com</h2>
     </div>
+    <!-- Script para verificar se a imagem carregou -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const img = new Image();
+            img.src = 'images/nature-background2.jpg';
+            
+            img.onerror = function() {
+                console.error('Erro: Imagem de fundo não carregou. Verifique o caminho: images/nature-background2.jpg');
+                document.body.style.background = '#3a5a40'; // Fallback sólido
+            };
+        });
+    </script>
 </body>
 </html>
