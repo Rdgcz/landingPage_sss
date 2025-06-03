@@ -34,11 +34,30 @@
 <body>
   <h1>Sítio Sábio Sabiá</h1>
   <p>Em construção</p>
-    <div class="social-links">
-    <a href="https://instagram.com/sitiosabiosabia" target="_blank" rel="noopener noreferrer">
-      <img src="images/instagram-icon.svg" alt="Instagram" width="30">
-    </a>
-  </div>
+   <div class="social-icon">
+  <a href="https://instagram.com/sitiosabiosabia" target="_blank" rel="noopener noreferrer"
+     aria-label="Siga o Sítio Sábio Sabiá no Instagram">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" 
+         alt="Instagram Oficial" 
+         width="28">
+  </a>
+  <span>Siga nossa jornada</span>
+</div>
+
+<style>
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+  }
+  .social-icon img {
+    transition: transform 0.2s;
+  }
+  .social-icon:hover img {
+    transform: scale(1.1);
+  }
+</style>
   <h2>sitiosabiosabia@gmail.com</h2>
   <img src="images/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá">  
 </body>
