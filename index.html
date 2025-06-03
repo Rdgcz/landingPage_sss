@@ -19,46 +19,102 @@
     <title>Sítio Sábio Sabiá</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f5f5f5;
+            height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: white;
         }
-        img {
+
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 50px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        img.logo {
             max-width: 300px;
             margin: 20px auto;
             display: block;
         }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .social-icon img {
+            transition: transform 0.2s;
+            width: 28px;
+        }
+
+        .social-icon:hover img {
+            transform: scale(1.1);
+        }
+
+        h1, h2, p {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Fallback para mobile ou quando o vídeo não carrega */
+        @media (max-width: 768px), (hover: none) {
+            #video-background {
+                display: none;
+            }
+            body {
+                background: linear-gradient(rgba(58, 90, 64, 0.8), rgba(58, 90, 64, 0.9)), 
+                            url('images/nature-background2.png') no-repeat center center/cover;
+            }
+        }
     </style>
 </head>
 <body>
-    <img src="images/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá"> 
-  <h1>Sítio Sábio Sabiá</h1>
-  <p>Site em construção</p>
-   <div class="social-icon">
-  <a href="https://instagram.com/sitiosabiosabia" target="_blank" rel="noopener noreferrer"
-     aria-label="Siga o Sítio Sábio Sabiá no Instagram">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" 
-         alt="Instagram Oficial" 
-         width="28">
-  </a>
-  <span>Siga nossa jornada!</span>
-</div>
+    <!-- Vídeo de fundo (autoplay, loop e sem controles) -->
+    <video id="video-background" autoplay muted loop poster="images/nature-background.png">
+        <source src="videos/nature-background2.mp4" type="video/mp4">
+        <source src="videos/nature-background2.webm" type="video/webm">
+        Seu navegador não suporta vídeos HTML5.
+    </video>
 
-<style>
-  .social-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 15px 0;
-  }
-  .social-icon img {
-    transition: transform 0.2s;
-  }
-  .social-icon:hover img {
-    transform: scale(1.1);
-  }
-</style>
-  <h2>sitiosabiosabia@gmail.com</h2> 
+    <!-- Conteúdo sobreposto -->
+    <div class="content-overlay">
+        <img src="images/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá" class="logo">
+        <h1>Sítio Sábio Sabiá</h1>
+        <p>Site em construção</p>
+        
+        <div class="social-icon">
+            <a href="https://instagram.com/sitiosabiosabia" target="_blank" rel="noopener noreferrer"
+               aria-label="Siga o Sítio Sábio Sabiá no Instagram">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" 
+                     alt="Instagram Oficial">
+            </a>
+            <span>Siga nossa jornada!</span>
+        </div>
+        
+        <h2>sitiosabiosabia@gmail.com</h2>
+    </div>
 </body>
 </html>
