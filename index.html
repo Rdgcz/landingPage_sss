@@ -26,18 +26,9 @@
             overflow-x: hidden;
             position: relative;
             color: white;
-        }
-
-        #video-background {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -1;
-            object-fit: cover;
+            background: linear-gradient(rgba(58, 90, 64, 0.8), rgba(58, 90, 64, 0.9)), 
+                        url('images/nature-background2.png') no-repeat center center/cover;
+            background-attachment: fixed;
         }
 
         .content-overlay {
@@ -79,26 +70,21 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        /* Fallback para mobile ou quando o vídeo não carrega */
-        @media (max-width: 768px), (hover: none) {
-            #video-background {
-                display: none;
-            }
+        /* Otimização para mobile */
+        @media (max-width: 768px) {
             body {
-                background: linear-gradient(rgba(58, 90, 64, 0.8), rgba(58, 90, 64, 0.9)), 
-                            url('images/nature-background2.png') no-repeat center center/cover;
+                background-size: auto 100%;
+            }
+            .content-overlay {
+                padding: 20px;
+            }
+            img.logo {
+                max-width: 200px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Vídeo de fundo (autoplay, loop e sem controles) -->
-    <video id="video-background" autoplay muted loop poster="images/nature-background.png">
-        <source src="videos/nature-background2.mp4" type="video/mp4">
-        <source src="videos/nature-background2.webm" type="video/webm">
-        Seu navegador não suporta vídeos HTML5.
-    </video>
-
     <!-- Conteúdo sobreposto -->
     <div class="content-overlay">
         <img src="images/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá" class="logo">
