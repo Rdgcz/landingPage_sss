@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta tags para SEO -->
+    <!-- Prefetch -->
+    <link rel="preload" href="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" as="image">
+    <!-- Meta tags... (mantenha as atuais) -->
     <meta name="description" content="Ecoturismo na Serra do Mar - Cunha/SP. Silêncio profundo, observação de pássaros e reconexão com a natureza em um refúgio regenerado. #SlowLiving">
     <meta name="keywords" content="ecoturismo Serra do Mar, turismo sustentável SP, sítio ecológico Cunha, observação de pássaros SP, retiro natureza São Paulo, turismo rural sustentável, hospedagem ecológica SP, Sítio Sábio Sabiá, Cunha ecoturismo, slow living Brasil, turismo de silêncio, contato com a natureza, regeneração ambiental, pousada ecológica Serra do Mar, trilhas ecológicas SP, retiro espiritual natureza, fim de semana natureza SP, turismo de experiência SP, sustentabilidade prática, refúgio ecológico">
     <meta name="author" content="Sítio Sábio Sabiá">
@@ -18,7 +20,8 @@
     <link rel="icon" href="assets/images/brand/favicon/favicon-android-chrome-512x512.png">
     <title>Sítio Sábio Sabiá</title>
     <style>
-        body {
+        /* Mantenha seu CSS atual, apenas adicione: */
+         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -32,7 +35,6 @@
             /* Fallback caso a imagem não carregue */
             background-color: #2d4a36;
         }
-
         .content-container {
             text-align: center;
             max-width: 600px;
@@ -105,6 +107,12 @@
             h1 {
                 font-size: 1.8rem;
             }
+        .content-container {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -116,7 +124,7 @@
              onerror="this.src='assets/images/brand/logo/logo-fallback.png'">
         
         <h1>Sítio Sábio Sabiá</h1>
-        <p>Site em construção</p>
+        <p>🚧Site em construção🚧</p>
         
 <a href="https://instagram.com/sitiosabiosabia" 
    class="social-icon" 
