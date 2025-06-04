@@ -24,96 +24,109 @@
             font-family: Arial, sans-serif;
             min-height: 100vh;
             color: white;
-            /* Fallback sólido */
-            background-color: #3a5a40;
-            /* Imagem de fundo com fallback */
-            background: 
-                url('assets/images/backgrounds/nature-background.jpg') no-repeat center center/cover;
+            background: url('assets/images/backgrounds/nature-background.jpg') no-repeat center center/cover;
             background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Fallback caso a imagem não carregue */
+            background-color: #2d4a36;
         }
 
-        .content-overlay {
-           background-color: transparent;
-        position: relative;
-        padding: 2rem;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+        .content-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+            width: 100%;
+            
         }
 
         img.logo {
-            max-width: 300px;
+            max-width: 250px;
             width: 100%;
-            margin: 0 auto 20px;
+            margin: 0 auto;
             display: block;
+            /* Melhora a qualidade em telas retina */
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 1rem 0 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 0 0 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            opacity: 0.9;
         }
 
         .social-icon {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin: 15px 0;
+            margin: 1rem 0;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
         }
 
         .social-icon img {
-            transition: transform 0.2s;
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
         }
 
-        .social-icon:hover img {
-            transform: scale(1.1);
+        h2 {
+            font-size: 1rem;
+            margin: 1rem 0 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            font-weight: normal;
+            opacity: 0.9;
         }
 
-        h1, h2, p {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            padding: 0.5rem 1rem;
-        border-radius: 4px;
-        }
-
-        /* Mobile */
         @media (max-width: 768px) {
-            body {
-                background-size: cover;
-                background-position: top center;
-            }
-            
-            .content-overlay {
-                padding: 1rem;
+            .content-container {
+                padding: 1.5rem;
+                margin: 1rem;
+                backdrop-filter: none;
             }
             
             img.logo {
                 max-width: 200px;
             }
-        }
-
-        /* Verificação de imagem */
-        .bg-check {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
+            
+            h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-     <div class="content-overlay">
-        <img src="assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Logomarca Sítio Sábio Sabiá" class="logo">
-        <h1>Sítio Sábio Sabiá</h1>
-        <p>🚧Site em construção🚧</p>
+    <div class="content-container">
+        <img src="assets/images/brand/logo/logo_sss_redu_compressed.png" 
+             alt="Logomarca Sítio Sábio Sabiá" 
+             class="logo"
+             onerror="this.src='assets/images/brand/logo/logo-fallback.png'">
         
-        <div class="social-icon">
-            <a href="https://instagram.com/sitiosabiosabia" target="_blank" rel="noopener noreferrer"
-               aria-label="Siga o Sítio Sábio Sabiá no Instagram">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" 
-                     alt="Instagram Oficial">
-            </a>
+        <h1>Sítio Sábio Sabiá</h1>
+        <p>Site em construção</p>
+        
+        <a href="https://instagram.com/sitiosabiosabia" 
+           class="social-icon" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Siga o Sítio Sábio Sabiá no Instagram">
+            <img src="assets/images/brand/social/instagram-icon.png" 
+                 alt="Instagram Oficial">
             <span>Pra dar uma espiada...</span>
-        </div>
+        </a>
         
         <h2>sitiosabiosabia@gmail.com</h2>
     </div>
