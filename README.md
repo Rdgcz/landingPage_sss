@@ -1,2 +1,4 @@
-# landingPage_sss
-Rpositorio para landing page do Sitio Sabio Sabia
+# Sítio Sábio Sabiá
+Repositório para Homepage do Sítio Sábio Sabiá.
+Ver online: www.sitiosabiosabia.com.br
+
