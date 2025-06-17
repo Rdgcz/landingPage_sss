@@ -16,6 +16,8 @@
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Updock&display=swap" rel="stylesheet">	
     
     <!-- Open Graph -->
     <meta property="og:title" content="Sítio Sábio Sabiá | Onde a Serra do Mar sussurra histórias de reconexão - Cunha/SP">
@@ -104,6 +106,8 @@
     }
 
     h1 { 
+	font-family: "Updock", cursive; /* Sobrescreve apenas aqui */
+        font-weight: 400; /* Updock só tem peso 400 */    
         font-size: clamp(1.8rem, 4vw, 2.5rem);
         color: var(--branco);
     }
@@ -203,6 +207,12 @@
         text-align: center;
         flex-grow: 1;
     }
+   
+    h1 {
+      font-family: "Updock", cursive;
+      font-weight: 400;
+      /* Mantenha outros estilos do h1 (cor, tamanho, etc.) se já existirem */
+    } 	
 
     .clock-container {
         text-align: right;
@@ -486,7 +496,6 @@
         <ul role="menubar">
             <li role="none"><a href="cunha.html" role="menuitem">Cunha</a></li>
             <li role="none"><a href="#" role="menuitem">O Sítio</a></li>
-            <li role="none"><a href="#" role="menuitem">Experiências</a></li>
             <li role="none"><a href="#" role="menuitem">Galeria</a></li>
             <li role="none"><a href="#" role="menuitem">Contato</a></li>
         </ul>
@@ -504,7 +513,7 @@
 	    
     <section name="slideshow">
 	<div class="moldura">
-  	    <h2 style="text-align: center;">Meu Slideshow</h2>
+  	    <h2 style="text-align: center;">O Sítio que Plantamos: História em Fotos</h2>
     		<div class="slideshow">
     		    <div class="slide fade">
       			<img src="imagem1.jpg" alt="Imagem 1">
@@ -518,7 +527,7 @@
       			<img src="imagem3.jpg" alt="Imagem 3">
     		    </div>
   		</div>
-  	        <div class="legenda-moldura">Fotos das minhas férias</div>
+  	        <div class="legenda-moldura">Documentário visual das transformações de 2019 a 2025."</div>
             </div>
 	</section>
         
