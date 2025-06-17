@@ -219,12 +219,14 @@
     }
 
     .clock {
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
-        font-weight: var(--peso-bold);
+        font-family: monospace; /* Fonte de relógio digital */
+    letter-spacing: 2px;
+    color: var(--laranja-ouro);
     }
 
     .date {
         font-size: clamp(0.8rem, 2vw, 1rem);
+	font-style: italic;
         margin-top: 0.2rem;
     }
 
@@ -562,89 +564,74 @@
     </footer>
 
     <script>
-        // Função para formatar a data em português
-        function formatarData(data) {
-            const opcoes = { 
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric',
-                timeZone: 'America/Sao_Paulo'
-            };
-            
-            return data.toLocaleDateString('pt-BR', opcoes);
+    // Funções do relógio (fora do DOMContentLoaded para garantir disponibilidade global)
+    function formatarData(data) {
+        const opcoes = { 
+            weekday: 'long', 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric',
+            timeZone: 'America/Sao_Paulo'
+        };
+        return data.toLocaleDateString('pt-BR', opcoes);
+    }
+
+    function atualizarRelogio() {
+        const agora = new Date();
+        const horas = agora.getHours().toString().padStart(2, '0');
+        const minutos = agora.getMinutes().toString().padStart(2, '0');
+        const segundos = agora.getSeconds().toString().padStart(2, '0');
+
+        const relogio = document.getElementById('digital-clock');
+        const dataElemento = document.getElementById('current-date');
+
+        if (relogio) {
+            relogio.textContent = `${horas}:${minutos}:${segundos}`;
+            relogio.setAttribute('aria-label', `Hora atual: ${horas} horas, ${minutos} minutos e ${segundos} segundos`);
         }
 
-        // Função para atualizar relógio e data
-        function atualizarRelogio() {
-            const agora = new Date();
-            
-            // Formatar hora
-            const horas = agora.getHours().toString().padStart(2, '0');
-            const minutos = agora.getMinutes().toString().padStart(2, '0');
-            const segundos = agora.getSeconds().toString().padStart(2, '0');
-            
-            // Atualizar DOM
-            const relogio = document.getElementById('digital-clock');
-            if(relogio) {
-                relogio.textContent = `${horas}:${minutos}:${segundos}`;
-                relogio.setAttribute('aria-label', `Hora atual: ${horas} horas, ${minutos} minutos e ${segundos} segundos`);
-            }
-            
-            // Formatar e atualizar data
-            const dataElemento = document.getElementById('current-date');
-            if(dataElemento) {
-                dataElemento.textContent = formatarData(agora);
-            }
+        if (dataElemento) {
+            dataElemento.textContent = formatarData(agora);
+        }
+    }
+
+    // Inicialização quando o DOM estiver pronto
+    document.addEventListener('DOMContentLoaded', function() {
+        // Atualiza o ano no footer
+        const currentYearElement = document.getElementById('current-year');
+        if (currentYearElement) {
+            currentYearElement.textContent = new Date().getFullYear();
         }
 
-        // Inicialização quando o DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', function() {
-            // Atualiza o ano no footer
-            const currentYearElement = document.getElementById('current-year');
-            if(currentYearElement) {
-                currentYearElement.textContent = new Date().getFullYear();
-            }
-            
-            // Inicia o relógio
-            atualizarRelogio();
-            setInterval(atualizarRelogio, 1000);
-            
-            // Melhoria de acessibilidade para links externos
-            document.querySelectorAll('a[href^="http"]').forEach(link => {
-                if(link.hostname !== window.location.hostname) {
-                    link.setAttribute('rel', 'noopener noreferrer');
-                }
-            });
-            
-            // Adiciona classe de carregamento para transição suave
-            document.body.classList.add('loaded');
-        });
+        // Inicia o relógio imediatamente e a cada 1 segundo
+        atualizarRelogio();
+        setInterval(atualizarRelogio, 1000);
 
-        // Fallback para imagens quebradas
-        document.addEventListener('error', function(e) {
-            if(e.target.tagName.toLowerCase() === 'img') {
-                e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+        // Slideshow (código separado para evitar conflitos)
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
             }
-        }, true);
-	// Slideshow
-	let slideIndex = 0;
-	showSlides();
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex-1].style.display = "block";  
+            setTimeout(showSlides, 3000);
+        }
+        
+        // Inicia o slideshow apenas se existirem slides
+        if (document.getElementsByClassName("slide").length > 0) {
+            showSlides();
+        }
+    });
 
-	function showSlides() {
-  	let i;
-  	let slides = document.getElementsByClassName("slide");
-  
-  	for (i = 0; i < slides.length; i++) {
-    	slides[i].style.display = "none";  
-  	}
-  
- 	 slideIndex++;
- 	 if (slideIndex > slides.length) {slideIndex = 1}    
-  
-  	slides[slideIndex-1].style.display = "block";  
-  	setTimeout(showSlides, 3000); // Muda a imagem a cada 3 segundos
-	}
+    // Fallback para imagens quebradas (mantido como estava)
+    document.addEventListener('error', function(e) {
+        if (e.target.tagName.toLowerCase() === 'img') {
+            e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+        }
+    }, true);
 </script>
 </body>
 </html>
