@@ -296,6 +296,55 @@
         text-decoration: none;
     }
 
+	/* Estilo da moldura */
+  .moldura {
+    width: 80%; /* Largura da moldura */
+    max-width: 600px; /* Largura máxima */
+    margin: 20px auto; /* Centraliza na página */
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 10px solid #8B4513; /* Cor marrom para parecer madeira */
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+	
+    /* === SLIDESHOW === */
+    .slideshow {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* Esconde conteúdo que ultrapassar */
+}
+
+.slide {
+  display: none;
+  width: 100%;
+}
+
+.slide img {
+  width: 100%;
+  vertical-align: middle;
+  border: 2px solid #ddd;	
+}
+
+/* Animação de fade */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}	
+	/* Legenda/rodapé da moldura */
+  .legenda-moldura {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+  }
+	
     /* === RODAPÉ === */
     footer {
         background-color: var(--marrom-escuro);
@@ -452,35 +501,43 @@
                 </span>
             </span>
         </div>
-		<section>
-		<figure>
-                <img src="assets/images/homepage-topo-antes.jpg"
-		    width="750"
-		    height="563"
-                    alt="Começo de tudo"
-                    class="imagem-conteudo"
-                    loading="lazy"
-                    onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'"
-                    itemprop="image">
-                <figcaption class="imagem-legenda">O início de tudo</figcaption>
-            </figure>
-			</section>
-        <section class="destaque" itemscope itemtype="https://schema.org/Place">
-            <h2>Da Terra Abandonada ao Santuário Vivo</h2>
-            <p itemprop="description">No coração da Serra do Mar, o Sítio Sábio Sabiá renasce como um santuário de reconexão. O que antes era um espaço esquecido pela ação do tempo, hoje floresce em meio a um trabalho contínuo de regeneração. Cada desafio superado revela a resiliência da natureza – nascentes que voltam a cantar, trilhas que se abrem sob a copa das árvores centenárias, e o retorno de pássaros como os sabiás, que emprestam seu nome e melodia a este refúgio.</p>
-            <p>Aqui, o tempo se mede pelo canto das aves ao amanhecer, pelo murmúrio dos riachos e pelo silêncio que acalma. Entre morros cobertos de Mata Atlântica, convidamos você a pisar mais devagar, respirar mais fundo e se reconhecer como parte dessa teia da vida. O Sítio não é apenas um lugar – é um convite para lembrar que pertencer à natureza é o nosso estado mais essencial.</p>
+	    
+    <section name="slideshow">
+	<div class="moldura">
+  	    <h2 style="text-align: center;">Meu Slideshow</h2>
+    		<div class="slideshow">
+    		    <div class="slide fade">
+      			<img src="imagem1.jpg" alt="Imagem 1">
+    		    </div>
+
+    		    <div class="slide fade">
+      		        <img src="imagem2.jpg" alt="Imagem 2">
+    		    </div>
+
+                    <div class="slide fade">
+      			<img src="imagem3.jpg" alt="Imagem 3">
+    		    </div>
+  		</div>
+  	        <div class="legenda-moldura">Fotos das minhas férias</div>
+            </div>
+	</section>
+        
+<section class="destaque" itemscope itemtype="https://schema.org/Place">
+	<h2>Da Terra Abandonada ao Santuário Vivo</h2>
+        <p itemprop="description">No coração da Serra do Mar, o Sítio Sábio Sabiá renasce como um santuário de reconexão. O que antes era um espaço esquecido pela ação do tempo, hoje floresce em meio a um trabalho contínuo de regeneração. Cada desafio superado revela a resiliência da natureza – nascentes que voltam a cantar, trilhas que se abrem sob a copa das árvores centenárias, e o retorno de pássaros como os sabiás, que emprestam seu nome e melodia a este refúgio.</p>
+        <p>Aqui, o tempo se mede pelo canto das aves ao amanhecer, pelo murmúrio dos riachos e pelo silêncio que acalma. Entre morros cobertos de Mata Atlântica, convidamos você a pisar mais devagar, respirar mais fundo e se reconhecer como parte dessa teia da vida. O Sítio não é apenas um lugar – é um convite para lembrar que pertencer à natureza é o nosso estado mais essencial.</p>
             <a href="#" class="btn" aria-label="Conheça a história do Sítio Sábio Sabiá">Conheça a História</a>
         </section>
         
-        <section class="destaque">
-            <h2>Vivências Transformadoras</h2>
-            <p>Desenvolvemos experiências que harmonizam o ser humano com a Mata Atlântica. Desde o amanhecer com os sabiás até o crepúsculo sob as araucárias, cada momento no sítio é uma celebração da vida simples e autêntica.</p>
-            <a href="#" class="btn" aria-label="Conheça nossas experiências no Sítio">Nossas Experiências</a>
+<section class="destaque">
+        <h2>Vivências Transformadoras</h2>
+        <p>Desenvolvemos experiências que harmonizam o ser humano com a Mata Atlântica. Desde o amanhecer com os sabiás até o crepúsculo sob as araucárias, cada momento no sítio é uma celebração da vida simples e autêntica.</p>
+        <a href="#" class="btn" aria-label="Conheça nossas experiências no Sítio">Nossas Experiências</a>
         </section>
         
-        <section class="timeline" itemscope itemtype="https://schema.org/ItemList">
-            <h2>Nossa História</h2>
-            <!-- Linha do tempo será implementada aqui -->
+<section class="timeline" itemscope itemtype="https://schema.org/ItemList">
+        <h2>Nossa História</h2>
+        <!-- Linha do tempo será implementada aqui -->
         </section>
     </main>
 
@@ -559,34 +616,24 @@
                 e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
             }
         }, true);
-		// Script simplificado para o carrossel decorativo
-        document.addEventListener('DOMContentLoaded', function() {
-            const carrossel = document.getElementById('carrossel');
-            const btnAnterior = document.querySelector('.carrossel-btn.anterior');
-            const btnProximo = document.querySelector('.carrossel-btn.proximo');
-            
-            let indiceAtual = 0;
-            const totalImagens = carrossel.querySelectorAll('img').length;
-            
-            function atualizarCarrossel() {
-                carrossel.style.transform = `translateX(-${indiceAtual * 100}%)`;
-            }
-            
-            btnAnterior.addEventListener('click', () => {
-                indiceAtual = (indiceAtual > 0) ? indiceAtual - 1 : totalImagens - 1;
-                atualizarCarrossel();
-            });
-            
-            btnProximo.addEventListener('click', () => {
-                indiceAtual = (indiceAtual < totalImagens - 1) ? indiceAtual + 1 : 0;
-                atualizarCarrossel();
-            });
-            
-            // Troca automática mais lenta (8 segundos)
-            setInterval(() => {
-                indiceAtual = (indiceAtual < totalImagens - 1) ? indiceAtual + 1 : 0;
-                atualizarCarrossel();
-            }, 8000);
+	// Slideshow
+	let slideIndex = 0;
+	showSlides();
+
+	function showSlides() {
+  	let i;
+  	let slides = document.getElementsByClassName("slide");
+  
+  	for (i = 0; i < slides.length; i++) {
+    	slides[i].style.display = "none";  
+  	}
+  
+ 	 slideIndex++;
+ 	 if (slideIndex > slides.length) {slideIndex = 1}    
+  
+  	slides[slideIndex-1].style.display = "block";  
+  	setTimeout(showSlides, 3000); // Muda a imagem a cada 3 segundos
+	}
         });
     </script>
 </body>
