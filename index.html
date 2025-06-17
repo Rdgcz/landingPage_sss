@@ -6,11 +6,15 @@
     <meta name="description" content="No Sítio Sábio Sabiá, a Serra do Mar revela seu ritmo ancestral. Observação de pássaros, silêncio que cura e trilhas sob a Mata Atlântica. Um refúgio para desacelerar e se reconectar com a essência da natureza.">
     <meta name="keywords" content="ecoturismo Serra do Mar, turismo sustentável SP, sítio ecológico Cunha, observação de pássaros SP, retiro natureza São Paulo, turismo rural sustentável, Sítio Sábio Sabiá, Cunha ecoturismo, slow living Brasil, turismo de silêncio, contato com a natureza, regeneração ambiental, trilhas ecológicas SP, retiro espiritual natureza, fim de semana natureza SP, turismo de experiência SP, sustentabilidade prática, refúgio ecológico, Mata Atlântica, biodiversidade Serra do Mar, avifauna Cunha">
     <meta name="author" content="Sítio Sábio Sabiá">
-    <meta name="theme-color" content="#3a5a40">
+    <meta name="theme-color" content="var(--marrom-escuro)">
+    <meta name="robots" content="index, follow">		
     
     <!-- Preload -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      as="style" 
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+      crossorigin="anonymous" fetchpriority="high">
     <link rel="preload" href="assets/logo.png" as="image">
     
     <!-- Preconnect -->
@@ -27,6 +31,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Sítio Sábio Sabiá">
+    <meta property="og:image:alt" content="Logo do Sítio Sábio Sabiá: um sabiá pousado na borda oval da logomarca.">	
     
     <!-- Favicon -->
     <link rel="icon" href="assets/images/brand/favicon/favicon-android-chrome-512x512.png" type="image/png">
@@ -207,12 +212,6 @@
         text-align: center;
         flex-grow: 1;
     }
-   
-    h1 {
-      font-family: "Updock", cursive;
-      font-weight: 400;
-      /* Mantenha outros estilos do h1 (cor, tamanho, etc.) se já existirem */
-    } 	
 
     .clock-container {
         text-align: right;
@@ -478,7 +477,7 @@
 <body itemscope itemtype="https://schema.org/WebPage">
     <header>
         <div class="logo-container">
-            <img src="assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Sítio Sábio Sabiá" class="logo" itemprop="logo" width="150" height="150">
+            <img src="assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Sítio Sábio Sabiá" class="logo" itemprop="logo" width="150" height="150" fetchpriority="high" decoding="async">
         </div>
         
         <div class="header-text">
@@ -511,23 +510,26 @@
             </span>
         </div>
 	    
-    <section name="slideshow">
+    <section aria-label="Algumas fotos do Sítio Sábio Sabiá" role="region">
 	<div class="moldura">
   	    <h2 style="text-align: center;">O Sítio que Plantamos: História em Fotos</h2>
-    		<div class="slideshow">
-    		    <div class="slide fade">
-      			<img src="imagem1.jpg" alt="Imagem 1">
+    		<div class="slideshow" role="group" aria-live="polite" aria-describedby="slideshow-desc">
+      <div class="slide fade" role="img" aria-label="Foto 1: [Descrição detalhada da imagem]">
+        <img src="imagem1.jpg" alt="[Descrição concisa]" loading="lazy">
     		    </div>
 
     		    <div class="slide fade">
-      		        <img src="imagem2.jpg" alt="Imagem 2">
+      		        <div class="slideshow" role="group" aria-live="polite" aria-describedby="slideshow-desc">
+      <div class="slide fade" role="img" aria-label="Foto 1: [Descrição detalhada da imagem]">
+        <img src="imagem1.jpg" alt="[Descrição concisa]" loading="lazy">
     		    </div>
 
-                    <div class="slide fade">
-      			<img src="imagem3.jpg" alt="Imagem 3">
+                   <div class="slideshow" role="group" aria-live="polite" aria-describedby="slideshow-desc">
+      <div class="slide fade" role="img" aria-label="Foto 1: [Descrição detalhada da imagem]">
+        <img src="imagem1.jpg" alt="[Descrição concisa]" loading="lazy">
     		    </div>
   		</div>
-  	        <div class="legenda-moldura">Documentário visual das transformações de 2019 a 2025."</div>
+  	         <div id="slideshow-desc" class="legenda-moldura">Documentário visual das transformações de 2019 a 2025.</div>
             </div>
 	</section>
         
@@ -643,7 +645,6 @@
   	slides[slideIndex-1].style.display = "block";  
   	setTimeout(showSlides, 3000); // Muda a imagem a cada 3 segundos
 	}
-        });
-    </script>
+</script>
 </body>
 </html>
