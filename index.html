@@ -269,11 +269,17 @@
   margin: 1rem 0;
   border-radius: var(--raio-borda-pequeno);
   border: 1px solid var(--bordas);
+		overflow: hidden;
 }
 .swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+	.swiper-wrapper {
+  display: flex;
+  overflow-x: auto; /* Permite scroll horizontal se o Swiper não carregar */
 }
 	
     /* === CONTEÚDO PRINCIPAL === */
@@ -499,17 +505,17 @@
             </span>
         </div>
 	    
-    <div class="swiper-container">
+    <div class="swiper-container" role="region" aria-label="Diversas fotos do Sítio">
   <div class="swiper-wrapper">
     <!-- Adicione suas imagens genéricas aqui -->
     <div class="swiper-slide">
-      <img src="assets/images/galeria/sitio-1.jpg" alt="Vista do Sítio Sábio Sabiá" loading="lazy">
+      <img src="assets/images/galeria/sitio-1.jpg" alt="Vista do Sítio Sábio Sabiá" loading="lazy" decoding="async">
     </div>
     <div class="swiper-slide">
-      <img src="assets/images/galeria/sitio-2.jpg" alt="Trilha na Mata Atlântica" loading="lazy">
+      <img src="assets/images/galeria/sitio-2.jpg" alt="Trilha na Mata Atlântica" loading="lazy" decoding="async">
     </div>
     <div class="swiper-slide">
-      <img src="assets/images/galeria/sitio-3.jpg" alt="Paisagem serrana" loading="lazy">
+      <img src="assets/images/galeria/sitio-3.jpg" alt="Paisagem serrana" loading="lazy" decoding="async">
     </div>
   </div>
 </div>
