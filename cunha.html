@@ -211,6 +211,17 @@
         height: auto;
     }
 
+    .logo-container a {
+    display: inline-block; /* Para manter o layout */
+    transition: transform var(--transicao-media);
+}
+
+.logo-container a:hover,
+.logo-container a:focus {
+    transform: scale(1.05); /* Efeito de zoom sutil ao passar o mouse */
+    outline: none; /* Remove outline padrão, mantendo acessibilidade */
+}
+
     .header-text {
         text-align: center;
         flex-grow: 1;
@@ -431,7 +442,16 @@
 <body itemscope itemtype="https://schema.org/WebPage">
     <header>
         <div class="logo-container">
-            <img src="assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Logomarca do Sítio Sábio Sabiá" class="logo" itemprop="logo" width="150" height="150" fetchpriority="high" decoding="async">
+            <a href="index.html" aria-label="Ir para a página inicial" title="Página inicial">
+            <img src="assets/images/brand/logo/logo_sss_redu_compressed.png"
+                alt="Logomarca do Sítio Sábio Sabiá" 
+                class="logo" 
+                itemprop="logo" 
+                width="150" 
+                height="150" 
+                fetchpriority="high" 
+                decoding="async">
+            </a>
         </div>
         
         <div class="header-text">
