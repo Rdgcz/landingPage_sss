@@ -15,6 +15,7 @@
       as="style" 
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
       crossorigin="anonymous" fetchpriority="high">
+	
     <link rel="preload" href="assets/logo.png" as="image">
     
     <!-- Preconnect -->
@@ -39,7 +40,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <title>Sítio Sábio Sabiá | Ecoturismo em Cunha/SP</title>
     
 <style>
@@ -261,6 +262,20 @@
         text-decoration: none;
     }
 
+	/* === SWIPER === */
+	.swiper-container {
+  width: 100%;
+  height: 300px;
+  margin: 1rem 0;
+  border-radius: var(--raio-borda-pequeno);
+  border: 1px solid var(--bordas);
+}
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+	
     /* === CONTEÚDO PRINCIPAL === */
     main {
         max-width: 1200px;
@@ -318,35 +333,7 @@
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
   }
-	
-    /* === SLIDESHOW === */
-    .slideshow {
-  position: relative;
-  width: 100%;
-  overflow: hidden; /* Esconde conteúdo que ultrapassar */
-}
-
-.slide {
-  display: none;
-  width: 100%;
-}
-
-.slide img {
-  width: 100%;
-  vertical-align: middle;
-  border: 2px solid #ddd;	
-}
-
-/* Animação de fade */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
-}	
+	 	
 	/* Legenda/rodapé da moldura */
   .legenda-moldura {
     text-align: center;
@@ -512,28 +499,20 @@
             </span>
         </div>
 	    
-    <section aria-label="Algumas fotos do Sítio Sábio Sabiá" role="region">
-	<div class="moldura">
-  	    <h2 style="text-align: center;">O Sítio que Plantamos: História em Fotos</h2>
-    		<div class="slideshow" role="group" aria-live="polite" aria-describedby="slideshow-desc">
-      <div class="slide fade" role="img" aria-label="Foto 1: [Descrição detalhada da imagem]">
-        <img src="imagem1.jpg" alt="[Descrição concisa]" loading="lazy">
-    		    </div>
-
-    		    <div class="slide fade">
-      		        <div class="slideshow" role="group" aria-live="polite" aria-describedby="slideshow-desc">
-      <div class="slide fade" role="img" aria-label="Foto 1: [Descrição detalhada da imagem]">
-        <img src="imagem1.jpg" alt="[Descrição concisa]" loading="lazy">
-    		    </div>
-
-                   <div class="slideshow" role="group" aria-live="polite" aria-describedby="slideshow-desc">
-      <div class="slide fade" role="img" aria-label="Foto 1: [Descrição detalhada da imagem]">
-        <img src="imagem1.jpg" alt="[Descrição concisa]" loading="lazy">
-    		    </div>
-  		</div>
-  	         <div id="slideshow-desc" class="legenda-moldura">Documentário visual das transformações de 2019 a 2025.</div>
-            </div>
-	</section>
+    <div class="swiper-container">
+  <div class="swiper-wrapper">
+    <!-- Adicione suas imagens genéricas aqui -->
+    <div class="swiper-slide">
+      <img src="assets/images/galeria/sitio-1.jpg" alt="Vista do Sítio Sábio Sabiá" loading="lazy">
+    </div>
+    <div class="swiper-slide">
+      <img src="assets/images/galeria/sitio-2.jpg" alt="Trilha na Mata Atlântica" loading="lazy">
+    </div>
+    <div class="swiper-slide">
+      <img src="assets/images/galeria/sitio-3.jpg" alt="Paisagem serrana" loading="lazy">
+    </div>
+  </div>
+</div>
         
 <section class="destaque" itemscope itemtype="https://schema.org/Place">
 	<h2>Da Terra Abandonada ao Santuário Vivo</h2>
@@ -562,76 +541,61 @@
         <p>© <span id="current-year" itemprop="copyrightYear"></span> - <span itemprop="copyrightHolder">Sítio Sábio Sabiá</span> - Todos os direitos reservados.</p>
         <p itemprop="email">sitiosabiosabia@gmail.com</p>
     </footer>
-
-    <script>
-    // Funções do relógio (fora do DOMContentLoaded para garantir disponibilidade global)
-    function formatarData(data) {
-        const opcoes = { 
-            weekday: 'long', 
-            day: 'numeric', 
-            month: 'long', 
-            year: 'numeric',
-            timeZone: 'America/Sao_Paulo'
-        };
-        return data.toLocaleDateString('pt-BR', opcoes);
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Relógio
+    const currentYearElement = document.getElementById('current-year');
+    if (currentYearElement) {
+      currentYearElement.textContent = new Date().getFullYear();
     }
+    atualizarRelogio();
+    setInterval(atualizarRelogio, 1000);
 
-    function atualizarRelogio() {
-        const agora = new Date();
-        const horas = agora.getHours().toString().padStart(2, '0');
-        const minutos = agora.getMinutes().toString().padStart(2, '0');
-        const segundos = agora.getSeconds().toString().padStart(2, '0');
-
-        const relogio = document.getElementById('digital-clock');
-        const dataElemento = document.getElementById('current-date');
-
-        if (relogio) {
-            relogio.textContent = `${horas}:${minutos}:${segundos}`;
-            relogio.setAttribute('aria-label', `Hora atual: ${horas} horas, ${minutos} minutos e ${segundos} segundos`);
-        }
-
-        if (dataElemento) {
-            dataElemento.textContent = formatarData(agora);
-        }
-    }
-
-    // Inicialização quando o DOM estiver pronto
-    document.addEventListener('DOMContentLoaded', function() {
-        // Atualiza o ano no footer
-        const currentYearElement = document.getElementById('current-year');
-        if (currentYearElement) {
-            currentYearElement.textContent = new Date().getFullYear();
-        }
-
-        // Inicia o relógio imediatamente e a cada 1 segundo
-        atualizarRelogio();
-        setInterval(atualizarRelogio, 1000);
-
-        // Slideshow (código separado para evitar conflitos)
-        let slideIndex = 0;
-        function showSlides() {
-            let slides = document.getElementsByClassName("slide");
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) slideIndex = 1;
-            slides[slideIndex-1].style.display = "block";  
-            setTimeout(showSlides, 3000);
-        }
-        
-        // Inicia o slideshow apenas se existirem slides
-        if (document.getElementsByClassName("slide").length > 0) {
-            showSlides();
-        }
+    // Swiper (substitui o slideshow antigo)
+    new Swiper('.swiper-container', {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      effect: 'fade',
+      fadeEffect: { crossFade: true }
     });
+  });
 
-    // Fallback para imagens quebradas (mantido como estava)
-    document.addEventListener('error', function(e) {
-        if (e.target.tagName.toLowerCase() === 'img') {
-            e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
-        }
-    }, true);
+  // Funções do relógio (mantidas como estavam)
+  function formatarData(data) {
+    const opcoes = { 
+      weekday: 'long', 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric',
+      timeZone: 'America/Sao_Paulo'
+    };
+    return data.toLocaleDateString('pt-BR', opcoes);
+  }
+
+  function atualizarRelogio() {
+    const agora = new Date();
+    const horas = agora.getHours().toString().padStart(2, '0');
+    const minutos = agora.getMinutes().toString().padStart(2, '0');
+    const segundos = agora.getSeconds().toString().padStart(2, '0');
+
+    const relogio = document.getElementById('digital-clock');
+    const dataElemento = document.getElementById('current-date');
+
+    if (relogio) relogio.textContent = `${horas}:${minutos}:${segundos}`;
+    if (dataElemento) dataElemento.textContent = formatarData(agora);
+  }
+
+  // Fallback para imagens quebradas
+  document.addEventListener('error', function(e) {
+    if (e.target.tagName.toLowerCase() === 'img') {
+      e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+    }
+  }, true);
 </script>
+	    
 </body>
 </html>
