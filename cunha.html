@@ -7,15 +7,22 @@
     <meta name="keywords" content="Cunha SP, Serra da Bocaina, Vale do Paraíba, Costa Verde, turismo ecológico, queijo artesanal, cerâmica de Cunha, trilhas, Mata Atlântica">
     <meta name="author" content="Sítio Sábio Sabiá">
     <meta name="theme-color" content="#3a5a40">
+    <meta name="robots" content="index, follow">
     
     <!-- Preload -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      as="style" 
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+      crossorigin="anonymous" fetchpriority="high">
+    
     <link rel="preload" href="assets/images/brand/logo/logo_sss_redu_compressed.png" as="image">
     
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Updock&display=swap" rel="stylesheet">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Cunha (SP) e Região: Costa Verde e Vale do Paraíba | Guia Completo">
@@ -25,6 +32,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Sítio Sábio Sabiá">
+    <meta property="og:image:alt" content="Logo do Sítio Sábio Sabiá com paisagem de Cunha ao fundo">
     
     <!-- Favicon -->
     <link rel="icon" href="assets/images/brand/favicon/favicon-android-chrome-512x512.png" type="image/png">
@@ -52,7 +60,7 @@
         
         /* Tipografia */
         --fonte-principal: 'Merriweather', serif;
-        --fonte-secundaria: 'Candara', sans-serif;
+        --fonte-secundaria: system-ui, sans-serif;
         --peso-regular: 400;
         --peso-bold: 700;
         
@@ -97,20 +105,22 @@
 
     /* === TIPOGRAFIA === */
     h1, h2, h3, h4 {
-        font-family: var(--fonte-secundaria);
+        font-family: var(--fonte-principal);
         line-height: 1.2;
         font-weight: var(--peso-bold);
         margin-bottom: var(--espaco-pequeno);
-        color: var(--marrom-escuro);
     }
 
     h1 { 
-        font-size: clamp(1.8rem, 4vw, 3rem);
-        color: var(--marrom-escuro);
+        font-family: "Updock", cursive;
+        font-weight: 400;
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        transform: scale(1.5);
+        color: var(--branco);
     }
     
     h2 { 
-        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-size: clamp(1.5rem, 3vw, 1.8rem);
         color: var(--terracota);
         margin-bottom: var(--espaco-medio);
         position: relative;
@@ -133,7 +143,7 @@
 
     .slogan {
         font-style: italic;
-        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
         color: var(--bordas);
     }
 
@@ -182,6 +192,7 @@
         background-color: var(--terracota);
         color: var(--branco);
         padding: var(--espaco-base) var(--espaco-grande);
+        padding-bottom: 5px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -196,7 +207,7 @@
     }
 
     .logo {
-        width: clamp(160px, 20vw, 200px);
+        width: clamp(100px, 15vw, 150px);
         height: auto;
     }
 
@@ -235,7 +246,7 @@
     }
 
     nav a {
-        color: var(--laranja-ouro);
+        color: var(--bordas);
         text-decoration: none;
         font-weight: var(--peso-bold);
         text-transform: uppercase;
@@ -247,14 +258,14 @@
 
     nav a:hover,
     nav a:focus {
-        color: var(--bordas);
+        color: var(--laranja-ouro);
         text-decoration: none;
     }
 
     /* === CONTEÚDO PRINCIPAL === */
     main {
         max-width: 1200px;
-        margin: 3rem auto;
+        margin: var(--espaco-grande) auto;
         padding: 0 var(--espaco-grande);
         flex: 1;
     }
@@ -266,15 +277,11 @@
         margin-bottom: var(--espaco-grande);
         box-shadow: 0 4px 12px var(--sombra);
         border-top: 4px solid var(--laranja-ouro);
+        transition: transform var(--transicao-media);
     }
 
-    /* === ELEMENTOS DE CONTEÚDO === */
-    .separador {
-        margin: var(--espaco-base) 0 var(--espaco-grande);
-        height: 2px;
-        border: 0;
-        background-color: var(--bordas);
-        opacity: 0.5;
+    .destaque:hover {
+        transform: translateY(-5px);
     }
 
     /* === BOTÕES === */
@@ -299,16 +306,6 @@
         border-color: var(--laranja-ouro);
         transform: translateY(-2px);
         text-decoration: none;
-    }
-
-    /* === LISTAS === */
-    ul, ol {
-        margin-bottom: var(--espaco-medio);
-        padding-left: var(--espaco-grande);
-    }
-
-    li {
-        margin-bottom: var(--espaco-pequeno);
     }
 
     /* === RODAPÉ === */
@@ -356,6 +353,16 @@
 
     .breadcrumb a {
         color: var(--taupe);
+    }
+
+    /* === ANIMAÇÕES === */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
     }
 
     /* === RESPONSIVIDADE === */
@@ -416,25 +423,15 @@
         }
         
         .logo {
-            width: 140px;
+            width: 100px;
         }
-    }
-
-    /* === ANIMAÇÕES === */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .fade-in {
-        animation: fadeIn 0.5s ease-in;
     }
 </style>
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
     <header>
         <div class="logo-container">
-            <img src="assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Logomarca do Sítio Sábio Sabiá" class="logo" itemprop="logo">
+            <img src="assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Logomarca do Sítio Sábio Sabiá" class="logo" itemprop="logo" width="150" height="150" fetchpriority="high" decoding="async">
         </div>
         
         <div class="header-text">
