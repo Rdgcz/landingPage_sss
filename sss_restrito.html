@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Área Restrita</title>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+</head>
+<body>
+  <h1>Bem-vindo à Área Restrita!</h1>
+  <button onclick="logout()">Sair</button>
+  <div id="conteudoRestrito">
+    <!-- Seus documentos privados aqui -->
+    <p>Conteúdo protegido...</p>
+  </div>
+
+  <script>
+    // Configuração do Firebase
+    const firebaseConfig = { /* COLE SEU firebaseConfig AQUI */ };
+    firebase.initializeApp(firebaseConfig);
+
+    // Verifica se o usuário está logado
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "login.html"; // Se não estiver logado, volta pro login
+      }
+    });
+
+    // Função de logout
+    function logout() {
+      firebase.auth().signOut()
+        .then(() => {
+          window.location.href = "login.html";
+        });
+    }
+  </script>
+</body>
+</html>
