@@ -1,45 +1,335 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Login</title>
-  <!-- Firebase v9 (modular) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Área de acesso restrito do Sítio Sábio Sabiá">
+    <meta name="keywords" content="login, área restrita, Sítio Sábio Sabiá, acesso">
+    <meta name="author" content="Sítio Sábio Sabiá">
+    <meta name="theme-color" content="var(--marrom-escuro)">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Preload -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      as="style" 
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+      crossorigin="anonymous" fetchpriority="high">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/images/brand/favicon/favicon-android-chrome-512x512.png" type="image/png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Acesso Restrito | Sítio Sábio Sabiá</title>
+    
+<style>
+    /* === VARIÁVEIS CSS === */
+    :root {
+        /* Cores */
+        --laranja-ouro: #EAA731;
+        --marrom-escuro: #362219;
+        --terracota: #A0470D;
+        --taupe: #A67958;
+        --fundo: #F8F1E5;
+        --bordas: #D9C7B8;
+        --destaque: #8C3A10;
+        --texto: #3E2723;
+        --branco: #FFFFFF;
+        --sombra: rgba(0, 0, 0, 0.1);
+        --perigo: #C62828;
+        
+        /* Tipografia */
+        --fonte-principal: 'Merriweather', serif;
+        --fonte-secundaria: system-ui, sans-serif;
+        --peso-regular: 400;
+        --peso-bold: 700;
+        
+        /* Espaçamentos */
+        --espaco-base: 1rem;
+        --espaco-pequeno: 0.5rem;
+        --espaco-medio: 1.5rem;
+        --espaco-grande: 2rem;
+        
+        /* Bordas */
+        --raio-borda: 8px;
+        --raio-borda-pequeno: 4px;
+        
+        /* Transições */
+        --transicao-rapida: 0.2s ease;
+        --transicao-media: 0.3s ease;
+    }
 
-    // Config do Firebase (substitua se necessário)
-    const firebaseConfig = {
-      apiKey: "AIzaSyC0O5QqfQae3K9-Ku9-tnpGS-ko82h10JI",
-      authDomain: "sitio-sabio-sabia.firebaseapp.com",
-      projectId: "sitio-sabio-sabia",
-      storageBucket: "sitio-sabio-sabia.firebasestorage.app",
-      messagingSenderId: "789144165592",
-      appId: "1:789144165592:web:0311bc2930a047cf160bad"
-    };
+    /* === RESET E BASE === */
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-    // Inicializa o Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+        height: 100%;
+    }
 
-    // Função de login (chamada pelo botão)
-    window.login = async () => {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+    body {
+        font-family: var(--fonte-principal);
+        background-color: var(--fundo);
+        color: var(--texto);
+        line-height: 1.6;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-image: url('../assets/images/brand/background-texture.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
 
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "restrito.html"; // Redireciona se der certo
-      } catch (error) {
-        document.getElementById("error").innerText = error.message;
-      }
-    };
-  </script>
+    /* === TIPOGRAFIA === */
+    h1, h2, h3, h4 {
+        font-family: var(--fonte-principal);
+        line-height: 1.2;
+        font-weight: var(--peso-bold);
+        margin-bottom: var(--espaco-medio);
+    }
+
+    h1 { 
+        font-size: clamp(1.8rem, 4vw, 2.2rem);
+        color: var(--marrom-escuro);
+        text-align: center;
+        margin-bottom: var(--espaco-grande);
+    }
+
+    /* === CONTAINER PRINCIPAL === */
+    .login-container {
+        max-width: 450px;
+        margin: var(--espaco-grande) auto;
+        padding: var(--espaco-grande);
+        background-color: var(--branco);
+        border-radius: var(--raio-borda);
+        box-shadow: 0 4px 12px var(--sombra);
+        border-top: 4px solid var(--laranja-ouro);
+        position: relative;
+        z-index: 1;
+    }
+
+    .logo-login {
+        display: block;
+        width: 120px;
+        height: auto;
+        margin: 0 auto var(--espaco-medio);
+    }
+
+    /* === FORMULÁRIO === */
+    .form-group {
+        margin-bottom: var(--espaco-medio);
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: var(--espaco-pequeno);
+        color: var(--marrom-escuro);
+        font-weight: var(--peso-bold);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid var(--bordas);
+        border-radius: var(--raio-borda-pequeno);
+        font-family: var(--fonte-principal);
+        transition: border-color var(--transicao-rapida);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--laranja-ouro);
+        box-shadow: 0 0 0 2px rgba(234, 167, 49, 0.2);
+    }
+
+    /* === BOTÕES === */
+    .btn {
+        display: inline-block;
+        width: 100%;
+        background-color: var(--laranja-ouro);
+        color: var(--marrom-escuro);
+        padding: 0.8rem;
+        border-radius: var(--raio-borda-pequeno);
+        text-decoration: none;
+        font-weight: var(--peso-bold);
+        border: none;
+        transition: all var(--transicao-media);
+        cursor: pointer;
+        font-size: 1rem;
+        text-align: center;
+        margin-top: var(--espaco-base);
+    }
+
+    .btn:hover,
+    .btn:focus {
+        background-color: var(--destaque);
+        color: var(--branco);
+        transform: translateY(-2px);
+    }
+
+    .btn i {
+        margin-right: var(--espaco-pequeno);
+    }
+
+    /* === MENSAGENS === */
+    .alert {
+        padding: var(--espaco-pequeno) var(--espaco-base);
+        margin-bottom: var(--espaco-base);
+        border-radius: var(--raio-borda-pequeno);
+        font-size: 0.9rem;
+    }
+
+    .alert-danger {
+        background-color: #FFEBEE;
+        color: var(--perigo);
+        border-left: 3px solid var(--perigo);
+    }
+
+    /* === RODAPÉ === */
+    .login-footer {
+        text-align: center;
+        margin-top: var(--espaco-grande);
+        color: var(--taupe);
+        font-size: 0.9rem;
+    }
+
+    /* === RESPONSIVIDADE === */
+    @media (max-width: 768px) {
+        .login-container {
+            margin: var(--espaco-medio);
+            padding: var(--espaco-medio);
+        }
+    }
+
+    @media (max-width: 480px) {
+        :root {
+            --espaco-base: 0.8rem;
+            --espaco-medio: 1rem;
+            --espaco-grande: 1.5rem;
+        }
+        
+        .login-container {
+            margin: var(--espaco-base);
+            padding: var(--espaco-base);
+        }
+    }
+</style>
 </head>
 <body>
-  <h1>Login</h1>
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Senha">
-  <button onclick="login()">Entrar</button>
-  <p id="error" style="color: red;"></p>
+    <div class="login-container">
+        <img src="../assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Sítio Sábio Sabiá" class="logo-login">
+        <h1><i class="fas fa-lock"></i> Acesso Restrito</h1>
+        
+        <div id="error" class="alert alert-danger" style="display: none;"></div>
+        
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" class="form-control" placeholder="Sua senha" required>
+        </div>
+        
+        <button class="btn" onclick="login()">
+            <i class="fas fa-sign-in-alt"></i> Entrar
+        </button>
+        
+        <p class="login-footer">
+            Sítio Sábio Sabiá © <span id="current-year"></span><br>
+            Apenas pessoal autorizado
+        </p>
+    </div>
+
+    <!-- Firebase v9 (modular) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+        // Config do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyC0O5QqfQae3K9-Ku9-tnpGS-ko82h10JI",
+            authDomain: "sitio-sabio-sabia.firebaseapp.com",
+            projectId: "sitio-sabio-sabia",
+            storageBucket: "sitio-sabio-sabia.appspot.com",
+            messagingSenderId: "789144165592",
+            appId: "1:789144165592:web:0311bc2930a047cf160bad"
+        };
+
+        // Inicializa o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Função de login
+        window.login = async () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const errorElement = document.getElementById("error");
+
+            // Validação simples
+            if (!email || !password) {
+                showError("Por favor, preencha todos os campos");
+                return;
+            }
+
+            try {
+                errorElement.style.display = 'none';
+                await signInWithEmailAndPassword(auth, email, password);
+                window.location.href = "restrito.html"; // Redireciona para área restrita
+            } catch (error) {
+                let errorMessage = "Erro no login";
+                
+                // Mensagens mais amigáveis para erros comuns
+                switch (error.code) {
+                    case "auth/invalid-email":
+                        errorMessage = "E-mail inválido";
+                        break;
+                    case "auth/user-disabled":
+                        errorMessage = "Esta conta está desativada";
+                        break;
+                    case "auth/user-not-found":
+                    case "auth/wrong-password":
+                        errorMessage = "E-mail ou senha incorretos";
+                        break;
+                    default:
+                        errorMessage = error.message;
+                }
+                
+                showError(errorMessage);
+            }
+        };
+
+        function showError(message) {
+            const errorElement = document.getElementById("error");
+            errorElement.innerText = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Ano atual no footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Permitir login com Enter
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
 </body>
 </html>
