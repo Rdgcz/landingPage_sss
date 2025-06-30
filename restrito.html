@@ -571,6 +571,10 @@
     </footer>
 
     <script type="module">
+        onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "login.html";
+    } else {
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
         import { 
             getAuth, 
@@ -910,7 +914,8 @@
             } catch (error) {
                 console.error("Erro ao fazer logout:", error);
             }
-        };
+        }
+        });
 
         // Disponibiliza funções globalmente
         window.listarArquivos = listarArquivos;
