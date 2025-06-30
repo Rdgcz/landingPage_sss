@@ -130,6 +130,16 @@
         margin: 0 auto var(--espaco-pequeno);
     }
 
+    .logo-link {
+    display: block;
+    text-align: center;
+    transition: transform var(--transicao-media);
+}
+
+.logo-link:hover {
+    transform: scale(1.05);
+}
+
     /* === FORMULÁRIO === */
     .form-group {
         margin-bottom: var(--espaco-medio);
@@ -232,7 +242,9 @@
 </head>
 <body>
     <div class="login-container">
+        <a href="../index.html" aria-label="Voltar para página inicial" class="logo-link">
         <img src="../assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Sítio Sábio Sabiá" class="logo-login">
+        </a>
         <h1>Acesso Restrito</h1>
         
         <div id="error" class="alert alert-danger" style="display: none;"></div>
