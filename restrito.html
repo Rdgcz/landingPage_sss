@@ -212,6 +212,194 @@
         text-decoration: none;
     }
 
+/* === DASHBOARD E CALENDÁRIO === */
+.dashboard-section {
+    display: flex;
+    margin: var(--espaco-medio) auto;
+    max-width: 1200px;
+    padding: 0 var(--espaco-grande);
+    gap: var(--espaco-medio);
+}
+
+.calendario-container {
+    flex: 1;
+    max-width: 25%;
+}
+
+.calendario {
+    background: var(--branco);
+    border-radius: var(--raio-borda);
+    box-shadow: 0 2px 6px var(--sombra);
+    padding: var(--espaco-pequeno);
+    height: 120px;
+    overflow: hidden;
+}
+
+.calendario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--espaco-pequeno);
+}
+
+.calendario-header h3 {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--marrom-escuro);
+}
+
+.calendario-header button {
+    background: none;
+    border: none;
+    color: var(--terracota);
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.dias-semana {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--taupe);
+    margin-bottom: 2px;
+}
+
+.dias-mes {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.dias-mes span {
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.dias-mes span.compromisso {
+    background-color: var(--laranja-ouro);
+    color: white;
+}
+
+.dias-mes span.hoje {
+    border: 1px solid var(--terracota);
+}
+
+.dashboard-container {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--espaco-pequeno);
+    height: 120px;
+}
+
+.dashboard-card {
+    background: var(--branco);
+    border-radius: var(--raio-borda);
+    box-shadow: 0 2px 6px var(--sombra);
+    padding: var(--espaco-pequeno);
+    text-align: center;
+}
+
+.dashboard-card h3 {
+    font-size: 0.9rem;
+    margin-bottom: var(--espaco-pequeno);
+    color: var(--marrom-escuro);
+}
+
+.dashboard-value {
+    font-size: 1.5rem;
+    font-weight: var(--peso-bold);
+    color: var(--terracota);
+}
+
+.dashboard-label {
+    font-size: 0.7rem;
+    color: var(--taupe);
+}
+
+/* === GRID DE MÓDULOS === */
+.grid-section {
+    max-width: 1200px;
+    margin: var(--espaco-grande) auto;
+    padding: 0 var(--espaco-grande);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: var(--espaco-medio);
+    color: var(--terracota);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--espaco-medio);
+}
+
+.grid-card {
+    background: var(--branco);
+    border-radius: var(--raio-borda);
+    box-shadow: 0 2px 6px var(--sombra);
+    padding: var(--espaco-medio);
+    text-align: center;
+    transition: transform var(--transicao-media), box-shadow var(--transicao-media);
+    color: var(--texto);
+    border-top: 3px solid var(--laranja-ouro);
+}
+
+.grid-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-decoration: none;
+}
+
+.grid-card i {
+    font-size: 2rem;
+    color: var(--terracota);
+    margin-bottom: var(--espaco-pequeno);
+}
+
+.grid-card h3 {
+    margin-bottom: var(--espaco-pequeno);
+    color: var(--marrom-escuro);
+}
+
+.grid-card p {
+    font-size: 0.9rem;
+    color: var(--taupe);
+    margin-bottom: 0;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 768px) {
+    .dashboard-section {
+        flex-direction: column;
+        padding: 0 var(--espaco-base);
+    }
+    
+    .calendario-container {
+        max-width: 100%;
+    }
+    
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .grid-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
+    
     /* === CONTEÚDO PRINCIPAL === */
     main {
         max-width: 1200px;
@@ -516,7 +704,47 @@
             <li role="none"><a href="../contato.html" role="menuitem">Contato</a></li>
         </ul>
     </nav>
-
+<section class="dashboard-section">
+    <div class="calendario-container">
+        <div class="calendario">
+            <div class="calendario-header">
+                <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                <h3 id="current-month">Junho 2023</h3>
+                <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="dias-semana">
+                <span>Dom</span>
+                <span>Seg</span>
+                <span>Ter</span>
+                <span>Qua</span>
+                <span>Qui</span>
+                <span>Sex</span>
+                <span>Sáb</span>
+            </div>
+            <div class="dias-mes" id="dias-mes">
+                <!-- Dias serão preenchidos via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-container">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-users"></i> Visitantes</h3>
+            <div class="dashboard-value">24</div>
+            <div class="dashboard-label">Este mês</div>
+        </div>
+        <div class="dashboard-card">
+            <h3><i class="fas fa-bed"></i> Reservas</h3>
+            <div class="dashboard-value">8</div>
+            <div class="dashboard-label">Ativas</div>
+        </div>
+        <div class="dashboard-card">
+            <h3><i class="fas fa-utensils"></i> Refeições</h3>
+            <div class="dashboard-value">12</div>
+            <div class="dashboard-label">Próximas</div>
+        </div>
+    </div>
+</section>
     <main class="fade-in" itemprop="mainContentOfPage">
         <div id="breadcrumb" aria-label="Rastro de navegação">
             <span itemscope itemtype="https://schema.org/BreadcrumbList">
@@ -922,6 +1150,102 @@
         window.downloadFile = downloadFile;
         window.deleteFile = deleteFile;
         window.criarPasta = criarPasta;
+    </script>
+    <script>
+       
+        // Calendário
+    document.addEventListener('DOMContentLoaded', function() {
+        const hoje = new Date();
+        let mesAtual = hoje.getMonth();
+        let anoAtual = hoje.getFullYear();
+        
+        const diasMesEl = document.getElementById('dias-mes');
+        const currentMonthEl = document.getElementById('current-month');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        
+        // Datas com compromissos (exemplo)
+        const compromissos = [
+            '2023-06-15',
+            '2023-06-20',
+            '2023-06-25',
+            '2023-07-03',
+            '2023-07-10'
+        ];
+        
+        function renderCalendario() {
+            // Limpa o calendário
+            diasMesEl.innerHTML = '';
+            
+            // Configura o mês/ano atual
+            const primeiroDia = new Date(anoAtual, mesAtual, 1);
+            const ultimoDia = new Date(anoAtual, mesAtual + 1, 0);
+            const diasNoMes = ultimoDia.getDate();
+            const primeiroDiaSemana = primeiroDia.getDay();
+            
+            // Atualiza o cabeçalho
+            const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+                          "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            currentMonthEl.textContent = `${meses[mesAtual]} ${anoAtual}`;
+            
+            // Dias vazios no início
+            for (let i = 0; i < primeiroDiaSemana; i++) {
+                const span = document.createElement('span');
+                diasMesEl.appendChild(span);
+            }
+            
+            // Dias do mês
+            for (let dia = 1; dia <= diasNoMes; dia++) {
+                const span = document.createElement('span');
+                span.textContent = dia;
+                
+                // Formata a data para comparação
+                const dataAtual = new Date(anoAtual, mesAtual, dia);
+                const dataFormatada = formatarData(dataAtual);
+                
+                // Verifica se é hoje
+                if (dia === hoje.getDate() && mesAtual === hoje.getMonth() && anoAtual === hoje.getFullYear()) {
+                    span.classList.add('hoje');
+                }
+                
+                // Verifica se tem compromisso
+                if (compromissos.includes(dataFormatada)) {
+                    span.classList.add('compromisso');
+                }
+                
+                diasMesEl.appendChild(span);
+            }
+        }
+        
+        function formatarData(data) {
+            const ano = data.getFullYear();
+            const mes = String(data.getMonth() + 1).padStart(2, '0');
+            const dia = String(data.getDate()).padStart(2, '0');
+            return `${ano}-${mes}-${dia}`;
+        }
+        
+        // Navegação do calendário
+        prevMonthBtn.addEventListener('click', function() {
+            mesAtual--;
+            if (mesAtual < 0) {
+                mesAtual = 11;
+                anoAtual--;
+            }
+            renderCalendario();
+        });
+        
+        nextMonthBtn.addEventListener('click', function() {
+            mesAtual++;
+            if (mesAtual > 11) {
+                mesAtual = 0;
+                anoAtual++;
+            }
+            renderCalendario();
+        });
+        
+        // Renderiza o calendário inicial
+        renderCalendario();
+    });
     </script>
 </body>
 </html>
