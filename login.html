@@ -95,6 +95,12 @@
         background-attachment: fixed;
     }
 
+    /* Garante que nenhum elemento ultrapasse a largura */
+html, body {
+    overflow-x: hidden; /* Impede rolagem horizontal */
+    width: 100%;
+    max-width: 100%;
+
     /* === TIPOGRAFIA === */
     h1, h2, h3, h4 {
         font-family: var(--fonte-principal);
@@ -112,11 +118,13 @@
 
     /* === CONTAINER PRINCIPAL === */
     .login-container {
+        width: 95%;
         max-width: 450px;
         margin: var(--espaco-grande) auto;
         padding: var(--espaco-grande);
         background-color: var(--branco);
         border-radius: var(--raio-borda);
+        box-sizing: border-box; /* Fundamental */
         box-shadow: 0 4px 12px var(--sombra);
         border-top: 4px solid var(--laranja-ouro);
         position: relative;
@@ -125,7 +133,8 @@
 
     .logo-login {
         display: block;
-        width: 100px;
+        width: 120px;
+        max-width: 100%;
         height: auto;
         margin: 0 auto var(--espaco-pequeno);
     }
@@ -154,6 +163,7 @@
 
     .form-control {
         width: 100%;
+        box-sizing: border-box;
         padding: 0.8rem;
         border: 1px solid var(--bordas);
         border-radius: var(--raio-borda-pequeno);
@@ -234,6 +244,7 @@
         }
         
         .login-container {
+            width: 90%;
             margin: var(--espaco-base);
             padding: var(--espaco-base);
         }
