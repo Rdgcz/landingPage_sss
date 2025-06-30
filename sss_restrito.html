@@ -2,36 +2,33 @@
 <html>
 <head>
   <title>Área Restrita</title>
-  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+    const firebaseConfig = { /* Mesmo config do login.html */ };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Verifica se o usuário está logado
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html"; // Se não logado, volta para o login
+      }
+    });
+
+    // Função de logout (chamada pelo botão)
+    window.logout = async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    };
+  </script>
 </head>
 <body>
   <h1>Bem-vindo à Área Restrita!</h1>
   <button onclick="logout()">Sair</button>
   <div id="conteudoRestrito">
-    <!-- Seus documentos privados aqui -->
     <p>Conteúdo protegido...</p>
   </div>
-
-  <script>
-    // Configuração do Firebase
-    const firebaseConfig = { /* COLE SEU firebaseConfig AQUI */ };
-    firebase.initializeApp(firebaseConfig);
-
-    // Verifica se o usuário está logado
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        window.location.href = "login.html"; // Se não estiver logado, volta pro login
-      }
-    });
-
-    // Função de logout
-    function logout() {
-      firebase.auth().signOut()
-        .then(() => {
-          window.location.href = "login.html";
-        });
-    }
-  </script>
 </body>
 </html>
