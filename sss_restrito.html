@@ -4,113 +4,277 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Área Restrita - Sítio Sabio Sabia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary-color: #4285f4;
+      --danger-color: #ea4335;
+      --text-color: #333;
+      --light-gray: #f5f5f5;
+      --border-radius: 8px;
+      --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #f5f5f5;
+      background-color: var(--light-gray);
+      color: var(--text-color);
+      line-height: 1.6;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #ddd;
     }
+
+    h1, h2, h3 {
+      color: var(--primary-color);
+    }
+
     #breadcrumb {
       margin: 20px 0;
       font-size: 14px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
     }
+
     #breadcrumb button {
       background: none;
       border: none;
-      color: #0066cc;
+      color: var(--primary-color);
       cursor: pointer;
       padding: 5px;
+      margin: 0 5px;
     }
+
     #breadcrumb button:hover {
       text-decoration: underline;
     }
+
+    #breadcrumb .separator {
+      color: #777;
+    }
+
     #file-manager {
       display: grid;
       grid-template-columns: 250px 1fr;
       gap: 20px;
     }
-    #subpastas {
+
+    #search-container {
+      margin-bottom: 15px;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+    }
+
+    #subpastas, #arquivos {
       background: white;
       padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
     }
-    #arquivos {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+
     .folder, .file {
-      padding: 8px;
+      padding: 10px;
       margin: 5px 0;
       cursor: pointer;
       border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+
     .folder:hover, .file:hover {
       background-color: #f0f0f0;
     }
+
+    .folder i, .file i {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+
+    .file-size {
+      color: #777;
+      font-size: 0.8em;
+      margin-left: 10px;
+    }
+
     .file-actions {
       display: flex;
       gap: 10px;
       margin-top: 20px;
+      flex-wrap: wrap;
     }
+
     button {
       padding: 8px 16px;
-      background-color: #0066cc;
+      background-color: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: var(--border-radius);
       cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
+
     button:hover {
-      background-color: #0052a3;
+      background-color: #3367d6;
     }
+
+    button i {
+      font-size: 0.9em;
+    }
+
     #logout-btn {
-      background-color: #cc0000;
+      background-color: var(--danger-color);
     }
+
     #logout-btn:hover {
-      background-color: #a30000;
+      background-color: #d33426;
     }
+
     .loading {
       text-align: center;
       padding: 20px;
       color: #666;
     }
+
+    #image-preview {
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+    }
+
+    #preview {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    #upload-progress {
+      width: 100%;
+      display: none;
+      margin-top: 10px;
+      height: 10px;
+      border-radius: 5px;
+    }
+
+    progress::-webkit-progress-bar {
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    progress::-webkit-progress-value {
+      background-color: var(--primary-color);
+      border-radius: 5px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 5px;
+    }
+
+    .action-buttons button {
+      padding: 5px 8px;
+      font-size: 0.8em;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+    }
+
+    @media (max-width: 768px) {
+      #file-manager {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .file-actions {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+        margin-bottom: 5px;
+        justify-content: center;
+      }
+
+      .folder, .file {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+
+      .action-buttons {
+        align-self: flex-end;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Sítio Sabio Sabia - Área Restrita</h1>
-    <button id="logout-btn" onclick="logout()">Sair</button>
+    <h1><i class="fas fa-lock"></i> Área Restrita - Sítio Sabio Sabia</h1>
+    <button id="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
   </header>
 
   <div id="breadcrumb">
-    <button onclick="listarArquivos('')">Home</button>
+    <button onclick="listarArquivos('')"><i class="fas fa-home"></i> Home</button>
   </div>
 
   <div id="file-manager">
     <div id="subpastas">
-      <h3>Pastas</h3>
-      <div id="folders-list" class="loading">Carregando...</div>
+      <h3><i class="fas fa-folder"></i> Pastas</h3>
+      <div id="search-container">
+        <input type="text" id="search-input" placeholder="Buscar..." oninput="filterFiles()">
+      </div>
+      <div id="folders-list" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Carregando pastas...
+      </div>
     </div>
     
     <div id="arquivos">
-      <h3>Arquivos</h3>
-      <div id="files-list" class="loading">Carregando...</div>
+      <h3><i class="fas fa-file"></i> Arquivos</h3>
+      <div id="files-list" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Carregando arquivos...
+      </div>
+      
+      <div id="image-preview">
+        <img id="preview">
+      </div>
+      
+      <progress id="upload-progress" value="0" max="100"></progress>
       
       <div class="file-actions">
-        <input type="file" id="fileInput">
-        <button onclick="upload()">Enviar Arquivo</button>
-        <button onclick="criarPasta()">Nova Pasta</button>
+        <input type="file" id="fileInput" style="display: none;">
+        <button onclick="document.getElementById('fileInput').click()">
+          <i class="fas fa-upload"></i> Enviar Arquivo
+        </button>
+        <button onclick="criarPasta()">
+          <i class="fas fa-folder-plus"></i> Nova Pasta
+        </button>
       </div>
     </div>
   </div>
@@ -126,12 +290,14 @@
       getStorage,
       ref,
       uploadBytes,
+      uploadBytesResumable,
       getDownloadURL,
       listAll,
-      deleteObject
+      deleteObject,
+      getMetadata
     } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
 
-    // Configuração do Firebase (substitua com seus dados)
+    // Configuração do Firebase (ATUALIZE COM SEUS DADOS)
     const firebaseConfig = {
       apiKey: "AIzaSyC0O5QqfQae3K9-Ku9-tnpGS-ko82h10JI",
       authDomain: "sitio-sabio-sabia.firebaseapp.com",
@@ -149,7 +315,8 @@
     // Variáveis globais
     let currentUser = null;
     let currentPath = '';
-    let currentFolderName = '';
+    let allFiles = [];
+    let allFolders = [];
 
     // Verifica autenticação
     onAuthStateChanged(auth, (user) => {
@@ -166,53 +333,33 @@
       if (!currentUser) return;
       
       currentPath = path;
-      document.getElementById('folders-list').innerHTML = '<div class="loading">Carregando...</div>';
-      document.getElementById('files-list').innerHTML = '<div class="loading">Carregando...</div>';
+      document.getElementById('folders-list').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando pastas...</div>';
+      document.getElementById('files-list').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando arquivos...</div>';
       
       try {
         const folderRef = ref(storage, `documentos/${currentUser.uid}/${path}`);
         const result = await listAll(folderRef);
         
+        // Ordena resultados
+        result.prefixes.sort((a, b) => a.name.localeCompare(b.name));
+        result.items.sort((a, b) => a.name.localeCompare(b.name));
+        
         // Atualiza breadcrumb
         updateBreadcrumb(path);
         
+        // Armazena para busca
+        allFolders = result.prefixes;
+        allFiles = result.items;
+        
         // Exibe subpastas
-        if (result.prefixes.length > 0) {
-          let foldersHTML = '';
-          result.prefixes.forEach(folder => {
-            const folderName = folder.name;
-            foldersHTML += `
-              <div class="folder" onclick="listarArquivos('${path}${folderName}/')">
-                📁 ${folderName}
-              </div>
-            `;
-          });
-          document.getElementById('folders-list').innerHTML = foldersHTML;
-        } else {
-          document.getElementById('folders-list').innerHTML = '<p>Nenhuma subpasta encontrada</p>';
-        }
+        displayFolders(result.prefixes);
         
         // Exibe arquivos
-        if (result.items.length > 0) {
-          let filesHTML = '';
-          result.items.forEach(file => {
-            const fileName = file.name;
-            filesHTML += `
-              <div class="file">
-                📄 ${fileName}
-                <button onclick="downloadFile('${path}${fileName}')">Baixar</button>
-                <button onclick="deleteFile('${path}${fileName}')">Excluir</button>
-              </div>
-            `;
-          });
-          document.getElementById('files-list').innerHTML = filesHTML;
-        } else {
-          document.getElementById('files-list').innerHTML = '<p>Nenhum arquivo encontrado</p>';
-        }
+        displayFiles(result.items);
+        
       } catch (error) {
         console.error("Erro ao listar arquivos:", error);
-        document.getElementById('folders-list').innerHTML = '<p style="color:red">Erro ao carregar pastas</p>';
-        document.getElementById('files-list').innerHTML = '<p style="color:red">Erro ao carregar arquivos</p>';
+        showError();
       }
     }
 
@@ -220,42 +367,185 @@
     function updateBreadcrumb(path) {
       if (path === '') {
         document.getElementById('breadcrumb').innerHTML = `
-          <button onclick="listarArquivos('')">Home</button>
+          <button onclick="listarArquivos('')"><i class="fas fa-home"></i> Home</button>
         `;
         return;
       }
       
       const parts = path.split('/').filter(part => part !== '');
-      let breadcrumbHTML = '<button onclick="listarArquivos(\'\')">Home</button>';
+      let breadcrumbHTML = '<button onclick="listarArquivos(\'\')"><i class="fas fa-home"></i> Home</button>';
       let currentPath = '';
       
       parts.forEach((part, index) => {
         currentPath += `${part}/`;
-        breadcrumbHTML += ` > <button onclick="listarArquivos('${currentPath}')">${part}</button>`;
+        breadcrumbHTML += ` <span class="separator">/</span> <button onclick="listarArquivos('${currentPath}')"><i class="fas fa-folder"></i> ${part}</button>`;
       });
       
       document.getElementById('breadcrumb').innerHTML = breadcrumbHTML;
     }
 
-    // Upload de arquivo
-    async function upload() {
-      const fileInput = document.getElementById('fileInput');
-      const file = fileInput.files[0];
+    // Exibe subpastas
+    async function displayFolders(folders) {
+      if (folders.length > 0) {
+        let foldersHTML = '';
+        
+        for (const folder of folders) {
+          foldersHTML += `
+            <div class="folder" onclick="listarArquivos('${currentPath}${folder.name}/')">
+              <div><i class="fas fa-folder"></i> ${folder.name}</div>
+            </div>
+          `;
+        }
+        
+        document.getElementById('folders-list').innerHTML = foldersHTML;
+      } else {
+        document.getElementById('folders-list').innerHTML = '<div class="empty-state">Nenhuma subpasta encontrada</div>';
+      }
+    }
+
+    // Exibe arquivos
+    async function displayFiles(files) {
+      if (files.length > 0) {
+        let filesHTML = '';
+        
+        for (const file of files) {
+          const metadata = await getMetadata(file);
+          const sizeKB = Math.round(metadata.size / 1024);
+          
+          filesHTML += `
+            <div class="file">
+              <div>
+                <i class="fas ${getFileIcon(file.name)}"></i> ${file.name}
+                <span class="file-size">${sizeKB} KB</span>
+              </div>
+              <div class="action-buttons">
+                <button onclick="downloadFile('${currentPath}${file.name}')" title="Baixar">
+                  <i class="fas fa-download"></i>
+                </button>
+                <button onclick="deleteFile('${currentPath}${file.name}')" title="Excluir">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          `;
+        }
+        
+        document.getElementById('files-list').innerHTML = filesHTML;
+      } else {
+        document.getElementById('files-list').innerHTML = '<div class="empty-state">Nenhum arquivo encontrado</div>';
+      }
+    }
+
+    // Retorna ícone conforme tipo de arquivo
+    function getFileIcon(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      const icons = {
+        pdf: 'fa-file-pdf',
+        doc: 'fa-file-word',
+        docx: 'fa-file-word',
+        xls: 'fa-file-excel',
+        xlsx: 'fa-file-excel',
+        ppt: 'fa-file-powerpoint',
+        pptx: 'fa-file-powerpoint',
+        jpg: 'fa-file-image',
+        jpeg: 'fa-file-image',
+        png: 'fa-file-image',
+        gif: 'fa-file-image',
+        txt: 'fa-file-alt',
+        zip: 'fa-file-archive',
+        rar: 'fa-file-archive',
+        mp3: 'fa-file-audio',
+        mp4: 'fa-file-video'
+      };
+      return icons[ext] || 'fa-file';
+    }
+
+    // Filtra arquivos/pastas
+    function filterFiles() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
       
-      if (!file) {
-        alert('Selecione um arquivo primeiro');
+      // Filtra pastas
+      const filteredFolders = allFolders.filter(folder => 
+        folder.name.toLowerCase().includes(searchTerm)
+      );
+      displayFolders(filteredFolders);
+      
+      // Filtra arquivos
+      const filteredFiles = allFiles.filter(file => 
+        file.name.toLowerCase().includes(searchTerm)
+      );
+      displayFiles(filteredFiles);
+    }
+
+    // Upload de arquivo
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      // Pré-visualização de imagem
+      const previewDiv = document.getElementById('image-preview');
+      const previewImg = document.getElementById('preview');
+      
+      if (file.type.startsWith('image/')) {
+        previewDiv.style.display = 'block';
+        previewImg.src = URL.createObjectURL(file);
+      } else {
+        previewDiv.style.display = 'none';
+      }
+      
+      // Validações
+      if (!validarNomeArquivo(file.name)) {
+        alert('Nome inválido! Use apenas letras, números, hífens e underlines.');
         return;
       }
       
-      try {
-        const storageRef = ref(storage, `documentos/${currentUser.uid}/${currentPath}${file.name}`);
-        await uploadBytes(storageRef, file);
-        listarArquivos(currentPath);
-        fileInput.value = ''; // Limpa o input
-      } catch (error) {
-        console.error("Erro no upload:", error);
-        alert('Falha no upload: ' + error.message);
+      if (file.size > 10 * 1024 * 1024) { // 10MB
+        alert('Arquivo muito grande! Tamanho máximo: 10MB');
+        return;
       }
+      
+      // Inicia upload
+      uploadFile(file);
+    });
+
+    async function uploadFile(file) {
+      const progressBar = document.getElementById('upload-progress');
+      const fileInput = document.getElementById('fileInput');
+      
+      try {
+        progressBar.style.display = 'block';
+        progressBar.value = 0;
+        
+        const storageRef = ref(storage, `documentos/${currentUser.uid}/${currentPath}${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progressBar.value = progress;
+          },
+          (error) => {
+            console.error("Erro no upload:", error);
+            alert('Falha no upload: ' + error.message);
+            progressBar.style.display = 'none';
+          },
+          () => {
+            listarArquivos(currentPath);
+            fileInput.value = '';
+            progressBar.style.display = 'none';
+            document.getElementById('image-preview').style.display = 'none';
+          }
+        );
+      } catch (error) {
+        console.error("Erro:", error);
+        progressBar.style.display = 'none';
+      }
+    }
+
+    // Valida nome do arquivo
+    function validarNomeArquivo(nome) {
+      const regex = /^[a-zA-Z0-9-_.áéíóúâêîôûãõç ]+(\.[a-zA-Z0-9]+)?$/;
+      return regex.test(nome);
     }
 
     // Download de arquivo
@@ -263,7 +553,14 @@
       try {
         const fileRef = ref(storage, `documentos/${currentUser.uid}/${filePath}`);
         const url = await getDownloadURL(fileRef);
-        window.open(url, '_blank');
+        
+        // Cria link temporário para download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filePath.split('/').pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
       } catch (error) {
         console.error("Erro no download:", error);
         alert('Falha ao baixar arquivo: ' + error.message);
@@ -272,7 +569,7 @@
 
     // Excluir arquivo
     async function deleteFile(filePath) {
-      if (!confirm('Tem certeza que deseja excluir este arquivo?')) return;
+      if (!confirm(`Tem certeza que deseja excluir "${filePath.split('/').pop()}"?`)) return;
       
       try {
         const fileRef = ref(storage, `documentos/${currentUser.uid}/${filePath}`);
@@ -289,16 +586,28 @@
       const folderName = prompt('Digite o nome da nova pasta:');
       if (!folderName) return;
       
-      // No Firebase Storage, pastas são implícitas (criadas quando um arquivo é adicionado)
-      // Para "criar" uma pasta, adicionamos um arquivo vazio chamado '.keep'
+      if (!validarNomeArquivo(folderName)) {
+        alert('Nome inválido! Use apenas letras, números, hífens e underlines.');
+        return;
+      }
+      
       try {
+        // Cria uma pasta vazia adicionando um arquivo .keep
         const folderRef = ref(storage, `documentos/${currentUser.uid}/${currentPath}${folderName}/.keep`);
-        await uploadBytes(folderRef, new Blob());
+        await uploadBytes(folderRef, new Blob(['']));
         listarArquivos(currentPath);
       } catch (error) {
         console.error("Erro ao criar pasta:", error);
         alert('Falha ao criar pasta: ' + error.message);
       }
+    }
+
+    // Mostra erro
+    function showError() {
+      document.getElementById('folders-list').innerHTML = 
+        '<div class="empty-state" style="color:var(--danger-color)"><i class="fas fa-exclamation-circle"></i> Erro ao carregar</div>';
+      document.getElementById('files-list').innerHTML = 
+        '<div class="empty-state" style="color:var(--danger-color)"><i class="fas fa-exclamation-circle"></i> Erro ao carregar</div>';
     }
 
     // Logout
@@ -313,7 +622,6 @@
 
     // Disponibiliza funções globalmente
     window.listarArquivos = listarArquivos;
-    window.upload = upload;
     window.downloadFile = downloadFile;
     window.deleteFile = deleteFile;
     window.criarPasta = criarPasta;
