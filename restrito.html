@@ -163,7 +163,7 @@
     header {
         background-color: var(--terracota);
         color: var(--branco);
-        padding: 0 15px 0 15px;
+        padding: var(--espaco-base);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -293,7 +293,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--espaco-pequeno);
-    height: 200px;
 }
 
 .dashboard-card {
@@ -403,9 +402,7 @@
     
     /* === CONTEÚDO PRINCIPAL === */
     main {
-        max-width: 1200px;
-        margin: var(--espaco-grande) auto;
-        padding: 0 var(--espaco-grande);
+        padding: var(--espaco-grande);
         flex: 1;
     }
 
