@@ -1,7 +1,7 @@
 # Sítio Sábio Sabiá
-Repositório para Homepage do Sítio Sábio Sabiá.
-Ver online: www.sitiosabiosabia.com.br
-Data de Criação: 02/06/2025
+## Repositório para Homepage do Sítio Sábio Sabiá.
+## Ver online: www.sitiosabiosabia.com.br
+## Data de Criação: 02/06/2025
 ## **Tecnologias Utilizadas**
 ### **Backend**
 - ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
