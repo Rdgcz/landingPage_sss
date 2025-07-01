@@ -2,7 +2,7 @@
 
 ---
 
-#### **📌 PRÉ-REQUISITOS**
+#### **📌 PRÉ-REQUISITOS** ✔️
 1. [Node.js](https://nodejs.org/) (v18+ LTS)
 2. Conta no [Firebase Console](https://console.firebase.google.com/)
 3. VS Code ou editor similar
@@ -11,24 +11,24 @@
 ---
 
 ### **🚀 PASSO 1: CONFIGURAÇÃO INICIAL**
-#### **1.1 Criar pasta do projeto**
+#### **1.1 Criar pasta do projeto** ✔️
 ```bash
 mkdir sitio-sabio-sabia-backend
 cd sitio-sabio-sabia-backend
 ```
 
-#### **1.2 Iniciar projeto Node.js**
+#### **1.2 Iniciar projeto Node.js** ✔️
 ```bash
 npm init -y
 ```
 
-#### **1.3 Instalar dependências**
+#### **1.3 Instalar dependências** ✔️
 ```bash
 npm install express cors firebase-admin dotenv
 npm install --save-dev nodemon
 ```
 
-#### **1.4 Configurar scripts no `package.json`**
+#### **1.4 Configurar scripts no `package.json`** ✔️
 ```json
 "scripts": {
   "dev": "nodemon src/app.js",
@@ -39,18 +39,18 @@ npm install --save-dev nodemon
 ---
 
 ### **🔐 PASSO 2: CONFIGURAR FIREBASE**
-#### **2.1 Obter credenciais do Firebase**
+#### **2.1 Obter credenciais do Firebase**✔️
 1. Acesse [Firebase Console](https://console.firebase.google.com/)
 2. No projeto → ⚙️ → *Contas de Serviço* → *Gerar nova chave privada*
 3. Baixe o JSON e renomeie para `firebase-service-account.json`
 
-#### **2.2 Criar arquivo `.env`**
+#### **2.2 Criar arquivo `.env`** ✔️
 ```env
 PORT=3001
 FIREBASE_STORAGE_BUCKET="seu-projeto.appspot.com"
 ```
 
-#### **2.3 Estrutura de pastas**
+#### **2.3 Estrutura de pastas** ✔️
 ```
 /backend
   /src
@@ -67,7 +67,7 @@ FIREBASE_STORAGE_BUCKET="seu-projeto.appspot.com"
 ---
 
 ### **💻 PASSO 3: CÓDIGO DO SERVIDOR**
-#### **3.1 `app.js` (Servidor principal)**
+#### **3.1 `app.js` (Servidor principal)** ✔️
 ```javascript
 require('dotenv').config();
 const express = require('express');
@@ -85,7 +85,7 @@ app.listen(process.env.PORT, () => {
 });
 ```
 
-#### **3.2 `storage.js` (Serviço Firebase)**
+#### **3.2 `storage.js` (Serviço Firebase)** ✔️
 ```javascript
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getStorage } = require('firebase-admin/storage');
@@ -110,7 +110,7 @@ module.exports = {
 };
 ```
 
-#### **3.3 `files.js` (Rotas)**
+#### **3.3 `files.js` (Rotas)** ✔️
 ```javascript
 const express = require('express');
 const router = express.Router();
@@ -137,14 +137,14 @@ module.exports = router;
 ---
 
 ### **🔧 PASSO 4: CONFIGURAÇÕES ADICIONAIS**
-#### **4.1 `.gitignore`**
+#### **4.1 `.gitignore`** ✔️
 ```
 node_modules/
 .env
 firebase-service-account.json
 ```
 
-#### **4.2 Configurar Git**
+#### **4.2 Configurar Git** ✔️
 ```bash
 git init
 git branch -m main
