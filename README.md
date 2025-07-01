@@ -107,7 +107,6 @@ Feito por RDGCZ + Assistência de IA //
 **Nota sobre segurança**: Esta implementação remove todas as credenciais sensíveis do frontend, garantindo que as operações sejam validadas e executadas apenas pelo backend autorizado.
 -------------------------------------------------------------------------------------------------------------------------------
 # 01/07/2025
-Aqui está a síntese completa para seu `README.md`, formatada em **Markdown**:
 
 ```markdown
 # 📂 Sitio Sabiá - Backend com Firebase
