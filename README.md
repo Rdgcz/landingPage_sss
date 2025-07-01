@@ -106,3 +106,83 @@ python3 -m http.server 3000
 Feito por RDGCZ + Assistência de IA //
 **Nota sobre segurança**: Esta implementação remove todas as credenciais sensíveis do frontend, garantindo que as operações sejam validadas e executadas apenas pelo backend autorizado.
 -------------------------------------------------------------------------------------------------------------------------------
+# 01/07/2025
+Aqui está a síntese completa para seu `README.md`, formatada em **Markdown**:
+
+```markdown
+# 📂 Sitio Sabiá - Backend com Firebase
+
+## 🛠️ Configuração Realizada
+
+### 1. Estrutura do Projeto
+```
+sitio-sabio-sabia-backend/
+├── src/
+│   ├── app.js               # Configuração do servidor
+│   ├── routes/files.js      # Endpoints de upload/download
+│   └── services/storage.js  # Integração com Firebase
+├── .env                     # Variáveis de ambiente
+├── firebase-service-account.json # Credenciais (não versionado)
+└── package.json
+```
+
+### 2. Tecnologias Implementadas
+- **Node.js** (v18+)
+- **Express** (Servidor HTTP)
+- **Firebase Admin SDK** (Armazenamento de arquivos)
+- **Dotenv** (Gestão de variáveis)
+
+### 3. Funcionalidades Prontas
+✔️ Servidor Node.js na porta `3001`  
+✔️ Rota POST `/api/files/upload`  
+✔️ Integração com Firebase Storage  
+✔️ Proteção de credenciais (`.gitignore`)  
+
+## 🔧 Como Executar
+
+```bash
+# 1. Clonar repositório
+git clone https://github.com/Rdgcz/sitio-sabio-sabia-backend.git
+
+# 2. Instalar dependências
+npm install
+
+# 3. Configurar ambiente
+cp .env.example .env
+# Preencher com seus dados do Firebase
+
+# 4. Iniciar servidor
+npm run dev
+```
+
+## 🔐 Variáveis de Ambiente (`.env`)
+```ini
+PORT=3001
+FIREBASE_STORAGE_BUCKET="seu-projeto.appspot.com"
+```
+
+## 🌐 Endpoints
+- **POST** `/api/files/upload`  
+  ```json
+  {
+    "file": "[base64]",
+    "fileName": "arquivo.txt"
+  }
+  ```
+
+## 📌 Próximos Passos
+- [ ] Implementar autenticação JWT  
+- [ ] Criar rota de listagem de arquivos  
+- [ ] Configurar CI/CD com GitHub Actions
+
+---
+
+> 💡 **Dica**: Sempre verifique se `firebase-service-account.json` está no `.gitignore`!
+```
+
+### ✨ Melhorias Incluídas:
+1. **Estrutura Visual Clara** com emojis e seções bem definidas
+2. **Destaque para segurança** (credenciais não versionadas)
+3. **Próximos passos** como checklist
+4. **Comandos prontos para copiar**
+--------------------------------------------------------------------------------------------------------------
