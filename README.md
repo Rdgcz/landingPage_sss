@@ -181,47 +181,54 @@ FIREBASE_STORAGE_BUCKET="seu-projeto.appspot.com"
 ---------------------------------------------------------------------------------------------------
 ## 02/07/2025
 
-Backend - Sitio Sabio Sabia
-Tecnologias: Node.js, Express, Firebase (Auth + Storage), JWT
+Aqui está a síntese completa para seu `README.md`, organizada por tópicos:
 
-🔧 Configuração Inicial
-Variáveis de Ambiente (/.env):
+---
 
-env
-PORT=3001
-JWT_SECRET=sua_chave_aleatoria_aqui
-FIREBASE_STORAGE_BUCKET=seu-projeto.appspot.com
-FIREBASE_PROJECT_ID=seu-projeto-id
-FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxx@seu-projeto.iam.gserviceaccount.com
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n..."
-Instalação:
+# **Backend - Sitio Sabio Sabia**  
+**Tecnologias**: Node.js, Express, Firebase (Auth + Storage), JWT  
 
-bash
-npm install express firebase-admin cors dotenv uuid
-🚀 Funcionalidades Implementadas
-1. Autenticação JWT
-Rotas protegidas com middleware authenticate
+## 🔧 **Configuração Inicial**  
+1. **Variáveis de Ambiente** (`/.env`):  
+   ```env
+   PORT=3001
+   JWT_SECRET=sua_chave_aleatoria_aqui
+   FIREBASE_STORAGE_BUCKET=seu-projeto.appspot.com
+   FIREBASE_PROJECT_ID=seu-projeto-id
+   FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxx@seu-projeto.iam.gserviceaccount.com
+   FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n..."
+   ```
 
-Tokens expiram em 2 horas
+2. **Instalação**:  
+   ```bash
+   npm install express firebase-admin cors dotenv uuid
+   ```
 
-Validação robusta de credenciais
+---
 
-2. Upload de Arquivos
-Suporte a arquivos até 10MB
+## 🚀 **Funcionalidades Implementadas**  
+### **1. Autenticação JWT**  
+- Rotas protegidas com middleware `authenticate`  
+- Tokens expiram em 1 hora  
+- Validação robusta de credenciais  
 
-Tipos permitidos: JPEG, PNG, PDF, TXT
+### **2. Upload de Arquivos**  
+- Suporte a arquivos até 10MB  
+- Tipos permitidos: `JPEG, PNG, PDF, TXT`  
+- Sanitização automática de nomes  
+- URLs temporárias com validade  
 
-Sanitização automática de nomes
+### **3. Rotas Principais**  
+| Método | Rota               | Descrição                  |  
+|--------|--------------------|----------------------------|  
+| `GET`  | `/`                | Verificação do status      |  
+| `POST` | `/api/files/upload`| Upload de arquivos (Base64)|  
+| `GET`  | `/api/files/status`| Health check do Storage    |  
 
-URLs temporárias com validade
+---
 
-3. Rotas Principais
-Método	Rota	Descrição
-GET	/	Verificação do status
-POST	/api/files/upload	Upload de arquivos (Base64)
-GET	/api/files/status	Health check do Storage
-🛠 Estrutura de Arquivos
-text
+## 🛠 **Estrutura de Arquivos**  
+```
 src/
 ├── auth/
 │   ├── middleware.js    # Validação JWT  
@@ -232,17 +239,20 @@ src/
 │   └── storage.js       # Integração Firebase  
 ├── app.js               # Config Express  
 └── startup.js           # Inicialização  
-🔒 Boas Práticas de Segurança
-Chaves privadas nunca commitadas
+```
 
-Validação de payloads com Joi
+---
 
-CORS restrito a domínios autorizados
+## 🔒 **Boas Práticas de Segurança**  
+- Chaves privadas **nunca** commitadas  
+- Validação de payloads com `Joi`  
+- CORS restrito a domínios autorizados  
+- Logs sensíveis ocultos em produção  
 
-Logs sensíveis ocultos em produção
+---
 
-🐞 Solução de Problemas Comuns
-bash
+## 🐞 **Solução de Problemas Comuns**  
+```bash
 # Erro: "Bucket não encontrado"
 Verifique: 
 1. Permissões no Google Cloud IAM  
@@ -250,18 +260,21 @@ Verifique:
 
 # Erro: "Token inválido"
 Renove o JWT_SECRET e reinicie o servidor  
-📈 Próximos Passos
-Implementar rate limiting
+```
 
-Adicionar Swagger para documentação
+---
 
-Configurar HTTPS em produção
+## 📈 **Próximos Passos**  
+- [ ] Implementar rate limiting  
+- [ ] Adicionar Swagger para documentação  
+- [ ] Configurar HTTPS em produção  
 
-[▶️ Executar em desenvolvimento]
-
-bash
+[▶️ **Executar em desenvolvimento**]  
+```bash
 npm run dev
+```  
 
+---
 
 ---------------------------------------------------------------------------------------------------
 ## 03/07/2025 -- **PENDENTE**
