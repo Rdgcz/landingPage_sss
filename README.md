@@ -279,39 +279,33 @@ npm run dev
 ---------------------------------------------------------------------------------------------------
 ## 03/07/2025 -- **PENDENTE**
 
-🔥 Guia Prático: Firebase em Produção para "sitiosabiosabia.com.br"
-📌 Antes de Começar
-Seu cenário atual:
+# 🔥 **Guia Prático: Firebase em Produção para "sitiosabiosabia.com.br"**
 
-Frontend: GitHub Pages (HTML/CSS/JS estático) no domínio sitiosabiosabia.com.br.
+## 📌 **Antes de Começar**
+1. **Seu cenário atual**:
+   - Frontend: GitHub Pages (HTML/CSS/JS estático) no domínio `sitiosabiosabia.com.br`.
+   - Backend: Firebase (Firestore, Auth, Storage, etc.).
+2. **O que precisamos fazer**:
+   - Configurar o Firebase para produção (regras de segurança, domínio personalizado, etc.).
+   - Testar todas as funcionalidades antes de liberar para usuários.
 
-Backend: Firebase (Firestore, Auth, Storage, etc.).
+---
 
-O que precisamos fazer:
+## 🚀 **Passo 1: Configurar o Firebase no Seu Projeto**
+### 1.1 **Acesse o Console do Firebase**
+- Vá para [Firebase Console](https://console.firebase.google.com/).
+- Selecione seu projeto (`sitio-sabio-sabia`).
 
-Configurar o Firebase para produção (regras de segurança, domínio personalizado, etc.).
+### 1.2 **Habilite os Serviços Necessários**
+- **Firestore Database**: Ative e defina regras de segurança.
+- **Authentication**: Habilite provedores (e-mail/senha, Google, etc.).
+- **Storage**: Configure as permissões.
 
-Testar todas as funcionalidades antes de liberar para usuários.
+### 1.3 **Regras de Segurança (Crucial para Produção)**
+Edite as regras no Firebase Console para **Firestore** e **Storage**:
 
-🚀 Passo 1: Configurar o Firebase no Seu Projeto
-1.1 Acesse o Console do Firebase
-Vá para Firebase Console.
-
-Selecione seu projeto (sitio-sabio-sabia).
-
-1.2 Habilite os Serviços Necessários
-Firestore Database: Ative e defina regras de segurança.
-
-Authentication: Habilite provedores (e-mail/senha, Google, etc.).
-
-Storage: Configure as permissões.
-
-1.3 Regras de Segurança (Crucial para Produção)
-Edite as regras no Firebase Console para Firestore e Storage:
-
-Firestore (em firestore.rules):
-
-javascript
+**Firestore (em `firestore.rules`)**:
+```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -321,9 +315,10 @@ service cloud.firestore {
     }
   }
 }
-Storage (em storage.rules):
+```
 
-javascript
+**Storage (em `storage.rules`)**:
+```javascript
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
@@ -332,71 +327,79 @@ service firebase.storage {
     }
   }
 }
-⚠️ Importante: Teste as regras no simulador do Firebase antes de publicar!
+```
 
-🌐 Passo 2: Vincular Seu Domínio ao Firebase
-2.1 Adicione seu domínio no Firebase Hosting
-No Console do Firebase, vá para Hosting.
+> ⚠️ **Importante**: Teste as regras no simulador do Firebase antes de publicar!
 
-Clique em Adicionar domínio e insira sitiosabiosabia.com.br.
+---
 
-Siga as instruções para verificar o domínio (via TXT no DNS).
+## 🌐 **Passo 2: Vincular Seu Domínio ao Firebase**
+### 2.1 **Adicione seu domínio no Firebase Hosting**
+- No Console do Firebase, vá para **Hosting**.
+- Clique em **Adicionar domínio** e insira `sitiosabiosabia.com.br`.
+- Siga as instruções para verificar o domínio (via TXT no DNS).
 
-2.2 Configure o DNS no Registro.br
-Acesse seu painel de domínio (ex: Registro.br).
+### 2.2 **Configure o DNS no Registro.br**
+- Acesse seu painel de domínio (ex: Registro.br).
+- Adicione os registros DNS apontando para o Firebase:
+  ```
+  Tipo: A | Nome: @ | Valor: 199.36.158.100 (IP do Firebase)
+  Tipo: A | Nome: www | Valor: 199.36.158.100
+  ```
 
-Adicione os registros DNS apontando para o Firebase:
+### 2.3 **Forçar HTTPS (Opcional, mas recomendado)**
+No Firebase Hosting, ative a opção **"Redirecionar HTTP para HTTPS"**.
 
-text
-Tipo: A | Nome: @ | Valor: 199.36.158.100 (IP do Firebase)
-Tipo: A | Nome: www | Valor: 199.36.158.100
-2.3 Forçar HTTPS (Opcional, mas recomendado)
-No Firebase Hosting, ative a opção "Redirecionar HTTP para HTTPS".
+---
 
-🧪 Passo 3: Testes em Produção
-3.1 Teste de Autenticação
-Acesse seu site (https://sitiosabiosabia.com.br).
+## 🧪 **Passo 3: Testes em Produção**
+### 3.1 **Teste de Autenticação**
+- Acesse seu site (`https://sitiosabiosabia.com.br`).
+- Tente criar um usuário e fazer login.
+- Verifique no Firebase Console se o usuário aparece em **Authentication**.
 
-Tente criar um usuário e fazer login.
+### 3.2 **Teste de Firestore/Storage**
+- Faça upload de uma imagem (Storage).
+- Crie um documento no Firestore.
+- Verifique no Console se os dados foram salvos.
 
-Verifique no Firebase Console se o usuário aparece em Authentication.
+### 3.3 **Teste de Performance**
+- Use o [Lighthouse](https://developers.google.com/web/tools/lighthouse) para auditar seu site.
 
-3.2 Teste de Firestore/Storage
-Faça upload de uma imagem (Storage).
+---
 
-Crie um documento no Firestore.
+## 🔒 **Passo 4: Monitoramento e Manutenção**
+### 4.1 **Ative Alertas no Firebase**
+- Vá para **Project Settings > Monitoring**.
+- Configure alertas para falhas de autenticação, aumento de tráfego, etc.
 
-Verifique no Console se os dados foram salvos.
+### 4.2 **Backup dos Dados**
+- **Firestore**: Use `firestore-backup-restore` para backups automáticos.
+- **Storage**: Habilite versionamento no Google Cloud Storage.
 
-3.3 Teste de Performance
-Use o Lighthouse para auditar seu site.
+---
 
-🔒 Passo 4: Monitoramento e Manutenção
-4.1 Ative Alertas no Firebase
-Vá para Project Settings > Monitoring.
+## 📋 **Checklist Final**
+| Tarefa | Status (✔/✖) |
+|--------|--------------|
+| Regras de segurança publicadas | |
+| Domínio vinculado ao Firebase | |
+| HTTPS funcionando | |
+| Testes de autenticação concluídos | |
+| Testes de Firestore/Storage OK | |
+| Alertas configurados | |
 
-Configure alertas para falhas de autenticação, aumento de tráfego, etc.
+---
 
-4.2 Backup dos Dados
-Firestore: Use firestore-backup-restore para backups automáticos.
+## ❓ **Dúvidas Comuns**
+### **1. Como atualizar o site no GitHub Pages sem perder as configurações do Firebase?**
+- Seu frontend (GitHub Pages) e backend (Firebase) são independentes. Basta atualizar o código no GitHub normalmente.
 
-Storage: Habilite versionamento no Google Cloud Storage.
+### **2. Posso usar o mesmo domínio para GitHub Pages e Firebase Hosting?**
+- Não. O domínio principal (`sitiosabiosabia.com.br`) deve apontar para **um só serviço** (GitHub Pages **ou** Firebase Hosting). Recomendo:
+  - Use `sitiosabiosabia.com.br` para GitHub Pages (frontend).
+  - Use `api.sitiosabiosabia.com.br` para Firebase (backend).
 
-📋 Checklist Final
-Tarefa	Status (✔/✖)
-Regras de segurança publicadas	
-Domínio vinculado ao Firebase	
-HTTPS funcionando	
-Testes de autenticação concluídos	
-Testes de Firestore/Storage OK	
-Alertas configurados	
-❓ Dúvidas Comuns
-1. Como atualizar o site no GitHub Pages sem perder as configurações do Firebase?
-Seu frontend (GitHub Pages) e backend (Firebase) são independentes. Basta atualizar o código no GitHub normalmente.
+---
 
-2. Posso usar o mesmo domínio para GitHub Pages e Firebase Hosting?
-Não. O domínio principal (sitiosabiosabia.com.br) deve apontar para um só serviço (GitHub Pages ou Firebase Hosting). Recomendo:
-
-Use sitiosabiosabia.com.br para GitHub Pages (frontend).
-
-Use api.sitiosabiosabia.com.br para Firebase (backend).
+-------------------------------------------------------------------------------------------------------------------------------------------
