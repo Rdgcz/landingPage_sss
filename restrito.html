@@ -3,820 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Área restrita do Sítio Sábio Sabiá - Gestão de documentos e arquivos">
-    <meta name="keywords" content="área restrita, gestão de arquivos, Sítio Sábio Sabiá, administração">
-    <meta name="author" content="Sítio Sábio Sabiá">
-    <meta name="theme-color" content="var(--marrom-escuro)">
-    <meta name="robots" content="noindex, nofollow">		
-    
-    <!-- Preload -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-      as="style" 
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
-      crossorigin="anonymous" fetchpriority="high">
-    
-    <!-- Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="../assets/images/brand/favicon/favicon-android-chrome-512x512.png" type="image/png">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <title>Área Restrita | Sítio Sábio Sabiá</title>
     
-<style>
-    /* === VARIÁVEIS CSS === */
-    :root {
-        /* Cores */
-        --laranja-ouro: #EAA731;
-        --marrom-escuro: #362219;
-        --terracota: #A0470D;
-        --taupe: #A67958;
-        --fundo: #F8F1E5;
-        --bordas: #D9C7B8;
-        --destaque: #8C3A10;
-        --texto: #3E2723;
-        --branco: #FFFFFF;
-        --sombra: rgba(0, 0, 0, 0.1);
-        --perigo: #C62828;
-        
-        /* Tipografia */
-        --fonte-principal: 'Merriweather', serif;
-        --fonte-secundaria: system-ui, sans-serif;
-        --peso-regular: 400;
-        --peso-bold: 700;
-        
-        /* Espaçamentos */
-        --espaco-base: 1rem;
-        --espaco-pequeno: 0.5rem;
-        --espaco-medio: 1.5rem;
-        --espaco-grande: 2rem;
-        
-        /* Bordas */
-        --raio-borda: 8px;
-        --raio-borda-pequeno: 4px;
-        
-        /* Transições */
-        --transicao-rapida: 0.2s ease;
-        --transicao-media: 0.3s ease;
-    }
-
-    /* === RESET E BASE === */
-    *, *::before, *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    html {
-        scroll-behavior: smooth;
-        font-size: 16px;
-    }
-
-    body {
-        font-family: var(--fonte-principal);
-        background-color: var(--fundo);
-        color: var(--texto);
-        line-height: 1.6;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        min-height: 100vh;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* === TIPOGRAFIA === */
-    h1, h2, h3, h4 {
-        font-family: var(--fonte-principal);
-        line-height: 1.2;
-        font-weight: var(--peso-bold);
-        margin-bottom: var(--espaco-pequeno);
-    }
-
-    h1 { 
-        font-size: clamp(1.5rem, 3vw, 1.8rem);
-        color: var(--branco);
-    }
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     
-    h2 { 
-        font-size: clamp(1.3rem, 2.5vw, 1.6rem);
-        color: var(--terracota);
-        margin-bottom: var(--espaco-medio);
-        position: relative;
-        padding-bottom: var(--espaco-pequeno);
-    }
-    
-    h2::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 60px;
-        height: 3px;
-        background-color: var(--taupe);
-    }
-
-    h3 {
-        font-size: clamp(1.1rem, 2vw, 1.3rem);
-        color: var(--marrom-escuro);
-        margin-bottom: var(--espaco-base);
-    }
-
-    p {
-        margin-bottom: var(--espaco-medio);
-    }
-
-    a {
-        color: var(--destaque);
-        text-decoration: none;
-        transition: color var(--transicao-rapida);
-    }
-
-    a:hover {
-        color: var(--terracota);
-        text-decoration: underline;
-    }
-
-    /* === IMAGENS === */
-    img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        border-radius: var(--raio-borda-pequeno);
-    }
-
-    /* === LAYOUT === */
-    .container {
-        width: 100%;
-        margin: 0 auto;
-        padding: 0 ;
-    }
-
-    /* === CABEÇALHO === */
-    header {
-        background-color: var(--terracota);
-        color: var(--branco);
-        padding: var(--espaco-base);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: var(--espaco-pequeno);
-    }
-
-    .logo-container {
-        display: flex;
-        align-items: center;
-        gap: var(--espaco-pequeno);
-    }
-
-    .logo {
-        width: clamp(60px, 10vw, 80px);
-        height: auto;
-    }
-
-    /* === NAVEGAÇÃO === */
-    nav {
-        background-color: var(--marrom-escuro);
-    }
-
-    nav ul {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        gap: var(--espaco-grande);
-        flex-wrap: wrap;
-        padding: var(--espaco-pequeno) 0;
-    }
-
-    nav a {
-        color: var(--bordas);
-        text-decoration: none;
-        font-weight: var(--peso-bold);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: color var(--transicao-media);
-        padding: var(--espaco-pequeno) 0;
-        font-size: clamp(0.8rem, 2vw, 1rem);
-    }
-
-    nav a:hover,
-    nav a:focus {
-        color: var(--laranja-ouro);
-        text-decoration: none;
-    }
-
-/* === DASHBOARD E CALENDÁRIO === */
-.dashboard-section {
-    display: flex;
-    margin: var(--espaco-medio) auto;
-    max-width: 100%;
-    padding: 0;
-    gap: var(--espaco-medio);
-}
-
-.calendario-container {
-    flex: 1;
-    max-width: 35%;
-}
-
-.calendario {
-    background: var(--branco);
-    border-radius: var(--raio-borda);
-    box-shadow: 0 2px 6px var(--sombra);
-    padding: var(--espaco-pequeno);
-    height: 200px;
-    overflow: hidden;
-}
-
-.calendario-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--espaco-pequeno);
-}
-
-.calendario-header h3 {
-    font-size: 0.9rem;
-    margin: 0;
-    color: var(--marrom-escuro);
-}
-
-.calendario-header button {
-    background: none;
-    border: none;
-    color: var(--terracota);
-    cursor: pointer;
-    font-size: 0.8rem;
-}
-
-.dias-semana {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    font-size: 0.7rem;
-    color: var(--taupe);
-    margin-bottom: 2px;
-}
-
-.dias-mes {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
-}
-
-.dias-mes span {
-    font-size: 0.7rem;
-    text-align: center;
-    padding: 2px;
-    border-radius: 2px;
-}
-
-.dias-mes span.compromisso {
-    background-color: var(--laranja-ouro);
-    color: white;
-}
-
-.dias-mes span.hoje {
-    border: 1px solid var(--terracota);
-}
-
-.dashboard-container {
-    flex: 3;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--espaco-pequeno);
-}
-
-.dashboard-card {
-    background: var(--branco);
-    border-radius: var(--raio-borda);
-    box-shadow: 0 2px 6px var(--sombra);
-    padding: auto;
-    text-align: center;
-}
-
-.dashboard-card h3 {
-    font-size: 0.9rem;
-    margin-bottom: var(--espaco-pequeno);
-    color: var(--marrom-escuro);
-}
-
-.dashboard-value {
-    font-size: 1.5rem;
-    font-weight: var(--peso-bold);
-    color: var(--terracota);
-}
-
-.dashboard-label {
-    font-size: 0.7rem;
-    color: var(--taupe);
-}
-
-/* === GRID DE MÓDULOS === */
-.grid-section {
-    max-width: 100%;
-    margin: var(--espaco-grande) auto;
-    padding: 0 ;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: var(--espaco-medio);
-    color: var(--terracota);
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: var(--espaco-medio);
-}
-
-.grid-card {
-    background: var(--branco);
-    border-radius: var(--raio-borda);
-    box-shadow: 0 2px 6px var(--sombra);
-    padding: var(--espaco-medio);
-    text-align: center;
-    transition: transform var(--transicao-media), box-shadow var(--transicao-media);
-    color: var(--texto);
-    border-top: 3px solid var(--laranja-ouro);
-}
-
-.grid-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    text-decoration: none;
-}
-
-.grid-card i {
-    font-size: 2rem;
-    color: var(--terracota);
-    margin-bottom: var(--espaco-pequeno);
-}
-
-.grid-card h3 {
-    margin-bottom: var(--espaco-pequeno);
-    color: var(--marrom-escuro);
-}
-
-.grid-card p {
-    font-size: 0.9rem;
-    color: var(--taupe);
-    margin-bottom: 0;
-}
-
-/* === RESPONSIVIDADE === */
-@media (max-width: 768px) {
-    .dashboard-section {
-        flex-direction: column;
-        padding: 0 var(--espaco-base);
-    }
-    
-    .calendario-container {
-        max-width: 100%;
-    }
-    
-    .dashboard-container {
-        grid-template-columns: 1fr;
-        height: auto;
-    }
-    
-    .grid-container {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .grid-container {
-        grid-template-columns: 1fr;
-    }
-}
-    
-    /* === CONTEÚDO PRINCIPAL === */
-    main {
-        padding: var(--espaco-grande);
-        flex: 1;
-    }
-
-    .card {
-        background-color: var(--branco);
-        border-radius: var(--raio-borda);
-        padding: var(--espaco-medio);
-        margin-bottom: var(--espaco-medio);
-        box-shadow: 0 2px 6px var(--sombra);
-        border-top: 3px solid var(--laranja-ouro);
-    }
-
-    /* === BOTÕES === */
-    .btn {
-        display: inline-block;
-        background-color: var(--laranja-ouro);
-        color: var(--marrom-escuro);
-        padding: 0.6rem 1.2rem;
-        border-radius: var(--raio-borda-pequeno);
-        text-decoration: none;
-        font-weight: var(--peso-bold);
-        border: 2px solid transparent;
-        transition: all var(--transicao-media);
-        cursor: pointer;
-        font-size: 0.9rem;
-    }
-
-    .btn:hover,
-    .btn:focus {
-        background-color: var(--destaque);
-        color: var(--branco);
-        border-color: var(--laranja-ouro);
-        transform: translateY(-2px);
-        text-decoration: none;
-    }
-
-    .btn-perigo {
-        background-color: var(--perigo);
-        color: var(--branco);
-    }
-
-    .btn-perigo:hover {
-        background-color: #B71C1C;
-        color: var(--branco);
-    }
-
-    /* === FORMULÁRIOS E INPUTS === */
-    input[type="text"],
-    input[type="search"],
-    input[type="file"] {
-        width: 100%;
-        padding: 0.6rem 0.8rem;
-        border: 1px solid var(--bordas);
-        border-radius: var(--raio-borda-pequeno);
-        font-family: var(--fonte-principal);
-        transition: border-color var(--transicao-rapida);
-    }
-
-    input[type="text"]:focus,
-    input[type="search"]:focus {
-        outline: none;
-        border-color: var(--laranja-ouro);
-    }
-
-    /* === FILE MANAGER === */
-    #breadcrumb {
-        margin: var(--espaco-base) 0;
-        font-size: 0.9rem;
-        color: var(--taupe);
-    }
-
-    #breadcrumb button {
-        background: none;
-        border: none;
-        color: var(--destaque);
-        cursor: pointer;
-        padding: 0.2rem 0.5rem;
-        font-family: var(--fonte-principal);
-        font-size: 0.9rem;
-    }
-
-    #breadcrumb button:hover {
-        color: var(--terracota);
-        text-decoration: underline;
-    }
-
-    #breadcrumb .separator {
-        color: var(--taupe);
-        margin: 0 0.3rem;
-    }
-
-    #file-manager {
-        display: grid;
-        grid-template-columns: 250px 1fr;
-        gap: var(--espaco-medio);
-    }
-
-    #search-container {
-        margin-bottom: var(--espaco-base);
-    }
-
-    #search-input {
-        width: 100%;
-        padding: 0.5rem 0.8rem;
-        border: 1px solid var(--bordas);
-        border-radius: var(--raio-borda-pequeno);
-    }
-
-    #subpastas, #arquivos {
-        background: var(--branco);
-        padding: var(--espaco-base);
-        border-radius: var(--raio-borda);
-        box-shadow: 0 2px 6px var(--sombra);
-    }
-
-    .folder, .file {
-        padding: 0.6rem;
-        margin: 0.3rem 0;
-        cursor: pointer;
-        border-radius: var(--raio-borda-pequeno);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: background-color var(--transicao-rapida);
-    }
-
-    .folder:hover, .file:hover {
-        background-color: rgba(234, 167, 49, 0.1);
-    }
-
-    .folder i {
-        color: var(--laranja-ouro);
-        margin-right: 0.5rem;
-    }
-
-    .file i {
-        color: var(--taupe);
-        margin-right: 0.5rem;
-        width: 1.2rem;
-        text-align: center;
-    }
-
-    .file-size {
-        color: var(--taupe);
-        font-size: 0.8rem;
-        margin-left: 0.5rem;
-    }
-
-    .file-actions {
-        display: flex;
-        gap: var(--espaco-pequeno);
-        margin-top: var(--espaco-base);
-        flex-wrap: wrap;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 0.3rem;
-    }
-
-    .action-buttons button {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-        min-width: auto;
-    }
-
-    #image-preview {
-        margin-top: var(--espaco-base);
-        text-align: center;
-        display: none;
-    }
-
-    #preview {
-        max-width: 100%;
-        max-height: 200px;
-        border-radius: var(--raio-borda-pequeno);
-        box-shadow: 0 2px 6px var(--sombra);
-    }
-
-    #upload-progress {
-        width: 100%;
-        display: none;
-        margin-top: var(--espaco-pequeno);
-        height: 6px;
-        border-radius: 3px;
-        appearance: none;
-        -webkit-appearance: none;
-    }
-
-    #upload-progress::-webkit-progress-bar {
-        background-color: var(--bordas);
-        border-radius: 3px;
-    }
-
-    #upload-progress::-webkit-progress-value {
-        background-color: var(--laranja-ouro);
-        border-radius: 3px;
-    }
-
-    .loading {
-        text-align: center;
-        padding: var(--espaco-base);
-        color: var(--taupe);
-    }
-
-    .loading i {
-        margin-right: 0.5rem;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: var(--espaco-base);
-        color: var(--taupe);
-        font-style: italic;
-    }
-
-    /* === RODAPÉ === */
-    footer {
-        background-color: var(--marrom-escuro);
-        color: var(--fundo);
-        text-align: center;
-        padding: var(--espaco-medio);
-        margin-top: auto;
-        font-size: 0.9rem;
-    }
-
-    /* === ANIMAÇÕES === */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .fade-in {
-        animation: fadeIn 0.8s ease-out forwards;
-    }
-
-    /* === RESPONSIVIDADE === */
-    @media (max-width: 768px) {
-        #file-manager {
-            grid-template-columns: 1fr;
-        }
-
-        header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: var(--espaco-pequeno);
-        }
-
-        .file-actions {
-            flex-direction: column;
-        }
-
-        .btn {
-            width: 100%;
-            margin-bottom: var(--espaco-pequeno);
-            justify-content: center;
-        }
-
-        .folder, .file {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: var(--espaco-pequeno);
-        }
-
-        .action-buttons {
-            align-self: flex-end;
-        }
-    }
-
-    @media (max-width: 480px) {
+    <!-- ViewerJS para visualização de documentos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js"></script>
+
+    <style>
         :root {
-            --espaco-base: 0.8rem;
-            --espaco-medio: 1rem;
-            --espaco-grande: 1.2rem;
+            --laranja-ouro: #EAA731;
+            --marrom-escuro: #362219;
+            --terracota: #A0470D;
+            --taupe: #A67958;
+            --fundo: #F8F1E5;
+            --branco: #FFFFFF;
+            --perigo: #C62828;
+            --raio-borda: 8px;
+            --fonte-principal: 'Merriweather', serif;
         }
-    }
-</style>
+        
+        body {
+            font-family: var(--fonte-principal);
+            background-color: var(--fundo);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: var(--terracota);
+            color: var(--branco);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 50px;
+        }
+        
+        nav {
+            background-color: var(--marrom-escuro);
+            padding: 0.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav a {
+            color: var(--fundo);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .card {
+            background: var(--branco);
+            border-radius: var(--raio-borda);
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            background: var(--laranja-ouro);
+            color: var(--marrom-escuro);
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: var(--terracota);
+            color: var(--branco);
+        }
+        
+        .btn-perigo {
+            background: var(--perigo);
+            color: var(--branco);
+        }
+        
+        .btn-sm {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+        
+        #file-manager {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1.5rem;
+        }
+        
+        #subpastas, #arquivos {
+            background: var(--branco);
+            padding: 1rem;
+            border-radius: var(--raio-borda);
+        }
+        
+        .folder, .file {
+            padding: 0.6rem;
+            margin: 0.3rem 0;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .folder:hover, .file:hover {
+            background: rgba(234, 167, 49, 0.1);
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        #upload-progress {
+            width: 100%;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        /* Preview styles */
+        #preview-container {
+            margin-top: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: var(--raio-borda);
+            padding: 1rem;
+            display: none;
+        }
+        
+        #preview-content {
+            max-height: 500px;
+            overflow: auto;
+        }
+        
+        /* Advanced search */
+        .search-panel {
+            background: var(--branco);
+            padding: 1rem;
+            border-radius: var(--raio-borda);
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .search-filter {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .search-filter label {
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: var(--marrom-escuro);
+            color: var(--fundo);
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            #file-manager {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<body itemscope itemtype="https://schema.org/WebPage">
+<body>
     <header>
         <div class="logo-container">
-            <img src="../assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Sítio Sábio Sabiá" class="logo" itemprop="logo" width="80" height="80" fetchpriority="high" decoding="async">
+            <img src="../assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Sítio Sábio Sabiá" class="logo">
         </div>
-        
-        <div class="header-text">
-            <h1 itemprop="headline">Área Restrita - Sítio Sábio Sabiá</h1>
-        </div>
-        
-        <button id="logout-btn" class="btn btn-perigo" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        <h1>Área Restrita</h1>
+        <button id="logout-btn" class="btn btn-perigo"><i class="fas fa-sign-out-alt"></i> Sair</button>
     </header>
 
-    <nav aria-label="Navegação principal">
-        <ul role="menubar">
-            <li role="none"><a href="../index.html" role="menuitem">Página Inicial</a></li>
-            <li role="none"><a href="../cunha.html" role="menuitem">Cunha</a></li>
-            <li role="none"><a href="../galeria.html" role="menuitem">Galeria</a></li>
-            <li role="none"><a href="../contato.html" role="menuitem">Contato</a></li>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Página Inicial</a></li>
+            <li><a href="../cunha.html">Cunha</a></li>
+            <li><a href="../galeria.html">Galeria</a></li>
+            <li><a href="../contato.html">Contato</a></li>
         </ul>
     </nav>
-<section class="dashboard-section">
-    <div class="calendario-container">
-        <div class="calendario">
-            <div class="calendario-header">
-                <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
-                <h3 id="current-month">Junho 2023</h3>
-                <button id="next-month"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <div class="dias-semana">
-                <span>Dom</span>
-                <span>Seg</span>
-                <span>Ter</span>
-                <span>Qua</span>
-                <span>Qui</span>
-                <span>Sex</span>
-                <span>Sáb</span>
-            </div>
-            <div class="dias-mes" id="dias-mes">
-                <!-- Dias serão preenchidos via JavaScript -->
-            </div>
-        </div>
-    </div>
-    
-    <div class="dashboard-container">
-        <div class="dashboard-card">
-            <h3><i class="fas fa-users"></i> Visitantes</h3>
-            <div class="dashboard-value">24</div>
-            <div class="dashboard-label">Este mês</div>
-        </div>
-        <div class="dashboard-card">
-            <h3><i class="fas fa-bed"></i> Reservas</h3>
-            <div class="dashboard-value">8</div>
-            <div class="dashboard-label">Ativas</div>
-        </div>
-        <div class="dashboard-card">
-            <h3><i class="fas fa-utensils"></i> Refeições</h3>
-            <div class="dashboard-value">12</div>
-            <div class="dashboard-label">Próximas</div>
-        </div>
-    </div>
-</section>
-    <main class="fade-in" itemprop="mainContentOfPage">
-        <div id="breadcrumb" aria-label="Rastro de navegação">
-            <span itemscope itemtype="https://schema.org/BreadcrumbList">
-                <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                    <button onclick="listarArquivos('')"><i class="fas fa-home"></i> Home</button>
-                    <meta itemprop="position" content="1">
-                </span>
-            </span>
-        </div>
-        
+
+    <main>
         <div class="card">
+            <div class="search-panel">
+                <div style="display: flex; gap: 1rem;">
+                    <input type="search" id="search-input" placeholder="Buscar por nome..." style="flex: 1; padding: 0.5rem;">
+                    <button id="advanced-search-toggle" class="btn btn-sm">
+                        <i class="fas fa-sliders-h"></i> Filtros
+                    </button>
+                    <button id="clear-search" class="btn btn-sm btn-perigo">
+                        <i class="fas fa-times"></i> Limpar
+                    </button>
+                </div>
+                
+                <div id="advanced-search" style="display: none; margin-top: 1rem;">
+                    <div class="search-filters">
+                        <div class="search-filter">
+                            <label for="search-type">Tipo de arquivo</label>
+                            <select id="search-type" class="form-control">
+                                <option value="">Todos</option>
+                                <option value="image">Imagens</option>
+                                <option value="pdf">PDF</option>
+                                <option value="document">Documentos</option>
+                                <option value="spreadsheet">Planilhas</option>
+                                <option value="video">Vídeos</option>
+                                <option value="audio">Áudios</option>
+                            </select>
+                        </div>
+                        
+                        <div class="search-filter">
+                            <label for="search-size">Tamanho</label>
+                            <select id="search-size" class="form-control">
+                                <option value="">Qualquer tamanho</option>
+                                <option value="small">Pequeno (0-1MB)</option>
+                                <option value="medium">Médio (1-5MB)</option>
+                                <option value="large">Grande (5MB+)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="search-filter">
+                            <label for="search-date">Data</label>
+                            <select id="search-date" class="form-control">
+                                <option value="">Qualquer data</option>
+                                <option value="today">Hoje</option>
+                                <option value="week">Esta semana</option>
+                                <option value="month">Este mês</option>
+                                <option value="year">Este ano</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="file-manager">
                 <div id="subpastas">
                     <h3><i class="fas fa-folder"></i> Pastas</h3>
-                    <div id="search-container">
-                        <input type="search" id="search-input" placeholder="Buscar..." oninput="filterFiles()">
-                    </div>
-                    <div id="folders-list" class="loading">
-                        <i class="fas fa-spinner fa-spin"></i> Carregando pastas...
-                    </div>
+                    <div id="folders-list">Carregando pastas...</div>
                 </div>
                 
                 <div id="arquivos">
                     <h3><i class="fas fa-file"></i> Arquivos</h3>
-                    <div id="files-list" class="loading">
-                        <i class="fas fa-spinner fa-spin"></i> Carregando arquivos...
-                    </div>
+                    <div id="files-list">Carregando arquivos...</div>
                     
-                    <div id="image-preview">
-                        <img id="preview" alt="Pré-visualização da imagem">
+                    <div id="preview-container">
+                        <h4>Pré-visualização</h4>
+                        <div id="preview-content"></div>
                     </div>
-                    
-                    <progress id="upload-progress" value="0" max="100"></progress>
                     
                     <div class="file-actions">
-                        <input type="file" id="fileInput" style="display: none;">
+                        <input type="file" id="fileInput" style="display: none;" multiple>
                         <button class="btn" onclick="document.getElementById('fileInput').click()">
-                            <i class="fas fa-upload"></i> Enviar Arquivo
+                            <i class="fas fa-upload"></i> Enviar Arquivo(s)
                         </button>
                         <button class="btn" onclick="criarPasta()">
                             <i class="fas fa-folder-plus"></i> Nova Pasta
                         </button>
                     </div>
+                    
+                    <progress id="upload-progress" value="0" max="100"></progress>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer itemscope itemtype="https://schema.org/WPFooter">
-        <p>© <span id="current-year" itemprop="copyrightYear"></span> - <span itemprop="copyrightHolder">Sítio Sábio Sabiá</span> - Todos os direitos reservados.</p>
-        <p itemprop="email">sitiosabiosabia@gmail.com</p>
+    <footer>
+        <p>© <span id="current-year"></span> - Sítio Sábio Sabiá</p>
     </footer>
 
-    <script type="module">
-        onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        window.location.href = "login.html";
-    } else {
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { 
-            getAuth, 
-            onAuthStateChanged, 
-            signOut 
-        } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-        import { 
-            getStorage,
-            ref,
-            uploadBytes,
-            uploadBytesResumable,
-            getDownloadURL,
-            listAll,
-            deleteObject,
-            getMetadata
-        } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js";
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
         // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyC0O5QqfQae3K9-Ku9-tnpGS-ko82h10JI",
@@ -828,162 +336,152 @@
         };
 
         // Inicializa o Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const storage = getStorage(app);
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const storage = firebase.storage();
 
         // Variáveis globais
         let currentUser = null;
         let currentPath = '';
         let allFiles = [];
         let allFolders = [];
+        let viewer = null; // Para o visualizador de documentos
 
-        // Verifica autenticação
-        onAuthStateChanged(auth, (user) => {
+        // Verifica autenticação ao carregar
+        auth.onAuthStateChanged((user) => {
             if (!user) {
                 window.location.href = "login.html";
             } else {
                 currentUser = user;
-                listarArquivos('');
                 document.getElementById('current-year').textContent = new Date().getFullYear();
+                listarArquivos('');
+                setupEventListeners();
             }
         });
 
-        // Função para listar arquivos e pastas
+        // Configura os listeners de eventos
+        function setupEventListeners() {
+            // Busca avançada
+            document.getElementById('advanced-search-toggle').addEventListener('click', function() {
+                const advancedSearch = document.getElementById('advanced-search');
+                advancedSearch.style.display = advancedSearch.style.display === 'none' ? 'block' : 'none';
+                this.innerHTML = advancedSearch.style.display === 'none' ? 
+                    '<i class="fas fa-sliders-h"></i> Filtros' : 
+                    '<i class="fas fa-times"></i> Fechar';
+            });
+            
+            // Limpar busca
+            document.getElementById('clear-search').addEventListener('click', function() {
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-type').value = '';
+                document.getElementById('search-size').value = '';
+                document.getElementById('search-date').value = '';
+                filterFiles();
+            });
+            
+            // Input de busca
+            document.getElementById('search-input').addEventListener('input', filterFiles);
+            document.getElementById('search-type').addEventListener('change', filterFiles);
+            document.getElementById('search-size').addEventListener('change', filterFiles);
+            document.getElementById('search-date').addEventListener('change', filterFiles);
+            
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                auth.signOut().then(() => {
+                    window.location.href = "login.html";
+                }).catch(error => {
+                    console.error("Erro ao fazer logout:", error);
+                });
+            });
+            
+            // Upload múltiplo
+            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+        }
+
+        // Função para listar arquivos
         async function listarArquivos(path) {
             if (!currentUser) return;
             
             currentPath = path;
-            document.getElementById('folders-list').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando pastas...</div>';
-            document.getElementById('files-list').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando arquivos...</div>';
+            document.getElementById('folders-list').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando pastas...';
+            document.getElementById('files-list').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando arquivos...';
+            hidePreview();
             
             try {
-                const folderRef = ref(storage, `documentos/${currentUser.uid}/${path}`);
-                const result = await listAll(folderRef);
+                const storageRef = storage.ref(`documentos/${currentUser.uid}/${path}`);
+                const result = await storageRef.listAll();
                 
-                // Ordena resultados
+                // Ordena os resultados
                 result.prefixes.sort((a, b) => a.name.localeCompare(b.name));
                 result.items.sort((a, b) => a.name.localeCompare(b.name));
-                
-                // Atualiza breadcrumb
-                updateBreadcrumb(path);
                 
                 // Armazena para busca
                 allFolders = result.prefixes;
                 allFiles = result.items;
                 
-                // Exibe subpastas
-                displayFolders(result.prefixes);
-                
-                // Exibe arquivos
-                displayFiles(result.items);
+                // Exibe os resultados
+                displayFolders(allFolders);
+                displayFiles(allFiles);
                 
             } catch (error) {
-                console.error("Erro ao listar arquivos:", error);
-                showError();
+                console.error("Erro:", error);
+                document.getElementById('folders-list').innerHTML = '<div style="color:var(--perigo)">Erro ao carregar pastas</div>';
+                document.getElementById('files-list').innerHTML = '<div style="color:var(--perigo)">Erro ao carregar arquivos</div>';
             }
         }
 
-        // Atualiza o breadcrumb
-        function updateBreadcrumb(path) {
-            if (path === '') {
-                document.getElementById('breadcrumb').innerHTML = `
-                    <button onclick="listarArquivos('')"><i class="fas fa-home"></i> Home</button>
+        // Exibe as pastas
+        function displayFolders(folders) {
+            let foldersHTML = '';
+            
+            folders.forEach(folder => {
+                foldersHTML += `
+                    <div class="folder" onclick="listarArquivos('${currentPath}${folder.name}/')">
+                        <div><i class="fas fa-folder"></i> ${folder.name}</div>
+                    </div>
                 `;
-                return;
-            }
-            
-            const parts = path.split('/').filter(part => part !== '');
-            let breadcrumbHTML = '<button onclick="listarArquivos(\'\')"><i class="fas fa-home"></i> Home</button>';
-            let currentPath = '';
-            
-            parts.forEach((part, index) => {
-                currentPath += `${part}/`;
-                breadcrumbHTML += ` <span class="separator">/</span> <button onclick="listarArquivos('${currentPath}')"><i class="fas fa-folder"></i> ${part}</button>`;
             });
             
-            document.getElementById('breadcrumb').innerHTML = breadcrumbHTML;
+            document.getElementById('folders-list').innerHTML = foldersHTML || '<div>Nenhuma pasta encontrada</div>';
         }
 
-        // Exibe subpastas
-        async function displayFolders(folders) {
-            if (folders.length > 0) {
-                let foldersHTML = '';
-                
-                for (const folder of folders) {
-                    foldersHTML += `
-                        <div class="folder" onclick="listarArquivos('${currentPath}${folder.name}/')">
-                            <div><i class="fas fa-folder"></i> ${folder.name}</div>
-                        </div>
-                    `;
-                }
-                
-                document.getElementById('folders-list').innerHTML = foldersHTML;
-            } else {
-                document.getElementById('folders-list').innerHTML = '<div class="empty-state">Nenhuma subpasta encontrada</div>';
-            }
-        }
-
-        // Exibe arquivos
+        // Exibe os arquivos
         async function displayFiles(files) {
-            if (files.length > 0) {
-                let filesHTML = '';
+            let filesHTML = '';
+            
+            for (const file of files) {
+                const metadata = await file.getMetadata();
+                const sizeKB = Math.round(metadata.size / 1024);
+                const uploadedAt = new Date(metadata.timeCreated).toLocaleDateString();
+                const fileType = getFileType(file.name);
                 
-                for (const file of files) {
-                    const metadata = await getMetadata(file);
-                    const sizeKB = Math.round(metadata.size / 1024);
-                    
-                    filesHTML += `
-                        <div class="file">
-                            <div>
-                                <i class="fas ${getFileIcon(file.name)}"></i> ${file.name}
-                                <span class="file-size">${sizeKB} KB</span>
-                            </div>
-                            <div class="action-buttons">
-                                <button class="btn" onclick="downloadFile('${currentPath}${file.name}')" title="Baixar">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button class="btn btn-perigo" onclick="deleteFile('${currentPath}${file.name}')" title="Excluir">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                filesHTML += `
+                    <div class="file" data-type="${fileType}" data-size="${metadata.size}" data-date="${metadata.timeCreated}">
+                        <div onclick="previewFile('${currentPath}${file.name}', '${fileType}')">
+                            <i class="fas ${getFileIcon(file.name)}"></i> ${file.name}
+                            <small>(${sizeKB} KB, ${uploadedAt})</small>
                         </div>
-                    `;
-                }
-                
-                document.getElementById('files-list').innerHTML = filesHTML;
-            } else {
-                document.getElementById('files-list').innerHTML = '<div class="empty-state">Nenhum arquivo encontrado</div>';
+                        <div>
+                            <button class="btn btn-sm" onclick="downloadFile('${currentPath}${file.name}')">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-sm btn-perigo" onclick="deleteFile('${currentPath}${file.name}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
             }
-        }
-
-        // Retorna ícone conforme tipo de arquivo
-        function getFileIcon(filename) {
-            const ext = filename.split('.').pop().toLowerCase();
-            const icons = {
-                pdf: 'fa-file-pdf',
-                doc: 'fa-file-word',
-                docx: 'fa-file-word',
-                xls: 'fa-file-excel',
-                xlsx: 'fa-file-excel',
-                ppt: 'fa-file-powerpoint',
-                pptx: 'fa-file-powerpoint',
-                jpg: 'fa-file-image',
-                jpeg: 'fa-file-image',
-                png: 'fa-file-image',
-                gif: 'fa-file-image',
-                txt: 'fa-file-alt',
-                zip: 'fa-file-archive',
-                rar: 'fa-file-archive',
-                mp3: 'fa-file-audio',
-                mp4: 'fa-file-video'
-            };
-            return icons[ext] || 'fa-file';
+            
+            document.getElementById('files-list').innerHTML = filesHTML || '<div>Nenhum arquivo encontrado</div>';
         }
 
         // Filtra arquivos/pastas
         function filterFiles() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const fileType = document.getElementById('search-type').value;
+            const fileSize = document.getElementById('search-size').value;
+            const fileDate = document.getElementById('search-date').value;
             
             // Filtra pastas
             const filteredFolders = allFolders.filter(folder => 
@@ -992,90 +490,237 @@
             displayFolders(filteredFolders);
             
             // Filtra arquivos
-            const filteredFiles = allFiles.filter(file => 
-                file.name.toLowerCase().includes(searchTerm)
-            );
+            const filteredFiles = allFiles.filter(file => {
+                const matchesSearch = file.name.toLowerCase().includes(searchTerm);
+                const matchesType = !fileType || getFileType(file.name) === fileType;
+                
+                let matchesSize = true;
+                if (fileSize) {
+                    const size = file._size || 0;
+                    if (fileSize === 'small') matchesSize = size < 1024 * 1024;
+                    else if (fileSize === 'medium') matchesSize = size >= 1024 * 1024 && size < 5 * 1024 * 1024;
+                    else if (fileSize === 'large') matchesSize = size >= 5 * 1024 * 1024;
+                }
+                
+                let matchesDate = true;
+                if (fileDate) {
+                    const fileDateObj = new Date(file._timeCreated || 0);
+                    const today = new Date();
+                    
+                    if (fileDate === 'today') {
+                        matchesDate = fileDateObj.toDateString() === today.toDateString();
+                    } else if (fileDate === 'week') {
+                        const weekAgo = new Date();
+                        weekAgo.setDate(weekAgo.getDate() - 7);
+                        matchesDate = fileDateObj >= weekAgo;
+                    } else if (fileDate === 'month') {
+                        matchesDate = fileDateObj.getMonth() === today.getMonth() && 
+                                      fileDateObj.getFullYear() === today.getFullYear();
+                    } else if (fileDate === 'year') {
+                        matchesDate = fileDateObj.getFullYear() === today.getFullYear();
+                    }
+                }
+                
+                return matchesSearch && matchesType && matchesSize && matchesDate;
+            });
+            
             displayFiles(filteredFiles);
         }
 
-        // Upload de arquivo
-        document.getElementById('fileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+        // Determina o tipo do arquivo
+        function getFileType(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
             
-            // Pré-visualização de imagem
-            const previewDiv = document.getElementById('image-preview');
-            const previewImg = document.getElementById('preview');
+            if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext)) return 'image';
+            if (['pdf'].includes(ext)) return 'pdf';
+            if (['doc', 'docx', 'odt', 'rtf', 'txt'].includes(ext)) return 'document';
+            if (['xls', 'xlsx', 'ods', 'csv'].includes(ext)) return 'spreadsheet';
+            if (['ppt', 'pptx', 'odp'].includes(ext)) return 'presentation';
+            if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(ext)) return 'video';
+            if (['mp3', 'wav', 'ogg', 'm4a'].includes(ext)) return 'audio';
+            if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) return 'archive';
             
-            if (file.type.startsWith('image/')) {
-                previewDiv.style.display = 'block';
-                previewImg.src = URL.createObjectURL(file);
-            } else {
-                previewDiv.style.display = 'none';
-            }
-            
-            // Validações
-            if (!validarNomeArquivo(file.name)) {
-                alert('Nome inválido! Use apenas letras, números, hífens e underlines.');
-                return;
-            }
-            
-            if (file.size > 10 * 1024 * 1024) { // 10MB
-                alert('Arquivo muito grande! Tamanho máximo: 10MB');
-                return;
-            }
-            
-            // Inicia upload
-            uploadFile(file);
-        });
+            return 'other';
+        }
 
-        async function uploadFile(file) {
+        // Retorna ícone conforme tipo de arquivo
+        function getFileIcon(filename) {
+            const type = getFileType(filename);
+            const icons = {
+                image: 'fa-file-image',
+                pdf: 'fa-file-pdf',
+                document: 'fa-file-word',
+                spreadsheet: 'fa-file-excel',
+                presentation: 'fa-file-powerpoint',
+                video: 'fa-file-video',
+                audio: 'fa-file-audio',
+                archive: 'fa-file-archive'
+            };
+            return icons[type] || 'fa-file';
+        }
+
+        // Manipula o upload de arquivos
+        async function handleFileUpload(e) {
+            const files = e.target.files;
+            if (!files || files.length === 0) return;
+            
             const progressBar = document.getElementById('upload-progress');
-            const fileInput = document.getElementById('fileInput');
+            progressBar.style.display = 'block';
+            progressBar.value = 0;
+            
+            let uploadedCount = 0;
+            const totalFiles = files.length;
+            
+            for (let i = 0; i < totalFiles; i++) {
+                const file = files[i];
+                
+                try {
+                    // Valida apenas caracteres permitidos no nome
+                    if (!/^[a-zA-Z0-9\-_\. \u00C0-\u00FF]+$/.test(file.name)) {
+                        alert(`O arquivo "${file.name}" contém caracteres inválidos no nome. Use apenas letras, números, hífens, pontos e espaços.`);
+                        continue;
+                    }
+                    
+                    const storageRef = storage.ref(`documentos/${currentUser.uid}/${currentPath}${file.name}`);
+                    const uploadTask = storageRef.put(file);
+                    
+                    await new Promise((resolve, reject) => {
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                const progress = ((uploadedCount + (snapshot.bytesTransferred / snapshot.totalBytes)) / totalFiles) * 100;
+                                progressBar.value = progress;
+                            },
+                            (error) => {
+                                console.error("Erro no upload:", error);
+                                alert(`Falha ao enviar "${file.name}": ${error.message}`);
+                                reject(error);
+                            },
+                            () => {
+                                uploadedCount++;
+                                progressBar.value = (uploadedCount / totalFiles) * 100;
+                                resolve();
+                            }
+                        );
+                    });
+                    
+                } catch (error) {
+                    console.error("Erro no upload:", error);
+                }
+            }
+            
+            // Atualiza a lista após uploads
+            if (uploadedCount > 0) {
+                listarArquivos(currentPath);
+            }
+            
+            progressBar.style.display = 'none';
+            document.getElementById('fileInput').value = '';
+        }
+
+        // Pré-visualização de arquivos
+        async function previewFile(filePath, fileType) {
+            const previewContainer = document.getElementById('preview-container');
+            const previewContent = document.getElementById('preview-content');
+            
+            previewContainer.style.display = 'block';
+            previewContent.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando pré-visualização...';
             
             try {
-                progressBar.style.display = 'block';
-                progressBar.value = 0;
+                const storageRef = storage.ref(`documentos/${currentUser.uid}/${filePath}`);
+                const url = await storageRef.getDownloadURL();
                 
-                const storageRef = ref(storage, `documentos/${currentUser.uid}/${currentPath}${file.name}`);
-                const uploadTask = uploadBytesResumable(storageRef, file);
+                // Destrói o visualizador anterior se existir
+                if (viewer) {
+                    viewer.destroy();
+                    viewer = null;
+                }
                 
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        progressBar.value = progress;
-                    },
-                    (error) => {
-                        console.error("Erro no upload:", error);
-                        alert('Falha no upload: ' + error.message);
-                        progressBar.style.display = 'none';
-                    },
-                    () => {
-                        listarArquivos(currentPath);
-                        fileInput.value = '';
-                        progressBar.style.display = 'none';
-                        document.getElementById('image-preview').style.display = 'none';
-                    }
-                );
+                // Limpa o conteúdo anterior
+                previewContent.innerHTML = '';
+                
+                // Exibe conforme o tipo de arquivo
+                if (fileType === 'image') {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '500px';
+                    previewContent.appendChild(img);
+                    
+                    // Inicializa o visualizador de imagens
+                    viewer = new Viewer(img, {
+                        navbar: false,
+                        title: false,
+                        toolbar: {
+                            zoomIn: 1,
+                            zoomOut: 1,
+                            oneToOne: 1,
+                            reset: 1,
+                            rotateLeft: 1,
+                            rotateRight: 1,
+                            flipHorizontal: 1,
+                            flipVertical: 1,
+                        }
+                    });
+                    
+                } else if (fileType === 'pdf') {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
+                    iframe.style.width = '100%';
+                    iframe.style.height = '500px';
+                    iframe.style.border = 'none';
+                    previewContent.appendChild(iframe);
+                    
+                } else if (fileType === 'document') {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
+                    iframe.style.width = '100%';
+                    iframe.style.height = '500px';
+                    iframe.style.border = 'none';
+                    previewContent.appendChild(iframe);
+                    
+                } else if (fileType === 'video') {
+                    const video = document.createElement('video');
+                    video.src = url;
+                    video.controls = true;
+                    video.style.maxWidth = '100%';
+                    video.style.maxHeight = '500px';
+                    previewContent.appendChild(video);
+                    
+                } else if (fileType === 'audio') {
+                    const audio = document.createElement('audio');
+                    audio.src = url;
+                    audio.controls = true;
+                    audio.style.width = '100%';
+                    previewContent.appendChild(audio);
+                    
+                } else {
+                    previewContent.innerHTML = `
+                        <p>Pré-visualização não disponível para este tipo de arquivo.</p>
+                        <p><a href="${url}" target="_blank">Clique aqui para visualizar</a></p>
+                    `;
+                }
+                
             } catch (error) {
-                console.error("Erro:", error);
-                progressBar.style.display = 'none';
+                console.error("Erro ao carregar pré-visualização:", error);
+                previewContent.innerHTML = '<div style="color:var(--perigo)">Erro ao carregar pré-visualização</div>';
             }
         }
 
-        // Valida nome do arquivo
-        function validarNomeArquivo(nome) {
-            const regex = /^[a-zA-Z0-9-_.áéíóúâêîôûãõç ]+(\.[a-zA-Z0-9]+)?$/;
-            return regex.test(nome);
+        // Esconde a pré-visualização
+        function hidePreview() {
+            document.getElementById('preview-container').style.display = 'none';
+            if (viewer) {
+                viewer.destroy();
+                viewer = null;
+            }
         }
 
         // Download de arquivo
         async function downloadFile(filePath) {
             try {
-                const fileRef = ref(storage, `documentos/${currentUser.uid}/${filePath}`);
-                const url = await getDownloadURL(fileRef);
+                const storageRef = storage.ref(`documentos/${currentUser.uid}/${filePath}`);
+                const url = await storageRef.getDownloadURL();
                 
-                // Cria link temporário para download
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = filePath.split('/').pop();
@@ -1084,7 +729,7 @@
                 document.body.removeChild(a);
             } catch (error) {
                 console.error("Erro no download:", error);
-                alert('Falha ao baixar arquivo: ' + error.message);
+                alert('Erro ao baixar arquivo: ' + error.message);
             }
         }
 
@@ -1093,12 +738,12 @@
             if (!confirm(`Tem certeza que deseja excluir "${filePath.split('/').pop()}"?`)) return;
             
             try {
-                const fileRef = ref(storage, `documentos/${currentUser.uid}/${filePath}`);
-                await deleteObject(fileRef);
+                const storageRef = storage.ref(`documentos/${currentUser.uid}/${filePath}`);
+                await storageRef.delete();
                 listarArquivos(currentPath);
             } catch (error) {
                 console.error("Erro ao excluir:", error);
-                alert('Falha ao excluir arquivo: ' + error.message);
+                alert('Erro ao excluir arquivo: ' + error.message);
             }
         }
 
@@ -1107,142 +752,28 @@
             const folderName = prompt('Digite o nome da nova pasta:');
             if (!folderName) return;
             
-            if (!validarNomeArquivo(folderName)) {
-                alert('Nome inválido! Use apenas letras, números, hífens e underlines.');
+            if (!/^[a-zA-Z0-9\-_ \u00C0-\u00FF]+$/.test(folderName)) {
+                alert('Nome inválido! Use apenas letras, números, hífens, espaços e underlines.');
                 return;
             }
             
             try {
-                // Cria uma pasta vazia adicionando um arquivo .keep
-                const folderRef = ref(storage, `documentos/${currentUser.uid}/${currentPath}${folderName}/.keep`);
-                await uploadBytes(folderRef, new Blob(['']));
+                // Cria um arquivo vazio para representar a pasta
+                const storageRef = storage.ref(`documentos/${currentUser.uid}/${currentPath}${folderName}/.keep`);
+                await storageRef.put(new Blob(['']));
                 listarArquivos(currentPath);
             } catch (error) {
                 console.error("Erro ao criar pasta:", error);
-                alert('Falha ao criar pasta: ' + error.message);
+                alert('Erro ao criar pasta: ' + error.message);
             }
         }
 
-        // Mostra erro
-        function showError() {
-            document.getElementById('folders-list').innerHTML = 
-                '<div class="empty-state" style="color:var(--perigo)"><i class="fas fa-exclamation-circle"></i> Erro ao carregar</div>';
-            document.getElementById('files-list').innerHTML = 
-                '<div class="empty-state" style="color:var(--perigo)"><i class="fas fa-exclamation-circle"></i> Erro ao carregar</div>';
-        }
-
-        // Logout
-        window.logout = async function() {
-            try {
-                await signOut(auth);
-                window.location.href = "index.html";
-            } catch (error) {
-                console.error("Erro ao fazer logout:", error);
-            }
-        }
-        });
-
-        // Disponibiliza funções globalmente
+        // Atribui funções globalmente
         window.listarArquivos = listarArquivos;
+        window.previewFile = previewFile;
         window.downloadFile = downloadFile;
         window.deleteFile = deleteFile;
         window.criarPasta = criarPasta;
-    </script>
-    <script>
-       
-        // Calendário
-    document.addEventListener('DOMContentLoaded', function() {
-        const hoje = new Date();
-        let mesAtual = hoje.getMonth();
-        let anoAtual = hoje.getFullYear();
-        
-        const diasMesEl = document.getElementById('dias-mes');
-        const currentMonthEl = document.getElementById('current-month');
-        const prevMonthBtn = document.getElementById('prev-month');
-        const nextMonthBtn = document.getElementById('next-month');
-        
-        // Datas com compromissos (exemplo)
-        const compromissos = [
-            '2023-06-15',
-            '2023-06-20',
-            '2023-06-25',
-            '2023-07-03',
-            '2023-07-10'
-        ];
-        
-        function renderCalendario() {
-            // Limpa o calendário
-            diasMesEl.innerHTML = '';
-            
-            // Configura o mês/ano atual
-            const primeiroDia = new Date(anoAtual, mesAtual, 1);
-            const ultimoDia = new Date(anoAtual, mesAtual + 1, 0);
-            const diasNoMes = ultimoDia.getDate();
-            const primeiroDiaSemana = primeiroDia.getDay();
-            
-            // Atualiza o cabeçalho
-            const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                          "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            currentMonthEl.textContent = `${meses[mesAtual]} ${anoAtual}`;
-            
-            // Dias vazios no início
-            for (let i = 0; i < primeiroDiaSemana; i++) {
-                const span = document.createElement('span');
-                diasMesEl.appendChild(span);
-            }
-            
-            // Dias do mês
-            for (let dia = 1; dia <= diasNoMes; dia++) {
-                const span = document.createElement('span');
-                span.textContent = dia;
-                
-                // Formata a data para comparação
-                const dataAtual = new Date(anoAtual, mesAtual, dia);
-                const dataFormatada = formatarData(dataAtual);
-                
-                // Verifica se é hoje
-                if (dia === hoje.getDate() && mesAtual === hoje.getMonth() && anoAtual === hoje.getFullYear()) {
-                    span.classList.add('hoje');
-                }
-                
-                // Verifica se tem compromisso
-                if (compromissos.includes(dataFormatada)) {
-                    span.classList.add('compromisso');
-                }
-                
-                diasMesEl.appendChild(span);
-            }
-        }
-        
-        function formatarData(data) {
-            const ano = data.getFullYear();
-            const mes = String(data.getMonth() + 1).padStart(2, '0');
-            const dia = String(data.getDate()).padStart(2, '0');
-            return `${ano}-${mes}-${dia}`;
-        }
-        
-        // Navegação do calendário
-        prevMonthBtn.addEventListener('click', function() {
-            mesAtual--;
-            if (mesAtual < 0) {
-                mesAtual = 11;
-                anoAtual--;
-            }
-            renderCalendario();
-        });
-        
-        nextMonthBtn.addEventListener('click', function() {
-            mesAtual++;
-            if (mesAtual > 11) {
-                mesAtual = 0;
-                anoAtual++;
-            }
-            renderCalendario();
-        });
-        
-        // Renderiza o calendário inicial
-        renderCalendario();
-    });
     </script>
 </body>
 </html>
