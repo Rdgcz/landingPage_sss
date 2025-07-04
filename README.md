@@ -106,3 +106,300 @@ python3 -m http.server 3000
 Feito por RDGCZ + Assistência de IA //
 **Nota sobre segurança**: Esta implementação remove todas as credenciais sensíveis do frontend, garantindo que as operações sejam validadas e executadas apenas pelo backend autorizado.
 -------------------------------------------------------------------------------------------------------------------------------
+# 01/07/2025
+
+```markdown
+# 📂 Sitio Sabiá - Backend com Firebase
+
+## 🛠️ Configuração Realizada
+
+### 1. Estrutura do Projeto
+```
+sitio-sabio-sabia-backend/
+├── src/
+│   ├── app.js               # Configuração do servidor
+│   ├── routes/files.js      # Endpoints de upload/download
+│   └── services/storage.js  # Integração com Firebase
+├── .env                     # Variáveis de ambiente
+├── firebase-service-account.json # Credenciais (não versionado)
+└── package.json
+```
+
+### 2. Tecnologias Implementadas
+- **Node.js** (v18+)
+- **Express** (Servidor HTTP)
+- **Firebase Admin SDK** (Armazenamento de arquivos)
+- **Dotenv** (Gestão de variáveis)
+
+### 3. Funcionalidades Prontas
+✔️ Servidor Node.js na porta `3001`  
+✔️ Rota POST `/api/files/upload`  
+✔️ Integração com Firebase Storage  
+✔️ Proteção de credenciais (`.gitignore`)  
+
+## 🔧 Como Executar
+
+```bash
+# 1. Clonar repositório
+git clone https://github.com/Rdgcz/sitio-sabio-sabia-backend.git
+
+# 2. Instalar dependências
+npm install
+
+# 3. Configurar ambiente
+cp .env.example .env
+# Preencher com seus dados do Firebase
+
+# 4. Iniciar servidor
+npm run dev
+```
+
+## 🔐 Variáveis de Ambiente (`.env`)
+```ini
+PORT=3001
+FIREBASE_STORAGE_BUCKET="seu-projeto.appspot.com"
+```
+
+## 🌐 Endpoints
+- **POST** `/api/files/upload`  
+  ```json
+  {
+    "file": "[base64]",
+    "fileName": "arquivo.txt"
+  }
+  ```
+
+## 📌 Próximos Passos
+- [ ] Implementar autenticação JWT  
+- [ ] Criar rota de listagem de arquivos  
+- [ ] Configurar CI/CD com GitHub Actions
+
+---
+
+> 💡 **Dica**: Sempre verifique se `firebase-service-account.json` está no `.gitignore`!
+
+---------------------------------------------------------------------------------------------------
+## 02/07/2025
+
+Aqui está a síntese completa para seu `README.md`, organizada por tópicos:
+
+---
+
+# **Backend - Sitio Sabio Sabia**  
+**Tecnologias**: Node.js, Express, Firebase (Auth + Storage), JWT  
+
+## 🔧 **Configuração Inicial**  
+1. **Variáveis de Ambiente** (`/.env`):  
+   ```env
+   PORT=3001
+   JWT_SECRET=sua_chave_aleatoria_aqui
+   FIREBASE_STORAGE_BUCKET=seu-projeto.appspot.com
+   FIREBASE_PROJECT_ID=seu-projeto-id
+   FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxx@seu-projeto.iam.gserviceaccount.com
+   FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n..."
+   ```
+
+2. **Instalação**:  
+   ```bash
+   npm install express firebase-admin cors dotenv uuid
+   ```
+
+---
+
+## 🚀 **Funcionalidades Implementadas**  
+### **1. Autenticação JWT**  
+- Rotas protegidas com middleware `authenticate`  
+- Tokens expiram em 1 hora  
+- Validação robusta de credenciais  
+
+### **2. Upload de Arquivos**  
+- Suporte a arquivos até 10MB  
+- Tipos permitidos: `JPEG, PNG, PDF, TXT`  
+- Sanitização automática de nomes  
+- URLs temporárias com validade  
+
+### **3. Rotas Principais**  
+| Método | Rota               | Descrição                  |  
+|--------|--------------------|----------------------------|  
+| `GET`  | `/`                | Verificação do status      |  
+| `POST` | `/api/files/upload`| Upload de arquivos (Base64)|  
+| `GET`  | `/api/files/status`| Health check do Storage    |  
+
+---
+
+## 🛠 **Estrutura de Arquivos**  
+```
+src/
+├── auth/
+│   ├── middleware.js    # Validação JWT  
+│   └── controller.js    # Rotas de login  
+├── routes/
+│   └── files.js         # Lógica de upload  
+├── services/
+│   └── storage.js       # Integração Firebase  
+├── app.js               # Config Express  
+└── startup.js           # Inicialização  
+```
+
+---
+
+## 🔒 **Boas Práticas de Segurança**  
+- Chaves privadas **nunca** commitadas  
+- Validação de payloads com `Joi`  
+- CORS restrito a domínios autorizados  
+- Logs sensíveis ocultos em produção  
+
+---
+
+## 🐞 **Solução de Problemas Comuns**  
+```bash
+# Erro: "Bucket não encontrado"
+Verifique: 
+1. Permissões no Google Cloud IAM  
+2. Nome do bucket no .env  
+
+# Erro: "Token inválido"
+Renove o JWT_SECRET e reinicie o servidor  
+```
+
+---
+
+## 📈 **Próximos Passos**  
+- [ ] Implementar rate limiting  
+- [ ] Adicionar Swagger para documentação  
+- [ ] Configurar HTTPS em produção  
+
+[▶️ **Executar em desenvolvimento**]  
+```bash
+npm run dev
+```  
+
+---
+
+---------------------------------------------------------------------------------------------------
+## 03/07/2025 -- **PENDENTE**
+
+# 🔥 **Guia Prático: Firebase em Produção para "sitiosabiosabia.com.br"**
+
+## 📌 **Antes de Começar**
+1. **Seu cenário atual**:
+   - Frontend: GitHub Pages (HTML/CSS/JS estático) no domínio `sitiosabiosabia.com.br`.
+   - Backend: Firebase (Firestore, Auth, Storage, etc.).
+2. **O que precisamos fazer**:
+   - Configurar o Firebase para produção (regras de segurança, domínio personalizado, etc.).
+   - Testar todas as funcionalidades antes de liberar para usuários.
+
+---
+
+## 🚀 **Passo 1: Configurar o Firebase no Seu Projeto**
+### 1.1 **Acesse o Console do Firebase**
+- Vá para [Firebase Console](https://console.firebase.google.com/).
+- Selecione seu projeto (`sitio-sabio-sabia`).
+
+### 1.2 **Habilite os Serviços Necessários**
+- **Firestore Database**: Ative e defina regras de segurança.
+- **Authentication**: Habilite provedores (e-mail/senha, Google, etc.).
+- **Storage**: Configure as permissões.
+
+### 1.3 **Regras de Segurança (Crucial para Produção)**
+Edite as regras no Firebase Console para **Firestore** e **Storage**:
+
+**Firestore (em `firestore.rules`)**:
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Libera leitura/escrita apenas para usuários autenticados
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+
+**Storage (em `storage.rules`)**:
+```javascript
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+
+> ⚠️ **Importante**: Teste as regras no simulador do Firebase antes de publicar!
+
+---
+
+## 🌐 **Passo 2: Vincular Seu Domínio ao Firebase**
+### 2.1 **Adicione seu domínio no Firebase Hosting**
+- No Console do Firebase, vá para **Hosting**.
+- Clique em **Adicionar domínio** e insira `sitiosabiosabia.com.br`.
+- Siga as instruções para verificar o domínio (via TXT no DNS).
+
+### 2.2 **Configure o DNS no Registro.br**
+- Acesse seu painel de domínio (ex: Registro.br).
+- Adicione os registros DNS apontando para o Firebase:
+  ```
+  Tipo: A | Nome: @ | Valor: 199.36.158.100 (IP do Firebase)
+  Tipo: A | Nome: www | Valor: 199.36.158.100
+  ```
+
+### 2.3 **Forçar HTTPS (Opcional, mas recomendado)**
+No Firebase Hosting, ative a opção **"Redirecionar HTTP para HTTPS"**.
+
+---
+
+## 🧪 **Passo 3: Testes em Produção**
+### 3.1 **Teste de Autenticação**
+- Acesse seu site (`https://sitiosabiosabia.com.br`).
+- Tente criar um usuário e fazer login.
+- Verifique no Firebase Console se o usuário aparece em **Authentication**.
+
+### 3.2 **Teste de Firestore/Storage**
+- Faça upload de uma imagem (Storage).
+- Crie um documento no Firestore.
+- Verifique no Console se os dados foram salvos.
+
+### 3.3 **Teste de Performance**
+- Use o [Lighthouse](https://developers.google.com/web/tools/lighthouse) para auditar seu site.
+
+---
+
+## 🔒 **Passo 4: Monitoramento e Manutenção**
+### 4.1 **Ative Alertas no Firebase**
+- Vá para **Project Settings > Monitoring**.
+- Configure alertas para falhas de autenticação, aumento de tráfego, etc.
+
+### 4.2 **Backup dos Dados**
+- **Firestore**: Use `firestore-backup-restore` para backups automáticos.
+- **Storage**: Habilite versionamento no Google Cloud Storage.
+
+---
+
+## 📋 **Checklist Final**
+| Tarefa | Status (✔/✖) |
+|--------|--------------|
+| Regras de segurança publicadas | |
+| Domínio vinculado ao Firebase | |
+| HTTPS funcionando | |
+| Testes de autenticação concluídos | |
+| Testes de Firestore/Storage OK | |
+| Alertas configurados | |
+
+---
+
+## ❓ **Dúvidas Comuns**
+### **1. Como atualizar o site no GitHub Pages sem perder as configurações do Firebase?**
+- Seu frontend (GitHub Pages) e backend (Firebase) são independentes. Basta atualizar o código no GitHub normalmente.
+
+### **2. Posso usar o mesmo domínio para GitHub Pages e Firebase Hosting?**
+- Não. O domínio principal (`sitiosabiosabia.com.br`) deve apontar para **um só serviço** (GitHub Pages **ou** Firebase Hosting). Recomendo:
+  - Use `sitiosabiosabia.com.br` para GitHub Pages (frontend).
+  - Use `api.sitiosabiosabia.com.br` para Firebase (backend).
+
+---
+
+-------------------------------------------------------------------------------------------------------------------------------------------
