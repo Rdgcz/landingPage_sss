@@ -1,779 +1,404 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área Restrita | Sítio Sábio Sabiá</title>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
-    
-    <!-- ViewerJS para visualização de documentos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Área Restrita | Sítio Sábio Sabiá</title>
 
-    <style>
-        :root {
-            --laranja-ouro: #EAA731;
-            --marrom-escuro: #362219;
-            --terracota: #A0470D;
-            --taupe: #A67958;
-            --fundo: #F8F1E5;
-            --branco: #FFFFFF;
-            --perigo: #C62828;
-            --raio-borda: 8px;
-            --fonte-principal: 'Merriweather', serif;
-        }
-        
-        body {
-            font-family: var(--fonte-principal);
-            background-color: var(--fundo);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        header {
-            background-color: var(--terracota);
-            color: var(--branco);
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            height: 50px;
-        }
-        
-        nav {
-            background-color: var(--marrom-escuro);
-            padding: 0.5rem;
-        }
-        
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 1rem;
-            margin: 0;
-            padding: 0;
-        }
-        
-        nav a {
-            color: var(--fundo);
-            text-decoration: none;
-            font-weight: bold;
-        }
-        
-        main {
-            flex: 1;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .card {
-            background: var(--branco);
-            border-radius: var(--raio-borda);
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .btn {
-            background: var(--laranja-ouro);
-            color: var(--marrom-escuro);
-            border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn:hover {
-            background: var(--terracota);
-            color: var(--branco);
-        }
-        
-        .btn-perigo {
-            background: var(--perigo);
-            color: var(--branco);
-        }
-        
-        .btn-sm {
-            padding: 0.3rem 0.6rem;
-            font-size: 0.8rem;
-        }
-        
-        #file-manager {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 1.5rem;
-        }
-        
-        #subpastas, #arquivos {
-            background: var(--branco);
-            padding: 1rem;
-            border-radius: var(--raio-borda);
-        }
-        
-        .folder, .file {
-            padding: 0.6rem;
-            margin: 0.3rem 0;
-            cursor: pointer;
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .folder:hover, .file:hover {
-            background: rgba(234, 167, 49, 0.1);
-        }
-        
-        .file-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        #upload-progress {
-            width: 100%;
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        /* Preview styles */
-        #preview-container {
-            margin-top: 1.5rem;
-            border: 1px solid #ddd;
-            border-radius: var(--raio-borda);
-            padding: 1rem;
-            display: none;
-        }
-        
-        #preview-content {
-            max-height: 500px;
-            overflow: auto;
-        }
-        
-        /* Advanced search */
-        .search-panel {
-            background: var(--branco);
-            padding: 1rem;
-            border-radius: var(--raio-borda);
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .search-filters {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .search-filter {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .search-filter label {
-            margin-bottom: 0.3rem;
-            font-weight: bold;
-        }
-        
-        footer {
-            background: var(--marrom-escuro);
-            color: var(--fundo);
-            text-align: center;
-            padding: 1rem;
-            margin-top: auto;
-        }
-        
-        /* Loading animation */
-        .loading {
-            display: inline-block;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @media (max-width: 768px) {
-            #file-manager {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+  <!-- ViewerJS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --laranja-ouro: #EAA731;
+      --marrom-escuro: #362219;
+      --terracota: #A0470D;
+      --taupe: #A67958;
+      --fundo: #F8F1E5;
+      --branco: #FFFFFF;
+      --perigo: #C62828;
+      --raio-borda: 8px;
+      --fonte-principal: 'Merriweather', serif;
+    }
+    body {
+      font-family: var(--fonte-principal);
+      background-color: var(--fundo);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--terracota);
+      color: var(--branco);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { height: 50px; }
+    nav {
+      background: var(--marrom-escuro);
+      padding: 0.5rem;
+    }
+    nav ul {
+      display: flex; justify-content: center;
+      list-style: none; gap: 1rem; margin: 0; padding: 0;
+    }
+    nav a {
+      color: var(--fundo);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      flex: 1; padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%;
+    }
+    .card {
+      background: var(--branco);
+      border-radius: var(--raio-borda);
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .btn {
+      background: var(--laranja-ouro);
+      color: var(--marrom-escuro);
+      border: none; padding: 0.6rem 1rem;
+      border-radius: 4px;
+      font-weight: bold; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: var(--terracota); color: var(--branco);
+    }
+    .btn-perigo { background: var(--perigo); color: var(--branco); }
+    .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+    #file-manager { display: grid; grid-template-columns: 250px 1fr; gap: 1.5rem; }
+    #subpastas, #arquivos { background: var(--branco); padding: 1rem; border-radius: var(--raio-borda); }
+    .folder, .file {
+      padding: 0.6rem; margin: 0.3rem 0; cursor: pointer;
+      border-radius: 4px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .folder:hover, .file:hover { background: rgba(234,167,49,0.1); }
+    .file-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+    #upload-progress { width: 100%; margin-top: 1rem; display: none; }
+    #preview-container {
+      margin-top: 1.5rem; border: 1px solid #ddd; border-radius: var(--raio-borda);
+      padding: 1rem; display: none;
+    }
+    #preview-content { max-height: 500px; overflow: auto; }
+    .search-panel {
+      background: var(--branco); padding: 1rem; border-radius: var(--raio-borda);
+      margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .search-filters {
+      display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+      gap: 1rem; margin-top: 1rem;
+    }
+    .search-filter { display: flex; flex-direction: column; }
+    .search-filter label { margin-bottom: 0.3rem; font-weight: bold; }
+    footer {
+      background: var(--marrom-escuro); color: var(--fundo);
+      text-align: center; padding: 1rem; margin-top: auto;
+    }
+    .loading { display: inline-block; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @media(max-width:768px) { #file-manager { grid-template-columns: 1fr; } }
+  </style>
 </head>
+
 <body>
-    <header>
-        <div class="logo-container">
-            <img src="../assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Sítio Sábio Sabiá" class="logo">
+  <header>
+    <div><img src="../assets/images/brand/logo/logo_sss_redu_compressed.png" alt="Logo" class="logo"></div>
+    <h1>Área Restrita</h1>
+    <button id="logout-btn" class="btn btn-perigo"><i class="fas fa-sign-out-alt"></i> Sair</button>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="../index.html">Página Inicial</a></li>
+      <li><a href="../cunha.html">Cunha</a></li>
+      <li><a href="../galeria.html">Galeria</a></li>
+      <li><a href="../contato.html">Contato</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="card">
+      <div class="search-panel">
+        <div style="display:flex;gap:1rem;">
+          <input type="search" id="search-input" placeholder="Buscar por nome..." style="flex:1; padding:0.5rem;">
+          <button id="advanced-search-toggle" class="btn btn-sm"><i class="fas fa-sliders-h"></i> Filtros</button>
+          <button id="clear-search" class="btn btn-sm btn-perigo"><i class="fas fa-times"></i> Limpar</button>
         </div>
-        <h1>Área Restrita</h1>
-        <button id="logout-btn" class="btn btn-perigo"><i class="fas fa-sign-out-alt"></i> Sair</button>
-    </header>
-
-    <nav>
-        <ul>
-            <li><a href="../index.html">Página Inicial</a></li>
-            <li><a href="../cunha.html">Cunha</a></li>
-            <li><a href="../galeria.html">Galeria</a></li>
-            <li><a href="../contato.html">Contato</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <div class="card">
-            <div class="search-panel">
-                <div style="display: flex; gap: 1rem;">
-                    <input type="search" id="search-input" placeholder="Buscar por nome..." style="flex: 1; padding: 0.5rem;">
-                    <button id="advanced-search-toggle" class="btn btn-sm">
-                        <i class="fas fa-sliders-h"></i> Filtros
-                    </button>
-                    <button id="clear-search" class="btn btn-sm btn-perigo">
-                        <i class="fas fa-times"></i> Limpar
-                    </button>
-                </div>
-                
-                <div id="advanced-search" style="display: none; margin-top: 1rem;">
-                    <div class="search-filters">
-                        <div class="search-filter">
-                            <label for="search-type">Tipo de arquivo</label>
-                            <select id="search-type" class="form-control">
-                                <option value="">Todos</option>
-                                <option value="image">Imagens</option>
-                                <option value="pdf">PDF</option>
-                                <option value="document">Documentos</option>
-                                <option value="spreadsheet">Planilhas</option>
-                                <option value="video">Vídeos</option>
-                                <option value="audio">Áudios</option>
-                            </select>
-                        </div>
-                        
-                        <div class="search-filter">
-                            <label for="search-size">Tamanho</label>
-                            <select id="search-size" class="form-control">
-                                <option value="">Qualquer tamanho</option>
-                                <option value="small">Pequeno (0-1MB)</option>
-                                <option value="medium">Médio (1-5MB)</option>
-                                <option value="large">Grande (5MB+)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="search-filter">
-                            <label for="search-date">Data</label>
-                            <select id="search-date" class="form-control">
-                                <option value="">Qualquer data</option>
-                                <option value="today">Hoje</option>
-                                <option value="week">Esta semana</option>
-                                <option value="month">Este mês</option>
-                                <option value="year">Este ano</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+        <div id="advanced-search" style="display:none;margin-top:1rem;">
+          <div class="search-filters">
+            <div class="search-filter">
+              <label for="search-type">Tipo</label>
+              <select id="search-type">
+                <option value="">Todos</option><option value="image">Imagens</option><option value="pdf">PDF</option>
+                <option value="document">Documentos</option><option value="spreadsheet">Planilhas</option>
+                <option value="video">Vídeos</option><option value="audio">Áudios</option>
+              </select>
             </div>
-
-            <div id="file-manager">
-                <div id="subpastas">
-                    <h3><i class="fas fa-folder"></i> Pastas</h3>
-                    <div id="folders-list">Carregando pastas...</div>
-                </div>
-                
-                <div id="arquivos">
-                    <h3><i class="fas fa-file"></i> Arquivos</h3>
-                    <div id="files-list">Carregando arquivos...</div>
-                    
-                    <div id="preview-container">
-                        <h4>Pré-visualização</h4>
-                        <div id="preview-content"></div>
-                    </div>
-                    
-                    <div class="file-actions">
-                        <input type="file" id="fileInput" style="display: none;" multiple>
-                        <button class="btn" onclick="document.getElementById('fileInput').click()">
-                            <i class="fas fa-upload"></i> Enviar Arquivo(s)
-                        </button>
-                        <button class="btn" onclick="criarPasta()">
-                            <i class="fas fa-folder-plus"></i> Nova Pasta
-                        </button>
-                    </div>
-                    
-                    <progress id="upload-progress" value="0" max="100"></progress>
-                </div>
+            <div class="search-filter">
+              <label for="search-size">Tamanho</label>
+              <select id="search-size">
+                <option value="">Qualquer</option><option value="small">Pequeno (0-1MB)</option>
+                <option value="medium">Médio (1-5MB)</option><option value="large">Grande (5MB+)</option>
+              </select>
             </div>
+            <div class="search-filter">
+              <label for="search-date">Data</label>
+              <select id="search-date">
+                <option value="">Qualquer</option><option value="today">Hoje</option>
+                <option value="week">Esta semana</option><option value="month">Este mês</option>
+                <option value="year">Este ano</option>
+              </select>
+            </div>
+          </div>
         </div>
-    </main>
+      </div>
 
-    <footer>
-        <p>© <span id="current-year"></span> - Sítio Sábio Sabiá</p>
-    </footer>
+      <div id="file-manager">
+        <div id="subpastas">
+          <h3><i class="fas fa-folder"></i> Pastas</h3>
+          <div id="folders-list">Carregando...</div>
+        </div>
+        <div id="arquivos">
+          <h3><i class="fas fa-file"></i> Arquivos</h3>
+          <div id="files-list">Carregando...</div>
+          <div id="preview-container">
+            <h4>Pré-visualização</h4>
+            <div id="preview-content"></div>
+          </div>
+          <div class="file-actions">
+            <input type="file" id="fileInput" style="display:none;" multiple>
+            <button class="btn" onclick="document.getElementById('fileInput').click()"><i class="fas fa-upload"></i> Enviar</button>
+            <button class="btn" onclick="criarPasta()"><i class="fas fa-folder-plus"></i> Nova Pasta</button>
+          </div>
+          <progress id="upload-progress" value="0" max="100"></progress>
+        </div>
+      </div>
+    </div>
+  </main>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <footer>© <span id="current-year"></span> - Sítio Sábio Sabiá</footer>
 
-    <script>
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyC0O5QqfQae3K9-Ku9-tnpGS-ko82h10JI",
-            authDomain: "sitio-sabio-sabia.firebaseapp.com",
-            projectId: "sitio-sabio-sabia",
-            storageBucket: "sitio-sabio-sabia.appspot.com",
-            messagingSenderId: "789144165592",
-            appId: "1:789144165592:web:0311bc2930a047cf160bad"
-        };
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0O5QqfQae3K9-Ku9-tnpGS-ko82h10JI",
+      authDomain: "sitio-sabio-sabia.firebaseapp.com",
+      projectId: "sitio-sabio-sabia",
+      storageBucket: "sitio-sabio-sabia.appspot.com",
+      messagingSenderId: "789144165592",
+      appId: "1:789144165592:web:0311bc2930a047cf160bad"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const storage = firebase.storage();
 
-        // Inicializa o Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const storage = firebase.storage();
+    let currentUser = null;
+    let currentPath = '';
+    let allFiles = [];
+    let allFolders = [];
+    let viewer = null;
 
-        // Variáveis globais
-        let currentUser = null;
-        let currentPath = '';
-        let allFiles = [];
-        let allFolders = [];
-        let viewer = null; // Para o visualizador de documentos
+    auth.onAuthStateChanged(user => {
+      if (!user) location.replace("login.html");
+      else {
+        currentUser = user;
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        listarArquivos('');
+        setupEvents();
+      }
+    });
 
-        // Verifica autenticação ao carregar
-        auth.onAuthStateChanged((user) => {
-            if (!user) {
-                window.location.href = "login.html";
-            } else {
-                currentUser = user;
-                document.getElementById('current-year').textContent = new Date().getFullYear();
-                listarArquivos('');
-                setupEventListeners();
-            }
-        });
+    function setupEvents() {
+      const adv = document.getElementById('advanced-search');
+      document.getElementById('advanced-search-toggle').onclick = () => {
+        adv.style.display = adv.style.display === 'none' ? 'block' : 'none';
+      };
+      document.getElementById('clear-search').onclick = () => {
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-type').value = '';
+        document.getElementById('search-size').value = '';
+        document.getElementById('search-date').value = '';
+        filterFiles();
+      };
+      ['search-input','search-type','search-size','search-date'].forEach(id => {
+        document.getElementById(id).oninput = filterFiles;
+      });
+      document.getElementById('logout-btn').onclick = () => auth.signOut().then(() => location.replace("login.html"));
+      document.getElementById('fileInput').onchange = handleFileUpload;
+    }
 
-        // Configura os listeners de eventos
-        function setupEventListeners() {
-            // Busca avançada
-            document.getElementById('advanced-search-toggle').addEventListener('click', function() {
-                const advancedSearch = document.getElementById('advanced-search');
-                advancedSearch.style.display = advancedSearch.style.display === 'none' ? 'block' : 'none';
-                this.innerHTML = advancedSearch.style.display === 'none' ? 
-                    '<i class="fas fa-sliders-h"></i> Filtros' : 
-                    '<i class="fas fa-times"></i> Fechar';
-            });
-            
-            // Limpar busca
-            document.getElementById('clear-search').addEventListener('click', function() {
-                document.getElementById('search-input').value = '';
-                document.getElementById('search-type').value = '';
-                document.getElementById('search-size').value = '';
-                document.getElementById('search-date').value = '';
-                filterFiles();
-            });
-            
-            // Input de busca
-            document.getElementById('search-input').addEventListener('input', filterFiles);
-            document.getElementById('search-type').addEventListener('change', filterFiles);
-            document.getElementById('search-size').addEventListener('change', filterFiles);
-            document.getElementById('search-date').addEventListener('change', filterFiles);
-            
-            // Logout
-            document.getElementById('logout-btn').addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    window.location.href = "login.html";
-                }).catch(error => {
-                    console.error("Erro ao fazer logout:", error);
-                });
-            });
-            
-            // Upload múltiplo
-            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+    async function listarArquivos(path) {
+      currentPath = path;
+      document.getElementById('folders-list').innerHTML = 'Carregando...';
+      document.getElementById('files-list').innerHTML = 'Carregando...';
+      hidePreview();
+      const storageRef = storage.ref(`documentos/${currentUser.uid}/${path}`);
+      try {
+        const result = await storageRef.listAll();
+        allFolders = result.prefixes.sort((a,b) => a.name.localeCompare(b.name));
+        allFiles = result.items.sort((a,b) => a.name.localeCompare(b.name));
+        await Promise.all(allFiles.map(async file => {
+          const meta = await file.getMetadata();
+          file._size = meta.size;
+          file._timeCreated = meta.timeCreated;
+        }));
+        showFolders(allFolders);
+        showFiles(allFiles);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function showFolders(folders) {
+      let html = folders.map(f => `<div class="folder" onclick="listarArquivos('${currentPath}${f.name}/')"><div><i class="fas fa-folder"></i> ${f.name}</div></div>`).join('');
+      document.getElementById('folders-list').innerHTML = html || 'Nenhuma pasta.';
+    }
+
+    function showFiles(files) {
+      let html = files.map(f => {
+        const size = Math.round(f._size/1024);
+        const date = new Date(f._timeCreated).toLocaleDateString();
+        const type = getFileType(f.name);
+        return `<div class="file" data-type="${type}" data-size="${f._size}" data-date="${f._timeCreated}">
+          <div onclick="previewFile('${currentPath}${f.name}','${type}')">
+            <i class="fas ${getFileIcon(f.name)}"></i> ${f.name} <small>(${size}KB, ${date})</small>
+          </div>
+          <div>
+            <button class="btn btn-sm" onclick="downloadFile('${currentPath}${f.name}')"><i class="fas fa-download"></i></button>
+            <button class="btn btn-sm btn-perigo" onclick="deleteFile('${currentPath}${f.name}')"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>`;
+      }).join('');
+      document.getElementById('files-list').innerHTML = html || 'Nenhum arquivo.';
+    }
+
+    function filterFiles() {
+      const t = document.getElementById('search-input').value.toLowerCase();
+      const ty = document.getElementById('search-type').value;
+      const sz = document.getElementById('search-size').value;
+      const dt = document.getElementById('search-date').value;
+      showFolders(allFolders.filter(f => f.name.toLowerCase().includes(t)));
+      showFiles(allFiles.filter(f => {
+        let ok = f.name.toLowerCase().includes(t);
+        if (ty && getFileType(f.name)!==ty) ok=false;
+        if (sz) {
+          if (sz==='small') ok=ok&&f._size<1e6;
+          if (sz==='medium') ok=ok&&f._size>=1e6&&f._size<5e6;
+          if (sz==='large') ok=ok&&f._size>=5e6;
         }
-
-        // Função para listar arquivos
-        async function listarArquivos(path) {
-            if (!currentUser) return;
-            
-            currentPath = path;
-            document.getElementById('folders-list').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando pastas...';
-            document.getElementById('files-list').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando arquivos...';
-            hidePreview();
-            
-            try {
-                const storageRef = storage.ref(`documentos/${currentUser.uid}/${path}`);
-                const result = await storageRef.listAll();
-                
-                // Ordena os resultados
-                result.prefixes.sort((a, b) => a.name.localeCompare(b.name));
-                result.items.sort((a, b) => a.name.localeCompare(b.name));
-                
-                // Armazena para busca
-                allFolders = result.prefixes;
-                allFiles = result.items;
-                
-                // Exibe os resultados
-                displayFolders(allFolders);
-                displayFiles(allFiles);
-                
-            } catch (error) {
-                console.error("Erro:", error);
-                document.getElementById('folders-list').innerHTML = '<div style="color:var(--perigo)">Erro ao carregar pastas</div>';
-                document.getElementById('files-list').innerHTML = '<div style="color:var(--perigo)">Erro ao carregar arquivos</div>';
-            }
+        if (dt) {
+          const d = new Date(f._timeCreated);
+          const now = new Date();
+          if (dt==='today') ok=ok&&d.toDateString()===now.toDateString();
+          if (dt==='week') ok=ok&&d >= new Date(now.setDate(now.getDate()-7));
+          if (dt==='month') ok=ok&&d.getMonth()===now.getMonth();
+          if (dt==='year') ok=ok&&d.getFullYear()===now.getFullYear();
         }
+        return ok;
+      }));
+    }
 
-        // Exibe as pastas
-        function displayFolders(folders) {
-            let foldersHTML = '';
-            
-            folders.forEach(folder => {
-                foldersHTML += `
-                    <div class="folder" onclick="listarArquivos('${currentPath}${folder.name}/')">
-                        <div><i class="fas fa-folder"></i> ${folder.name}</div>
-                    </div>
-                `;
-            });
-            
-            document.getElementById('folders-list').innerHTML = foldersHTML || '<div>Nenhuma pasta encontrada</div>';
+    function getFileType(name) {
+      const ext = name.split('.').pop().toLowerCase();
+      if (['jpg','jpeg','png','gif'].includes(ext)) return 'image';
+      if (ext==='pdf') return 'pdf';
+      if (['doc','docx','odt','rtf','txt'].includes(ext)) return 'document';
+      if (['xls','xlsx','csv'].includes(ext)) return 'spreadsheet';
+      if (['mp4','webm','avi'].includes(ext)) return 'video';
+      if (['mp3','wav'].includes(ext)) return 'audio';
+      return 'other';
+    }
+
+    function getFileIcon(name) {
+      const t = getFileType(name);
+      return {
+        image:'fa-file-image', pdf:'fa-file-pdf', document:'fa-file-word',
+        spreadsheet:'fa-file-excel', video:'fa-file-video', audio:'fa-file-audio'
+      }[t]||'fa-file';
+    }
+
+    async function handleFileUpload(e) {
+      const files = e.target.files; if (!files.length) return;
+      const p = document.getElementById('upload-progress');
+      p.style.display='block'; p.value=0;
+      let done=0;
+      for (const f of files) {
+        if (!/^[a-zA-Z0-9\-_\. \u00C0-\u00FF]+$/.test(f.name.trim())) {
+          alert(`Nome inválido: ${f.name}`); continue;
         }
+        const ref = storage.ref(`documentos/${currentUser.uid}/${currentPath}${f.name.trim()}`);
+        await ref.put(f);
+        done++;
+        p.value = (done/files.length)*100;
+      }
+      listarArquivos(currentPath);
+      p.style.display='none'; e.target.value='';
+    }
 
-        // Exibe os arquivos
-        async function displayFiles(files) {
-            let filesHTML = '';
-            
-            for (const file of files) {
-                const metadata = await file.getMetadata();
-                const sizeKB = Math.round(metadata.size / 1024);
-                const uploadedAt = new Date(metadata.timeCreated).toLocaleDateString();
-                const fileType = getFileType(file.name);
-                
-                filesHTML += `
-                    <div class="file" data-type="${fileType}" data-size="${metadata.size}" data-date="${metadata.timeCreated}">
-                        <div onclick="previewFile('${currentPath}${file.name}', '${fileType}')">
-                            <i class="fas ${getFileIcon(file.name)}"></i> ${file.name}
-                            <small>(${sizeKB} KB, ${uploadedAt})</small>
-                        </div>
-                        <div>
-                            <button class="btn btn-sm" onclick="downloadFile('${currentPath}${file.name}')">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="btn btn-sm btn-perigo" onclick="deleteFile('${currentPath}${file.name}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            document.getElementById('files-list').innerHTML = filesHTML || '<div>Nenhum arquivo encontrado</div>';
-        }
+    async function previewFile(path, type) {
+      const c = document.getElementById('preview-container');
+      const p = document.getElementById('preview-content');
+      c.style.display='block'; p.innerHTML='Carregando...';
+      const url = await storage.ref(`documentos/${currentUser.uid}/${path}`).getDownloadURL();
+      if (type==='image') {
+        p.innerHTML = `<img src="${url}" style="max-width:100%;">`;
+        if (viewer) viewer.destroy();
+        viewer = new Viewer(p.querySelector('img'));
+      } else if (type==='pdf') {
+        p.innerHTML = `<iframe src="${url}" style="width:100%;height:500px;"></iframe>`;
+      } else if (type==='document'||type==='spreadsheet') {
+        p.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" style="width:100%;height:500px;"></iframe>`;
+      } else if (type==='video') {
+        p.innerHTML = `<video controls src="${url}" style="width:100%;max-height:500px;"></video>`;
+      } else if (type==='audio') {
+        p.innerHTML = `<audio controls src="${url}" style="width:100%;"></audio>`;
+      } else {
+        p.innerHTML = `<a href="${url}" target="_blank">Baixar arquivo</a>`;
+      }
+    }
 
-        // Filtra arquivos/pastas
-        function filterFiles() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const fileType = document.getElementById('search-type').value;
-            const fileSize = document.getElementById('search-size').value;
-            const fileDate = document.getElementById('search-date').value;
-            
-            // Filtra pastas
-            const filteredFolders = allFolders.filter(folder => 
-                folder.name.toLowerCase().includes(searchTerm)
-            );
-            displayFolders(filteredFolders);
-            
-            // Filtra arquivos
-            const filteredFiles = allFiles.filter(file => {
-                const matchesSearch = file.name.toLowerCase().includes(searchTerm);
-                const matchesType = !fileType || getFileType(file.name) === fileType;
-                
-                let matchesSize = true;
-                if (fileSize) {
-                    const size = file._size || 0;
-                    if (fileSize === 'small') matchesSize = size < 1024 * 1024;
-                    else if (fileSize === 'medium') matchesSize = size >= 1024 * 1024 && size < 5 * 1024 * 1024;
-                    else if (fileSize === 'large') matchesSize = size >= 5 * 1024 * 1024;
-                }
-                
-                let matchesDate = true;
-                if (fileDate) {
-                    const fileDateObj = new Date(file._timeCreated || 0);
-                    const today = new Date();
-                    
-                    if (fileDate === 'today') {
-                        matchesDate = fileDateObj.toDateString() === today.toDateString();
-                    } else if (fileDate === 'week') {
-                        const weekAgo = new Date();
-                        weekAgo.setDate(weekAgo.getDate() - 7);
-                        matchesDate = fileDateObj >= weekAgo;
-                    } else if (fileDate === 'month') {
-                        matchesDate = fileDateObj.getMonth() === today.getMonth() && 
-                                      fileDateObj.getFullYear() === today.getFullYear();
-                    } else if (fileDate === 'year') {
-                        matchesDate = fileDateObj.getFullYear() === today.getFullYear();
-                    }
-                }
-                
-                return matchesSearch && matchesType && matchesSize && matchesDate;
-            });
-            
-            displayFiles(filteredFiles);
-        }
+    function hidePreview() { document.getElementById('preview-container').style.display='none'; }
 
-        // Determina o tipo do arquivo
-        function getFileType(filename) {
-            const ext = filename.split('.').pop().toLowerCase();
-            
-            if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext)) return 'image';
-            if (['pdf'].includes(ext)) return 'pdf';
-            if (['doc', 'docx', 'odt', 'rtf', 'txt'].includes(ext)) return 'document';
-            if (['xls', 'xlsx', 'ods', 'csv'].includes(ext)) return 'spreadsheet';
-            if (['ppt', 'pptx', 'odp'].includes(ext)) return 'presentation';
-            if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(ext)) return 'video';
-            if (['mp3', 'wav', 'ogg', 'm4a'].includes(ext)) return 'audio';
-            if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) return 'archive';
-            
-            return 'other';
-        }
+    function downloadFile(path) {
+      storage.ref(`documentos/${currentUser.uid}/${path}`).getDownloadURL().then(url => {
+        const a = document.createElement('a');
+        a.href = url; a.download = path.split('/').pop(); a.click();
+      });
+    }
 
-        // Retorna ícone conforme tipo de arquivo
-        function getFileIcon(filename) {
-            const type = getFileType(filename);
-            const icons = {
-                image: 'fa-file-image',
-                pdf: 'fa-file-pdf',
-                document: 'fa-file-word',
-                spreadsheet: 'fa-file-excel',
-                presentation: 'fa-file-powerpoint',
-                video: 'fa-file-video',
-                audio: 'fa-file-audio',
-                archive: 'fa-file-archive'
-            };
-            return icons[type] || 'fa-file';
-        }
+    function deleteFile(path) {
+      if (!confirm('Tem certeza?')) return;
+      storage.ref(`documentos/${currentUser.uid}/${path}`).delete().then(() => listarArquivos(currentPath));
+    }
 
-        // Manipula o upload de arquivos
-        async function handleFileUpload(e) {
-            const files = e.target.files;
-            if (!files || files.length === 0) return;
-            
-            const progressBar = document.getElementById('upload-progress');
-            progressBar.style.display = 'block';
-            progressBar.value = 0;
-            
-            let uploadedCount = 0;
-            const totalFiles = files.length;
-            
-            for (let i = 0; i < totalFiles; i++) {
-                const file = files[i];
-                
-                try {
-                    // Valida apenas caracteres permitidos no nome
-                    if (!/^[a-zA-Z0-9\-_\. \u00C0-\u00FF]+$/.test(file.name)) {
-                        alert(`O arquivo "${file.name}" contém caracteres inválidos no nome. Use apenas letras, números, hífens, pontos e espaços.`);
-                        continue;
-                    }
-                    
-                    const storageRef = storage.ref(`documentos/${currentUser.uid}/${currentPath}${file.name}`);
-                    const uploadTask = storageRef.put(file);
-                    
-                    await new Promise((resolve, reject) => {
-                        uploadTask.on('state_changed',
-                            (snapshot) => {
-                                const progress = ((uploadedCount + (snapshot.bytesTransferred / snapshot.totalBytes)) / totalFiles) * 100;
-                                progressBar.value = progress;
-                            },
-                            (error) => {
-                                console.error("Erro no upload:", error);
-                                alert(`Falha ao enviar "${file.name}": ${error.message}`);
-                                reject(error);
-                            },
-                            () => {
-                                uploadedCount++;
-                                progressBar.value = (uploadedCount / totalFiles) * 100;
-                                resolve();
-                            }
-                        );
-                    });
-                    
-                } catch (error) {
-                    console.error("Erro no upload:", error);
-                }
-            }
-            
-            // Atualiza a lista após uploads
-            if (uploadedCount > 0) {
-                listarArquivos(currentPath);
-            }
-            
-            progressBar.style.display = 'none';
-            document.getElementById('fileInput').value = '';
-        }
+    function criarPasta() {
+      const nome = prompt('Nome da nova pasta:').trim();
+      if (!nome || !/^[a-zA-Z0-9\-_ \u00C0-\u00FF]+$/.test(nome)) {
+        alert('Nome inválido.'); return;
+      }
+      const ref = storage.ref(`documentos/${currentUser.uid}/${currentPath}${nome}/.keep`);
+      ref.putString('').then(() => listarArquivos(currentPath));
+    }
+  </script>
 
-        // Pré-visualização de arquivos
-        async function previewFile(filePath, fileType) {
-            const previewContainer = document.getElementById('preview-container');
-            const previewContent = document.getElementById('preview-content');
-            
-            previewContainer.style.display = 'block';
-            previewContent.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando pré-visualização...';
-            
-            try {
-                const storageRef = storage.ref(`documentos/${currentUser.uid}/${filePath}`);
-                const url = await storageRef.getDownloadURL();
-                
-                // Destrói o visualizador anterior se existir
-                if (viewer) {
-                    viewer.destroy();
-                    viewer = null;
-                }
-                
-                // Limpa o conteúdo anterior
-                previewContent.innerHTML = '';
-                
-                // Exibe conforme o tipo de arquivo
-                if (fileType === 'image') {
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.style.maxWidth = '100%';
-                    img.style.maxHeight = '500px';
-                    previewContent.appendChild(img);
-                    
-                    // Inicializa o visualizador de imagens
-                    viewer = new Viewer(img, {
-                        navbar: false,
-                        title: false,
-                        toolbar: {
-                            zoomIn: 1,
-                            zoomOut: 1,
-                            oneToOne: 1,
-                            reset: 1,
-                            rotateLeft: 1,
-                            rotateRight: 1,
-                            flipHorizontal: 1,
-                            flipVertical: 1,
-                        }
-                    });
-                    
-                } else if (fileType === 'pdf') {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
-                    iframe.style.width = '100%';
-                    iframe.style.height = '500px';
-                    iframe.style.border = 'none';
-                    previewContent.appendChild(iframe);
-                    
-                } else if (fileType === 'document') {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
-                    iframe.style.width = '100%';
-                    iframe.style.height = '500px';
-                    iframe.style.border = 'none';
-                    previewContent.appendChild(iframe);
-                    
-                } else if (fileType === 'video') {
-                    const video = document.createElement('video');
-                    video.src = url;
-                    video.controls = true;
-                    video.style.maxWidth = '100%';
-                    video.style.maxHeight = '500px';
-                    previewContent.appendChild(video);
-                    
-                } else if (fileType === 'audio') {
-                    const audio = document.createElement('audio');
-                    audio.src = url;
-                    audio.controls = true;
-                    audio.style.width = '100%';
-                    previewContent.appendChild(audio);
-                    
-                } else {
-                    previewContent.innerHTML = `
-                        <p>Pré-visualização não disponível para este tipo de arquivo.</p>
-                        <p><a href="${url}" target="_blank">Clique aqui para visualizar</a></p>
-                    `;
-                }
-                
-            } catch (error) {
-                console.error("Erro ao carregar pré-visualização:", error);
-                previewContent.innerHTML = '<div style="color:var(--perigo)">Erro ao carregar pré-visualização</div>';
-            }
-        }
-
-        // Esconde a pré-visualização
-        function hidePreview() {
-            document.getElementById('preview-container').style.display = 'none';
-            if (viewer) {
-                viewer.destroy();
-                viewer = null;
-            }
-        }
-
-        // Download de arquivo
-        async function downloadFile(filePath) {
-            try {
-                const storageRef = storage.ref(`documentos/${currentUser.uid}/${filePath}`);
-                const url = await storageRef.getDownloadURL();
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = filePath.split('/').pop();
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            } catch (error) {
-                console.error("Erro no download:", error);
-                alert('Erro ao baixar arquivo: ' + error.message);
-            }
-        }
-
-        // Excluir arquivo
-        async function deleteFile(filePath) {
-            if (!confirm(`Tem certeza que deseja excluir "${filePath.split('/').pop()}"?`)) return;
-            
-            try {
-                const storageRef = storage.ref(`documentos/${currentUser.uid}/${filePath}`);
-                await storageRef.delete();
-                listarArquivos(currentPath);
-            } catch (error) {
-                console.error("Erro ao excluir:", error);
-                alert('Erro ao excluir arquivo: ' + error.message);
-            }
-        }
-
-        // Criar nova pasta
-        async function criarPasta() {
-            const folderName = prompt('Digite o nome da nova pasta:');
-            if (!folderName) return;
-            
-            if (!/^[a-zA-Z0-9\-_ \u00C0-\u00FF]+$/.test(folderName)) {
-                alert('Nome inválido! Use apenas letras, números, hífens, espaços e underlines.');
-                return;
-            }
-            
-            try {
-                // Cria um arquivo vazio para representar a pasta
-                const storageRef = storage.ref(`documentos/${currentUser.uid}/${currentPath}${folderName}/.keep`);
-                await storageRef.put(new Blob(['']));
-                listarArquivos(currentPath);
-            } catch (error) {
-                console.error("Erro ao criar pasta:", error);
-                alert('Erro ao criar pasta: ' + error.message);
-            }
-        }
-
-        // Atribui funções globalmente
-        window.listarArquivos = listarArquivos;
-        window.previewFile = previewFile;
-        window.downloadFile = downloadFile;
-        window.deleteFile = deleteFile;
-        window.criarPasta = criarPasta;
-    </script>
+  <!-- Regras Firebase sugeridas:
+    match /documentos/{uid}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  -->
 </body>
 </html>
