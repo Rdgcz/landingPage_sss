@@ -4,7 +4,7 @@ firebase-service-account*.json
 
 # Arquivos de ambiente
 .env
-.env.local
+*.env.local
 
 # Firebase cache
 .firebase/
@@ -14,3 +14,17 @@ firebase-service-account*.json
 
 # Node modules
 node_modules/
+
+# Sistema
+.DS_Store
+.thumbsdb
+
+# IDE
+.idea/
+.vscode/
+
+# Build
+dist/
+build/firebase-admin-credentials.json
+startup.js
+test-auth.js
