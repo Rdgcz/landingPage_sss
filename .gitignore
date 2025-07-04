@@ -28,3 +28,4 @@ dist/
 build/firebase-admin-credentials.json
 startup.js
 test-auth.js
+firebase-admin-credentials.jsonfirebase-admin-credentials.json
