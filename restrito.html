@@ -391,7 +391,7 @@
         alert('Nome inválido.'); return;
       }
       const ref = storage.ref(`documentos/${currentUser.uid}/${currentPath}${nome}/.keep`);
-      ref.putString('').then(() => listarArquivos(currentPath));
+      ref.putString('keep').then(() => listarArquivos(currentPath));
     }
   </script>
 
